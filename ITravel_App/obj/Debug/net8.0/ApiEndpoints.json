@@ -1,0 +1,91 @@
+[
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "saveDestinationImage",
+    "RelativePath": "api/TravelAdmin/saveDestinationImage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "img",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destination_id",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_path",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "is_default",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveDestinationTranslations",
+    "RelativePath": "api/TravelAdmin/SaveDestinationTranslations",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.destination_translation",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveMainDestination",
+    "RelativePath": "api/TravelAdmin/SaveMainDestination",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.destination_main",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "getDestinations",
+    "RelativePath": "api/TravelClient/getDestinations",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.destination.DestinationReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
