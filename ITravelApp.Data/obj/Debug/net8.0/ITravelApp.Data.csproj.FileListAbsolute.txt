@@ -19,3 +19,4 @@ D:\ItravelWebsite\API\ITravel_App\ITravelApp.Data\obj\Debug\net8.0\ITravelApp.Da
 D:\ItravelWebsite\API\ITravel_App\ITravelApp.Data\obj\Debug\net8.0\ITravelApp.Data.csproj.GenerateResource.cache
 D:\ItravelWebsite\API\ITravel_App\ITravelApp.Data\obj\Debug\net8.0\de\ITravelApp.Data.resources.dll
 D:\ItravelWebsite\API\ITravel_App\ITravelApp.Data\obj\Debug\net8.0\en\ITravelApp.Data.resources.dll
+D:\ItravelWebsite\API\ITravel_App\ITravelApp.Data\obj\Debug\net8.0\ITravelApp.Data.sourcelink.json

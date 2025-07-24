@@ -1,5 +1,6 @@
 ﻿using ITravelApp.Data;
 using ITravelApp.Data.Models.destination;
+using ITravelApp.Data.Models.trips;
 
 namespace ITravel_App.Services
 {
@@ -16,6 +17,11 @@ namespace ITravel_App.Services
         public List<DestinationResponse> getDestinations(DestinationReq req)
         {
             return _clientDAO.getDestinations(req);
+        }
+
+        public Task<List<TripsAll>> GetTripsAll(TripsReq req)
+        {
+            return _clientDAO.GetTripsAll(req);
         }
     }
 }

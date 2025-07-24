@@ -172,3 +172,4 @@ D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\ITravel_App.Resou
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\ITravel_App.csproj.GenerateResource.cache
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\de\ITravel_App.resources.dll
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\en\ITravel_App.resources.dll
+D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\ITravel_App.sourcelink.json

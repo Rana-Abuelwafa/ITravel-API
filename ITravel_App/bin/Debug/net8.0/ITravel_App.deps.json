@@ -21,6 +21,14 @@
         },
         "runtime": {
           "ITravel_App.dll": {}
+        },
+        "resources": {
+          "de/ITravel_App.resources.dll": {
+            "locale": "de"
+          },
+          "en/ITravel_App.resources.dll": {
+            "locale": "en"
+          }
         }
       },
       "Humanizer.Core/2.14.1": {

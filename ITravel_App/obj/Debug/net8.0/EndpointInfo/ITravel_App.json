@@ -164,6 +164,333 @@
         }
       }
     },
+    "/api/TravelAdmin/SaveMainTrip": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trip_main"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/trip_main"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/trip_main"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/SaveTripTranslation": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripTranslationReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripTranslationReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripTranslationReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/SaveTripPrices": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripPricesReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripPricesReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripPricesReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/saveTripImage": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "img": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "trip_id": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "img_path": {
+                    "type": "string"
+                  },
+                  "img_name": {
+                    "type": "string"
+                  },
+                  "is_default": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "encoding": {
+                "img": {
+                  "style": "form"
+                },
+                "id": {
+                  "style": "form"
+                },
+                "trip_id": {
+                  "style": "form"
+                },
+                "img_path": {
+                  "style": "form"
+                },
+                "img_name": {
+                  "style": "form"
+                },
+                "is_default": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/SaveMainFacility": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/facility_main"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/facility_main"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/facility_main"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/SaveFacilityTranslation": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacilityTranslationReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacilityTranslationReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacilityTranslationReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/AssignFacilityToTrip": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripFacilityAssignReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripFacilityAssignReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripFacilityAssignReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelClient/getDestinations": {
       "post": {
         "tags": [
@@ -205,6 +532,48 @@
           }
         }
       }
+    },
+    "/api/TravelClient/GetTripsAll": {
+      "post": {
+        "tags": [
+          "TravelClient"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -217,6 +586,147 @@
             "nullable": true
           },
           "country_code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FacilityTranslationReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "facility_id": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lang_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "facility_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "facility_desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripFacilityAssignReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trip_id": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "facility_id": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripPricesReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trip_id": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "trip_origin_price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "trip_sale_price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "currency_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripTranslationReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trip_id": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lang_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_description": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_includes": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_highlight": {
+            "type": "string",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripsReq": {
+        "type": "object",
+        "properties": {
+          "destination_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lang_code": {
             "type": "string",
             "nullable": true
           }
@@ -275,6 +785,71 @@
           },
           "active": {
             "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "facility_main": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "facility_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "facility_default_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "trip_main": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trip_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_default_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "trip_duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "pickup": {
+            "type": "string",
+            "nullable": true
+          },
+          "show_in_top": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "show_in_slider": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "destination_id": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           }
         },

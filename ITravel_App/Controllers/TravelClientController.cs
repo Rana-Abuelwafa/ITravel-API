@@ -1,6 +1,7 @@
 ﻿using ITravel_App.Services;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
+using ITravelApp.Data.Models.trips;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -25,6 +26,14 @@ namespace ITravel_App.Controllers
         {
 
             return Ok(_clientService.getDestinations(req));
+        }
+        #endregion
+        #region trips
+        [HttpPost("GetTripsAll")]
+        public async Task<IActionResult> GetTripsAll(TripsReq req)
+        {
+
+            return Ok(await _clientService.GetTripsAll(req));
         }
         #endregion
     }

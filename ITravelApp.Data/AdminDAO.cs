@@ -1,6 +1,7 @@
 ﻿using ITravelApp.Data.Data;
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
+using ITravelApp.Data.Models.trips;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -109,7 +110,7 @@ namespace ITravelApp.Data
 
             return response;
         }
-
+        //save destination images
         public ResponseCls saveDestinationImage(destination_img row)
         {
             ResponseCls response;
@@ -152,5 +153,357 @@ namespace ITravelApp.Data
             return response;
         }
         #endregion
+
+        #region trips
+
+        //save main trip data by admin
+        public ResponseCls SaveMainTrip(trip_main row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            var msg = _localizer["DuplicateData"];
+            try
+            {
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_mains.Where(wr => wr.trip_code == row.trip_code && wr.active == row.active && wr.destination_id == row.destination_id).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_mains.Count() > 0)
+                    {
+                        maxId = _db.trip_mains.Max(d => d.id);
+
+                    }
+                    row.id = maxId + 1;
+                    _db.trip_mains.Add(row);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_mains.Update(row);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = row.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+        //save trip translation data by admin
+        public ResponseCls SaveTripTranslation(TripTranslationReq row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            var msg = _localizer["DuplicateData"];
+            try
+            {
+                trip_translation trip = new trip_translation
+                {
+                    id = row.id,
+                    lang_code=row.lang_code,
+                    trip_description=row.trip_description,
+                    trip_highlight=row.trip_highlight,
+                    trip_id = row.trip_id,
+                    trip_includes = row.trip_includes,
+                    trip_name = row.trip_name
+                };
+                if (row.delete == true)
+                {
+                    _db.Remove(trip);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+
+                if (trip.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_translations.Where(wr => wr.lang_code == trip.lang_code && wr.trip_id == trip.trip_id).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_translations.Count() > 0)
+                    {
+                        maxId = _db.trip_translations.Max(d => d.id);
+
+                    }
+                    trip.id = maxId + 1;
+                    _db.trip_translations.Add(trip);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_translations.Update(trip);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = trip.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+        //assign prices with different currency to trips
+        public ResponseCls SaveTripPrices(TripPricesReq row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            try
+            {
+                trip_price price = new trip_price
+                {
+                    id = row.id,
+                    trip_id=row.trip_id,
+                    currency_code = row.currency_code,
+                    trip_origin_price = row.trip_origin_price,
+                    trip_sale_price = row.trip_sale_price
+                };
+                if (row.delete == true)
+                {
+                    _db.Remove(price);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+                if (price.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_prices.Where(wr => wr.trip_id == price.trip_id && wr.currency_code == price.currency_code).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_prices.Count() > 0)
+                    {
+                        maxId = _db.trip_prices.Max(d => d.id);
+
+                    }
+                    price.id = maxId + 1;
+                    _db.trip_prices.Add(price);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_prices.Update(price);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = price.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+        //save trip images
+        public ResponseCls saveTripImage(TripImgReq row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            try
+            {
+                trip_img trip = new trip_img
+                {
+                    trip_id = row.trip_id,
+                    id=row.id,
+                    img_name=row.img_name,
+                    img_path = row.img_path,
+                    is_default = row.is_default
+
+                };
+                
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == trip.is_default).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_imgs.Count() > 0)
+                    {
+                        maxId = _db.trip_imgs.Max(d => d.id);
+
+                    }
+                    trip.id = maxId + 1;
+                    _db.trip_imgs.Add(trip);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_imgs.Update(trip);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = trip.id };
+
+
+            }
+
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+        //save main facility data by admin
+        public ResponseCls SaveMainFacility(facility_main row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            var msg = _localizer["DuplicateData"];
+            try
+            {
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.facility_mains.Where(wr => wr.facility_code == row.facility_code && wr.active == row.active).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.facility_mains.Count() > 0)
+                    {
+                        maxId = _db.facility_mains.Max(d => d.id);
+
+                    }
+                    row.id = maxId + 1;
+                    _db.facility_mains.Add(row);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.facility_mains.Update(row);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = row.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+        //save facility translation data by admin
+        public ResponseCls SaveFacilityTranslation(FacilityTranslationReq row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            try
+            {
+                facility_translation facility = new facility_translation
+                {
+                    facility_desc=row.facility_desc,
+                    facility_id=row.facility_id,
+                    facility_name=row.facility_name,
+                    id= row.id,
+                    lang_code= row.lang_code
+                };
+                if (row.delete == true)
+                {
+                    _db.Remove(facility);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.facility_translations.Where(wr => wr.lang_code == facility.lang_code && wr.facility_id == facility.facility_id).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.facility_translations.Count() > 0)
+                    {
+                        maxId = _db.facility_translations.Max(d => d.id);
+
+                    }
+                    facility.id = maxId + 1;
+                    _db.facility_translations.Add(facility);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.facility_translations.Update(facility);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = facility.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+        //assign facility to trip  by admin
+        public ResponseCls AssignFacilityToTrip(TripFacilityAssignReq row)
+        {
+            ResponseCls response;
+            int maxId = 0;
+            try
+            {
+                trip_facility trip = new trip_facility
+                {
+                    id=row.id,
+                    facility_id=row.facility_id,
+                    active=row.active,
+                    trip_id = row.trip_id
+                };
+                if (row.delete == true)
+                {
+                    _db.Remove(trip);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_facilities.Where(wr => wr.trip_id == trip.trip_id && wr.facility_id == trip.facility_id).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_facilities.Count() > 0)
+                    {
+                        maxId = _db.trip_facilities.Max(d => d.id);
+
+                    }
+                    trip.id = maxId + 1;
+                    _db.trip_facilities.Add(trip);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_facilities.Update(trip);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = trip.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+        #endregion
+
     }
 }

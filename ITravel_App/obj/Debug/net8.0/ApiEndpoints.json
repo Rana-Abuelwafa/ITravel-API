@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "AssignFacilityToTrip",
+    "RelativePath": "api/TravelAdmin/AssignFacilityToTrip",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.trips.TripFacilityAssignReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "saveDestinationImage",
     "RelativePath": "api/TravelAdmin/saveDestinationImage",
     "HttpMethod": "POST",
@@ -58,6 +74,22 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveFacilityTranslation",
+    "RelativePath": "api/TravelAdmin/SaveFacilityTranslation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.trips.FacilityTranslationReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "SaveMainDestination",
     "RelativePath": "api/TravelAdmin/SaveMainDestination",
     "HttpMethod": "POST",
@@ -67,6 +99,111 @@
       {
         "Name": "row",
         "Type": "ITravelApp.Data.Entities.destination_main",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveMainFacility",
+    "RelativePath": "api/TravelAdmin/SaveMainFacility",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.facility_main",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveMainTrip",
+    "RelativePath": "api/TravelAdmin/SaveMainTrip",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.trip_main",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "saveTripImage",
+    "RelativePath": "api/TravelAdmin/saveTripImage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "img",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "trip_id",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_path",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "is_default",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveTripPrices",
+    "RelativePath": "api/TravelAdmin/SaveTripPrices",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.trips.TripPricesReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveTripTranslation",
+    "RelativePath": "api/TravelAdmin/SaveTripTranslation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.trips.TripTranslationReq",
         "IsRequired": true
       }
     ],
@@ -83,6 +220,22 @@
       {
         "Name": "req",
         "Type": "ITravelApp.Data.Models.destination.DestinationReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetTripsAll",
+    "RelativePath": "api/TravelClient/GetTripsAll",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.trips.TripsReq",
         "IsRequired": true
       }
     ],

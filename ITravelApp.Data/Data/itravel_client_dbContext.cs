@@ -22,6 +22,22 @@ public partial class itravel_client_dbContext : DbContext
 
     public virtual DbSet<destination_translation> destination_translations { get; set; }
 
+    public virtual DbSet<facility_main> facility_mains { get; set; }
+
+    public virtual DbSet<facility_translation> facility_translations { get; set; }
+
+    public virtual DbSet<trip_facility> trip_facilities { get; set; }
+
+    public virtual DbSet<trip_img> trip_imgs { get; set; }
+
+    public virtual DbSet<trip_main> trip_mains { get; set; }
+
+    public virtual DbSet<trip_price> trip_prices { get; set; }
+
+    public virtual DbSet<trip_translation> trip_translations { get; set; }
+
+    public virtual DbSet<tripwithdetail> tripwithdetails { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseNpgsql("Host=localhost:5432;Database=itravel_client_db;Username=postgres;Password=Berlin2020");
@@ -52,6 +68,86 @@ public partial class itravel_client_dbContext : DbContext
 
             entity.Property(e => e.dest_name).HasMaxLength(50);
             entity.Property(e => e.lang_code).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<facility_main>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("facility_main_pkey");
+
+            entity.ToTable("facility_main");
+
+            entity.Property(e => e.facility_code).HasMaxLength(20);
+            entity.Property(e => e.facility_default_name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<facility_translation>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("facility_translations_pkey");
+
+            entity.Property(e => e.lang_code).HasMaxLength(5);
+        });
+
+        modelBuilder.Entity<trip_facility>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("trip_facility_pkey");
+
+            entity.ToTable("trip_facility");
+        });
+
+        modelBuilder.Entity<trip_img>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("trips_imgs_pkey");
+
+            entity.Property(e => e.id).HasDefaultValueSql("nextval('trips_imgs_id_seq'::regclass)");
+            entity.Property(e => e.img_name).HasMaxLength(50);
+            entity.Property(e => e.img_path).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<trip_main>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("trips_main_pkey");
+
+            entity.ToTable("trip_main");
+
+            entity.Property(e => e.id).HasDefaultValueSql("nextval('trips_main_id_seq'::regclass)");
+            entity.Property(e => e.pickup).HasMaxLength(20);
+            entity.Property(e => e.trip_code).HasMaxLength(20);
+            entity.Property(e => e.trip_default_name).HasMaxLength(50);
+            entity.Property(e => e.trip_duration).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<trip_price>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("trip_prices_pkey");
+
+            entity.Property(e => e.currency_code).HasMaxLength(5);
+        });
+
+        modelBuilder.Entity<trip_translation>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("trips_translations_pkey");
+
+            entity.Property(e => e.id).HasDefaultValueSql("nextval('trips_translations_id_seq'::regclass)");
+            entity.Property(e => e.lang_code).HasMaxLength(5);
+            entity.Property(e => e.trip_name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<tripwithdetail>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("tripwithdetails");
+
+            entity.Property(e => e.country_code).HasMaxLength(20);
+            entity.Property(e => e.currency_code).HasMaxLength(5);
+            entity.Property(e => e.default_img).HasMaxLength(50);
+            entity.Property(e => e.dest_code).HasMaxLength(20);
+            entity.Property(e => e.lang_code).HasMaxLength(5);
+            entity.Property(e => e.pickup).HasMaxLength(20);
+            entity.Property(e => e.trip_code).HasMaxLength(20);
+            entity.Property(e => e.trip_default_name).HasMaxLength(50);
+            entity.Property(e => e.trip_duration).HasMaxLength(20);
+            entity.Property(e => e.trip_name).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);
