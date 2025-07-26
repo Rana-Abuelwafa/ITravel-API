@@ -35,6 +35,12 @@ namespace ITravel_App.Controllers
 
             return Ok(await _clientService.GetTripsAll(req));
         }
+        [HttpPost("GetTripsForSlider")]
+        public async Task<IActionResult> GetTripsForSlider(TripsReq req)
+        {
+
+            return Ok(await _clientService.GetTripsForSlider(req));
+        }
         #endregion
     }
 }

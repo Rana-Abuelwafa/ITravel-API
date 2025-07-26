@@ -240,5 +240,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetTripsForSlider",
+    "RelativePath": "api/TravelClient/GetTripsForSlider",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.trips.TripsReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

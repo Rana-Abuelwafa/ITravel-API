@@ -96,8 +96,12 @@ namespace ITravelApp.Data
             try
             {
                 var trips = await _db.tripwithdetails
-                    .Where(wr => wr.lang_code == req.lang_code && wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id))
-                    .Select(s => new TripsAll
+                    .Where(wr => wr.lang_code == req.lang_code && 
+                                 wr.show_in_top == (req.show_in_top == false ? wr.show_in_top : req.show_in_top) && 
+                                 wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
+                                 wr.currency_code ==req.currency_code)
+                    .ToListAsync();
+                    return trips.Select(s => new TripsAll
                     {
                         destination_id = s.destination_id,
                         lang_code = s.lang_code,
@@ -123,6 +127,26 @@ namespace ITravelApp.Data
                         facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
                         imgs = GetImgsByTrip(s.trip_id).Result
                     })
+                    .ToList();
+
+
+               
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req)
+        {
+            try
+            {
+                var trips = await _db.tripwithdetails
+                    .Where(wr => wr.lang_code == req.lang_code && 
+                                wr.show_in_slider == true && 
+                                wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
+                                wr.currency_code == req.currency_code)
                     .ToListAsync();
 
 

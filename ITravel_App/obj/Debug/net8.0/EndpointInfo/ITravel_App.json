@@ -574,6 +574,48 @@
           }
         }
       }
+    },
+    "/api/TravelClient/GetTripsForSlider": {
+      "post": {
+        "tags": [
+          "TravelClient"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -727,6 +769,14 @@
             "format": "int32"
           },
           "lang_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "show_in_top": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "currency_code": {
             "type": "string",
             "nullable": true
           }

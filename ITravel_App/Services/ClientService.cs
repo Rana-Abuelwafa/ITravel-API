@@ -1,4 +1,5 @@
 ﻿using ITravelApp.Data;
+using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.trips;
 
@@ -22,6 +23,11 @@ namespace ITravel_App.Services
         public Task<List<TripsAll>> GetTripsAll(TripsReq req)
         {
             return _clientDAO.GetTripsAll(req);
+        }
+
+        public Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req)
+        {
+            return _clientDAO.GetTripsForSlider(req);
         }
     }
 }
