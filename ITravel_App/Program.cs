@@ -3,9 +3,11 @@ using ITravelApp.Data;
 using ITravelApp.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Text;
 
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -34,29 +36,29 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
 {
-    //options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    //{
-    //    Scheme = "bearer",
-    //    BearerFormat = "JWT",
-    //    In = ParameterLocation.Header,
-    //    Name = "Authorization",
-    //    Description = "Bearer Authentication with JWT Token",
-    //    Type = SecuritySchemeType.Http
-    //});
-    //options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    //{
-    //    {
-    //        new OpenApiSecurityScheme
-    //        {
-    //            Reference = new OpenApiReference
-    //            {
-    //                Id = "Bearer",
-    //                Type = ReferenceType.SecurityScheme
-    //            }
-    //        },
-    //        new List<string>()
-    //    }
-    //});
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
     options.OperationFilter<AcceptLanguageHeaderOperationFilter>();
 });
 builder.Services.AddDbContext<itravel_client_dbContext>(options =>
@@ -66,6 +68,18 @@ builder.Services.AddScoped<ClientDAO>();
 builder.Services.AddScoped<AdminDAO>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddAuthentication()
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 // Add localization services
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -89,7 +103,8 @@ var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOpt
 app.UseRequestLocalization(locOptions.Value);
 app.UseStaticFiles();
 app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthentication();
+app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using ITravel_App.Services;
+using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.trips;
@@ -29,18 +30,29 @@ namespace ITravel_App.Controllers
         }
         #endregion
         #region trips
+        //get trips and top trips with its details 
         [HttpPost("GetTripsAll")]
         public async Task<IActionResult> GetTripsAll(TripsReq req)
         {
 
             return Ok(await _clientService.GetTripsAll(req));
         }
+        //get trips which shown in home page slider
         [HttpPost("GetTripsForSlider")]
         public async Task<IActionResult> GetTripsForSlider(TripsReq req)
         {
 
             return Ok(await _clientService.GetTripsForSlider(req));
         }
+
+        [HttpPost("GetPickupsForTrip")]
+        public async Task<IActionResult> GetPickupsForTrip(PickupsReq req)
+        {
+
+            return Ok(await _clientService.GetPickupsForTrip(req));
+        }
+
+        
         #endregion
     }
 }

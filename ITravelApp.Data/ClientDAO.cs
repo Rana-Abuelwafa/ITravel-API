@@ -1,6 +1,8 @@
 ﻿using ITravelApp.Data.Data;
 using ITravelApp.Data.Entities;
+using ITravelApp.Data.Models;
 using ITravelApp.Data.Models.destination;
+using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.trips;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -60,6 +62,7 @@ namespace ITravelApp.Data
 
         #region trips
 
+        //get facilities for specific trip
         public List<TripFacility> getFacilityForTrip(decimal? trip_id, string lang_code)
         {
             try
@@ -80,6 +83,8 @@ namespace ITravelApp.Data
                 return null;
             }
         }
+       
+        //get images list for specific trip
         public async Task<List<trip_img>> GetImgsByTrip(decimal? trip_id)
         {
             try
@@ -91,6 +96,7 @@ namespace ITravelApp.Data
                 return null;
             }
         }
+        //get trips and top trips with its details 
         public async Task<List<TripsAll>> GetTripsAll(TripsReq req)
         {
             try
@@ -138,6 +144,8 @@ namespace ITravelApp.Data
                 return null;
             }
         }
+        
+        //get trips which shown in home page slider
         public async Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req)
         {
             try
@@ -157,6 +165,118 @@ namespace ITravelApp.Data
             {
                 return null;
             }
+        }
+
+        //get Pickups for spicifics trips
+        public async Task<List<TripsPickupResponse>> GetPickupsForTrip(PickupsReq req)
+        {
+            try
+            {
+                var result = await _db.trip_pickups_mains.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
+                                   .Join(_db.trip_pickups_translations.Where(wr => wr.lang_code == req.lang_code),
+                                        MAIN => new { trip_pickup_id = MAIN.id },
+                                        TRANS => new { TRANS.trip_pickup_id },
+                                        (MAIN, TRANS) => new TripsPickupResponse
+                                        {
+                                            trip_pickup_id = MAIN.id,
+                                            lang_code = TRANS.lang_code,
+                                            order = MAIN.order,
+                                            pickup_code = MAIN.pickup_code,
+                                            pickup_default_name = MAIN.pickup_default_name,
+                                            pickup_description = TRANS.pickup_description,
+                                            pickup_name = TRANS.pickup_name,
+                                            trip_id = MAIN.trip_id,
+                                            trip_type = MAIN.trip_type,
+                                            duration=MAIN.duration
+                                        }
+                                       ).OrderBy(x => x.order).ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        //get client reviews for specific trip 
+        //used for exercusion trip && transfer trip
+        //trip_type = 1 mean exercusion 
+        //trip_type = 2 mean transfer
+        // pageNumber = 1; // Current page number (1-based)
+        // pageSize = 10;  // Number of items per page
+        public async Task<ClientsReviewsResponse> GetClientsReviews(ClientsReviewsReq req)
+        {
+            
+            try
+            {
+                var totalRecords = await _db.tbl_reviews.CountAsync();
+                var reviews = await _db.tbl_reviews.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
+                                            .Select(s => new ClientsReviews
+                                            {
+                                                trip_id = s.trip_id,
+                                                client_id = s.client_id,
+                                                entry_date= s.entry_date,
+                                                entry_dateStr=s.entry_date.ToString(),
+                                                id = s.id,
+                                                review_description= s.review_description,
+                                                review_rate= s.review_rate,
+                                                review_title= s.review_title,
+                                                trip_type= s.trip_type,
+                                            })
+                                             .Skip((req.pageNumber - 1) * req.pageSize)
+                                             .Take(req.pageSize)
+                                            .ToListAsync();
+
+                return new ClientsReviewsResponse
+                {
+                    reviews = reviews,
+                    totalPages = totalRecords
+                };
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        //save client reviews for trip
+        public ResponseCls SaveReviewForTrip(tbl_review row)
+        {
+            ResponseCls response;
+            long maxId = 0;
+            try
+            {
+                row.entry_date = DateTime.Now;
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.tbl_reviews.Where(wr => wr.client_id == row.client_id && wr.trip_id == row.trip_id).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.tbl_reviews.Count() > 0)
+                    {
+                        maxId = _db.tbl_reviews.Max(d => d.id);
+
+                    }
+                    row.id = maxId + 1;
+                    _db.tbl_reviews.Add(row);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.tbl_reviews.Update(row);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = row.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
         }
         #endregion
     }

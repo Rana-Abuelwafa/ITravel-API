@@ -5,7 +5,7 @@ namespace ITravelApp.Data.Entities;
 
 public partial class tripwithdetail
 {
-    public int? trip_trans_id { get; set; }
+    public long? trip_trans_id { get; set; }
 
     public string? trip_description { get; set; }
 
@@ -15,7 +15,7 @@ public partial class tripwithdetail
 
     public string? trip_highlight { get; set; }
 
-    public decimal? trip_id { get; set; }
+    public long? trip_id { get; set; }
 
     public string? trip_name { get; set; }
 

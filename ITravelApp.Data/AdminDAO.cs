@@ -160,7 +160,7 @@ namespace ITravelApp.Data
         public ResponseCls SaveMainTrip(trip_main row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             var msg = _localizer["DuplicateData"];
             try
             {
@@ -200,7 +200,7 @@ namespace ITravelApp.Data
         public ResponseCls SaveTripTranslation(TripTranslationReq row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             var msg = _localizer["DuplicateData"];
             try
             {
@@ -257,7 +257,7 @@ namespace ITravelApp.Data
         public ResponseCls SaveTripPrices(TripPricesReq row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             try
             {
                 trip_price price = new trip_price
@@ -310,7 +310,7 @@ namespace ITravelApp.Data
         public ResponseCls saveTripImage(TripImgReq row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             try
             {
                 trip_img trip = new trip_img
@@ -361,7 +361,7 @@ namespace ITravelApp.Data
         public ResponseCls SaveMainFacility(facility_main row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             var msg = _localizer["DuplicateData"];
             try
             {
@@ -401,7 +401,7 @@ namespace ITravelApp.Data
         public ResponseCls SaveFacilityTranslation(FacilityTranslationReq row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             try
             {
                 facility_translation facility = new facility_translation
@@ -455,7 +455,7 @@ namespace ITravelApp.Data
         public ResponseCls AssignFacilityToTrip(TripFacilityAssignReq row)
         {
             ResponseCls response;
-            int maxId = 0;
+            long maxId = 0;
             try
             {
                 trip_facility trip = new trip_facility
@@ -503,6 +503,118 @@ namespace ITravelApp.Data
             }
             return response;
         }
+
+
+        //save  trip pickups main data by admin
+        public ResponseCls SaveMainTripPickups(TripsPickupSaveReq row)
+        {
+            ResponseCls response;
+            long maxId = 0;
+            var msg = _localizer["DuplicateData"];
+            try
+            {
+                trip_pickups_main pickup = new trip_pickups_main
+                {
+                    id=row.id,
+                    order=row.order,
+                    pickup_code=row.pickup_code,
+                    pickup_default_name=row.pickup_default_name,
+                    trip_id=row.trip_id,
+                    trip_type= row.trip_type
+                };
+                if (row.delete == true)
+                {
+                    _db.Remove(pickup);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_pickups_mains.Where(wr => wr.pickup_code == pickup.pickup_code && wr.trip_id == pickup.trip_id && wr.order == pickup.order).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_pickups_mains.Count() > 0)
+                    {
+                        maxId = _db.trip_pickups_mains.Max(d => d.id);
+
+                    }
+                    row.id = maxId + 1;
+                    _db.trip_pickups_mains.Add(pickup);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_pickups_mains.Update(pickup);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = row.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+        //save  trip pickups main data by admin
+        public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row)
+        {
+            ResponseCls response;
+            long maxId = 0;
+            var msg = _localizer["DuplicateData"];
+            try
+            {
+                trip_pickups_translation pickup = new trip_pickups_translation
+                {
+                    id = row.id,
+                   lang_code=row.lang_code,
+                   pickup_description=row.pickup_description,
+                   pickup_name = row.pickup_name,
+                   trip_pickup_id = row.trip_pickup_id
+                };
+                if (row.delete == true)
+                {
+                    _db.Remove(pickup);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+                if (row.id == 0)
+                {
+                    //check duplicate validation
+                    var result = _db.trip_pickups_translations.Where(wr => wr.lang_code == pickup.lang_code && wr.trip_pickup_id == pickup.trip_pickup_id).SingleOrDefault();
+                    if (result != null)
+                    {
+                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                    }
+                    if (_db.trip_pickups_translations.Count() > 0)
+                    {
+                        maxId = _db.trip_pickups_translations.Max(d => d.id);
+
+                    }
+                    row.id = maxId + 1;
+                    _db.trip_pickups_translations.Add(pickup);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.trip_pickups_translations.Update(pickup);
+                    _db.SaveChanges();
+                }
+
+                response = new ResponseCls { errors = null, success = true, idOut = row.id };
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+
+      
         #endregion
 
     }

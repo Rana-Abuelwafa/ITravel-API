@@ -5,6 +5,90 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Booking/GetClientsReviews": {
+      "post": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientsReviewsReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientsReviewsReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientsReviewsReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Booking/SaveReviewForTrip": {
+      "post": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/tbl_review"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/tbl_review"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/tbl_review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelAdmin/SaveMainDestination": {
       "post": {
         "tags": [
@@ -316,13 +400,9 @@
                     "type": "string",
                     "format": "binary"
                   },
-                  "id": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
                   "trip_id": {
-                    "type": "number",
-                    "format": "double"
+                    "type": "integer",
+                    "format": "int64"
                   },
                   "img_path": {
                     "type": "string"
@@ -332,14 +412,15 @@
                   },
                   "is_default": {
                     "type": "boolean"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
                   }
                 }
               },
               "encoding": {
                 "img": {
-                  "style": "form"
-                },
-                "id": {
                   "style": "form"
                 },
                 "trip_id": {
@@ -352,6 +433,9 @@
                   "style": "form"
                 },
                 "is_default": {
+                  "style": "form"
+                },
+                "id": {
                   "style": "form"
                 }
               }
@@ -491,6 +575,90 @@
         }
       }
     },
+    "/api/TravelAdmin/SaveMainTripPickups": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsPickupSaveReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsPickupSaveReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsPickupSaveReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/SaveTripPickupsTranslations": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsPickupTranslationSaveReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsPickupTranslationSaveReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripsPickupTranslationSaveReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelClient/getDestinations": {
       "post": {
         "tags": [
@@ -616,10 +784,74 @@
           }
         }
       }
+    },
+    "/api/TravelClient/GetPickupsForTrip": {
+      "post": {
+        "tags": [
+          "TravelClient"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PickupsReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PickupsReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PickupsReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ClientsReviewsReq": {
+        "type": "object",
+        "properties": {
+          "trip_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "DestinationReq": {
         "type": "object",
         "properties": {
@@ -637,13 +869,9 @@
       "FacilityTranslationReq": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "facility_id": {
-            "type": "number",
-            "format": "double",
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           },
           "lang_code": {
@@ -658,8 +886,30 @@
             "type": "string",
             "nullable": true
           },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
           "delete": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PickupsReq": {
+        "type": "object",
+        "properties": {
+          "trip_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lang_code": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -667,23 +917,23 @@
       "TripFacilityAssignReq": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "trip_id": {
-            "type": "number",
-            "format": "double",
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           },
           "facility_id": {
-            "type": "number",
-            "format": "double",
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           },
           "active": {
             "type": "boolean",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
           "delete": {
             "type": "boolean"
@@ -694,13 +944,9 @@
       "TripPricesReq": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "trip_id": {
-            "type": "number",
-            "format": "double",
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           },
           "trip_origin_price": {
@@ -717,6 +963,10 @@
             "type": "string",
             "nullable": true
           },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
           "delete": {
             "type": "boolean"
           }
@@ -726,13 +976,9 @@
       "TripTranslationReq": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "trip_id": {
-            "type": "number",
-            "format": "double",
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           },
           "lang_code": {
@@ -754,6 +1000,87 @@
           "trip_highlight": {
             "type": "string",
             "nullable": true
+          },
+          "trip_details": {
+            "type": "string",
+            "nullable": true
+          },
+          "important_info": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripsPickupSaveReq": {
+        "type": "object",
+        "properties": {
+          "trip_id": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pickup_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "pickup_default_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripsPickupTranslationSaveReq": {
+        "type": "object",
+        "properties": {
+          "trip_pickup_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pickup_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "pickup_description": {
+            "type": "string",
+            "nullable": true
+          },
+          "lang_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
           "delete": {
             "type": "boolean"
@@ -843,10 +1170,6 @@
       "facility_main": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "facility_code": {
             "type": "string",
             "nullable": true
@@ -858,6 +1181,52 @@
           "active": {
             "type": "boolean",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "tbl_review": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "client_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "review_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "review_description": {
+            "type": "string",
+            "nullable": true
+          },
+          "entry_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "review_rate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "trip_id": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -865,10 +1234,6 @@
       "trip_main": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "trip_code": {
             "type": "string",
             "nullable": true
@@ -901,10 +1266,27 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
           }
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Bearer Authentication with JWT Token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

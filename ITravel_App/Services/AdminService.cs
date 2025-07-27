@@ -50,9 +50,20 @@ namespace ITravel_App.Services
             return _adminDAO.SaveMainTrip(row);
         }
 
+        public ResponseCls SaveMainTripPickups(TripsPickupSaveReq row)
+        {
+            return _adminDAO.SaveMainTripPickups(row);
+        }
+
+       
         public ResponseCls saveTripImage(TripImgReq row)
         {
             return _adminDAO.saveTripImage(row);
+        }
+
+        public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row)
+        {
+            return _adminDAO.SaveTripPickupsTranslations(row);
         }
 
         public ResponseCls SaveTripPrices(TripPricesReq row)

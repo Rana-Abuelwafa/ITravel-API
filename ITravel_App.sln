@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITravel_App", "ITravel_App\ITravel_App.csproj", "{2E44046B-075B-44C3-A5A8-A15A7BA6BA9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITravelApp.Data", "ITravelApp.Data\ITravelApp.Data.csproj", "{65DD9F0E-B43C-4769-8410-3CFAADC03B13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TravelApp", "TravelApp", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TravelAuthentication", "TravelAuthentication", "{68E7961D-81DD-4B89-997F-93E79DF029EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel_Authentication", "Travel_Authentication\Travel_Authentication.csproj", "{297FB958-4CA4-4663-B6D5-EF7AFD981070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mails_App", "..\..\..\waslaa\api\WaslaAPI\Mails_App\Mails_App.csproj", "{D230C6DF-AD46-7601-DEC3-D23B086D7573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +29,22 @@ Global
 		{65DD9F0E-B43C-4769-8410-3CFAADC03B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65DD9F0E-B43C-4769-8410-3CFAADC03B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65DD9F0E-B43C-4769-8410-3CFAADC03B13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{297FB958-4CA4-4663-B6D5-EF7AFD981070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297FB958-4CA4-4663-B6D5-EF7AFD981070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297FB958-4CA4-4663-B6D5-EF7AFD981070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{297FB958-4CA4-4663-B6D5-EF7AFD981070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D230C6DF-AD46-7601-DEC3-D23B086D7573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D230C6DF-AD46-7601-DEC3-D23B086D7573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D230C6DF-AD46-7601-DEC3-D23B086D7573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D230C6DF-AD46-7601-DEC3-D23B086D7573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E44046B-075B-44C3-A5A8-A15A7BA6BA9B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{65DD9F0E-B43C-4769-8410-3CFAADC03B13} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{297FB958-4CA4-4663-B6D5-EF7AFD981070} = {68E7961D-81DD-4B89-997F-93E79DF029EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDACC18B-514E-4EB0-8194-A3BEBAD5FEF3}

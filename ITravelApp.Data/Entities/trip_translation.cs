@@ -5,9 +5,7 @@ namespace ITravelApp.Data.Entities;
 
 public partial class trip_translation
 {
-    public int id { get; set; }
-
-    public decimal? trip_id { get; set; }
+    public long? trip_id { get; set; }
 
     public string? lang_code { get; set; }
 
@@ -18,4 +16,10 @@ public partial class trip_translation
     public string? trip_includes { get; set; }
 
     public string? trip_highlight { get; set; }
+
+    public string? trip_details { get; set; }
+
+    public string? important_info { get; set; }
+
+    public long id { get; set; }
 }

@@ -130,6 +130,21 @@ namespace ITravel_App.Controllers
 
             return Ok(_adminService.AssignFacilityToTrip(row));
         }
+
+        [HttpPost("SaveMainTripPickups")]
+        public IActionResult SaveMainTripPickups(TripsPickupSaveReq row)
+        {
+
+            return Ok(_adminService.SaveMainTripPickups(row));
+        }
+
+        [HttpPost("SaveTripPickupsTranslations")]
+        public IActionResult SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row)
+        {
+
+            return Ok(_adminService.SaveTripPickupsTranslations(row));
+        }
+       
         #endregion
     }
 }

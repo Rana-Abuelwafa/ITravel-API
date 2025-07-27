@@ -18,6 +18,10 @@ namespace ITravel_App.Services
         public ResponseCls SaveMainFacility(facility_main row);
         public ResponseCls SaveFacilityTranslation(FacilityTranslationReq row);
         public ResponseCls AssignFacilityToTrip(TripFacilityAssignReq row);
+
+        public ResponseCls SaveMainTripPickups(TripsPickupSaveReq row);
+        public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row);
+      
         #endregion
     }
 }

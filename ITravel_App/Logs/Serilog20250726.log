@@ -263,3 +263,265 @@ WHERE t.lang_code = @__req_lang_code_0 AND t.show_in_slider AND (t.destination_i
 [2025-07-26 09:57:40.968 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripsForSlider (ITravel_App) in 10.7307ms
 [2025-07-26 09:57:40.968 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsForSlider (ITravel_App)'
 [2025-07-26 09:57:40.968 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsForSlider - 200 null application/json; charset=utf-8 11.9783ms
+[2025-07-26 18:57:56.646 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-07-26 18:57:57.844 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-07-26 18:57:57.845 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-07-26 18:58:00.787 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-07-26 18:58:00.825 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-07-26 18:58:00.826 +03:00  INF]  Hosting environment: Development
+[2025-07-26 18:58:00.826 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-07-26 18:58:01.862 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 1090.7339ms
+[2025-07-26 18:58:01.968 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-07-26 18:58:01.984 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 15.7056ms
+[2025-07-26 18:58:01.985 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-07-26 18:58:02.308 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 322.9991ms
+[2025-07-26 18:58:02.490 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-07-26 18:58:02.557 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 66.5167ms
+[2025-07-26 18:59:08.955 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - application/json 245
+[2025-07-26 18:59:09.004 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 18:59:09.010 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App)'
+[2025-07-26 18:59:09.052 +03:00  INF]  Route matched with {action = "SaveMainTrip", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainTrip(ITravelApp.Data.Entities.trip_main) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 18:59:12.005 +03:00  INF]  Executed DbCommand (120ms) [Parameters=[@__row_trip_code_0='?', @__row_active_1='?' (DbType = Boolean), @__row_destination_id_2='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.active, t.destination_id, t.pickup, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration
+FROM trip_main AS t
+WHERE t.trip_code = @__row_trip_code_0 AND t.active = @__row_active_1 AND t.destination_id = @__row_destination_id_2
+LIMIT 2
+[2025-07-26 18:59:12.089 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_main AS t
+[2025-07-26 18:59:12.124 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_main AS t
+[2025-07-26 18:59:12.423 +03:00  INF]  Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?' (DbType = Boolean), @p2='?' (DbType = Decimal), @p3='?', @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?', @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_main (id, active, destination_id, pickup, show_in_slider, show_in_top, trip_code, trip_default_name, trip_duration)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+[2025-07-26 18:59:12.472 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 18:59:12.491 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App) in 3431.6951ms
+[2025-07-26 18:59:12.491 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App)'
+[2025-07-26 18:59:12.510 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - 200 null application/json; charset=utf-8 3554.7376ms
+[2025-07-26 19:00:09.728 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripTranslation - application/json 291
+[2025-07-26 19:00:09.738 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:00:09.738 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripTranslation (ITravel_App)'
+[2025-07-26 19:00:09.752 +03:00  INF]  Route matched with {action = "SaveTripTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveTripTranslation(ITravelApp.Data.Models.trips.TripTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:00:09.809 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__trip_lang_code_0='?', @__trip_trip_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.important_info, t.lang_code, t.trip_description, t.trip_details, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name
+FROM trip_translations AS t
+WHERE t.lang_code = @__trip_lang_code_0 AND t.trip_id = @__trip_trip_id_1
+LIMIT 2
+[2025-07-26 19:00:09.815 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_translations AS t
+[2025-07-26 19:00:09.821 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_translations AS t
+[2025-07-26 19:00:09.871 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?', @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Int64), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_translations (id, important_info, lang_code, trip_description, trip_details, trip_highlight, trip_id, trip_includes, trip_name)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+[2025-07-26 19:00:09.873 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:00:09.873 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveTripTranslation (ITravel_App) in 120.4603ms
+[2025-07-26 19:00:09.873 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripTranslation (ITravel_App)'
+[2025-07-26 19:00:09.873 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripTranslation - 200 null application/json; charset=utf-8 146.316ms
+[2025-07-26 19:00:38.382 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripTranslation - application/json 297
+[2025-07-26 19:00:38.384 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:00:38.384 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripTranslation (ITravel_App)'
+[2025-07-26 19:00:38.384 +03:00  INF]  Route matched with {action = "SaveTripTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveTripTranslation(ITravelApp.Data.Models.trips.TripTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:00:38.535 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_lang_code_0='?', @__trip_trip_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.important_info, t.lang_code, t.trip_description, t.trip_details, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name
+FROM trip_translations AS t
+WHERE t.lang_code = @__trip_lang_code_0 AND t.trip_id = @__trip_trip_id_1
+LIMIT 2
+[2025-07-26 19:00:38.536 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_translations AS t
+[2025-07-26 19:00:38.537 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_translations AS t
+[2025-07-26 19:00:38.539 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?', @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Int64), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_translations (id, important_info, lang_code, trip_description, trip_details, trip_highlight, trip_id, trip_includes, trip_name)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+[2025-07-26 19:00:38.539 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:00:38.539 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveTripTranslation (ITravel_App) in 155.2934ms
+[2025-07-26 19:00:38.539 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripTranslation (ITravel_App)'
+[2025-07-26 19:00:38.540 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripTranslation - 200 null application/json; charset=utf-8 157.3997ms
+[2025-07-26 19:01:47.820 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTripPickups - application/json 161
+[2025-07-26 19:01:47.820 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:01:47.820 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTripPickups (ITravel_App)'
+[2025-07-26 19:01:47.830 +03:00  INF]  Route matched with {action = "SaveMainTripPickups", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainTripPickups(ITravelApp.Data.Models.trips.TripsPickupSaveReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:01:47.873 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__pickup_pickup_code_0='?', @__pickup_trip_id_1='?' (DbType = Int64), @__pickup_order_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.duration, t."order", t.pickup_code, t.pickup_default_name, t.trip_id, t.trip_type
+FROM trip_pickups_main AS t
+WHERE t.pickup_code = @__pickup_pickup_code_0 AND t.trip_id = @__pickup_trip_id_1 AND t."order" = @__pickup_order_2
+LIMIT 2
+[2025-07-26 19:01:47.879 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_pickups_main AS t
+[2025-07-26 19:01:47.921 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?', @p3='?', @p4='?' (DbType = Int64), @p5='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_pickups_main (duration, "order", pickup_code, pickup_default_name, trip_id, trip_type)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING id;
+[2025-07-26 19:01:47.937 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:01:47.937 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveMainTripPickups (ITravel_App) in 106.4556ms
+[2025-07-26 19:01:47.937 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTripPickups (ITravel_App)'
+[2025-07-26 19:01:47.937 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTripPickups - 200 null application/json; charset=utf-8 117.3042ms
+[2025-07-26 19:02:07.389 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTripPickups - application/json 161
+[2025-07-26 19:02:07.389 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:02:07.390 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTripPickups (ITravel_App)'
+[2025-07-26 19:02:07.390 +03:00  INF]  Route matched with {action = "SaveMainTripPickups", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainTripPickups(ITravelApp.Data.Models.trips.TripsPickupSaveReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:02:07.393 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__pickup_pickup_code_0='?', @__pickup_trip_id_1='?' (DbType = Int64), @__pickup_order_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.duration, t."order", t.pickup_code, t.pickup_default_name, t.trip_id, t.trip_type
+FROM trip_pickups_main AS t
+WHERE t.pickup_code = @__pickup_pickup_code_0 AND t.trip_id = @__pickup_trip_id_1 AND t."order" = @__pickup_order_2
+LIMIT 2
+[2025-07-26 19:02:07.394 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_pickups_main AS t
+[2025-07-26 19:02:07.401 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_pickups_main AS t
+[2025-07-26 19:02:07.404 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?', @p3='?', @p4='?' (DbType = Int64), @p5='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_pickups_main (duration, "order", pickup_code, pickup_default_name, trip_id, trip_type)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING id;
+[2025-07-26 19:02:07.406 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:02:07.406 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveMainTripPickups (ITravel_App) in 16.2661ms
+[2025-07-26 19:02:07.406 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTripPickups (ITravel_App)'
+[2025-07-26 19:02:07.406 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTripPickups - 200 null application/json; charset=utf-8 17.7685ms
+[2025-07-26 19:03:15.768 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - application/json 145
+[2025-07-26 19:03:15.768 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:03:15.769 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:03:15.770 +03:00  INF]  Route matched with {action = "SaveTripPickupsTranslations", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveTripPickupsTranslations(ITravelApp.Data.Models.trips.TripsPickupTranslationSaveReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:03:15.824 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__pickup_lang_code_0='?', @__pickup_trip_pickup_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.lang_code, t.pickup_description, t.pickup_name, t.trip_pickup_id
+FROM trip_pickups_translations AS t
+WHERE t.lang_code = @__pickup_lang_code_0 AND t.trip_pickup_id = @__pickup_trip_pickup_id_1
+LIMIT 2
+[2025-07-26 19:03:15.830 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_pickups_translations AS t
+[2025-07-26 19:03:15.853 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_pickups_translations (lang_code, pickup_description, pickup_name, trip_pickup_id)
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING id;
+[2025-07-26 19:03:15.855 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:03:15.855 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App) in 84.5635ms
+[2025-07-26 19:03:15.855 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:03:15.855 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - 200 null application/json; charset=utf-8 87.2183ms
+[2025-07-26 19:03:32.785 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - application/json 142
+[2025-07-26 19:03:32.786 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:03:32.786 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:03:32.786 +03:00  INF]  Route matched with {action = "SaveTripPickupsTranslations", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveTripPickupsTranslations(ITravelApp.Data.Models.trips.TripsPickupTranslationSaveReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:03:32.789 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__pickup_lang_code_0='?', @__pickup_trip_pickup_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.lang_code, t.pickup_description, t.pickup_name, t.trip_pickup_id
+FROM trip_pickups_translations AS t
+WHERE t.lang_code = @__pickup_lang_code_0 AND t.trip_pickup_id = @__pickup_trip_pickup_id_1
+LIMIT 2
+[2025-07-26 19:03:32.790 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_pickups_translations AS t
+[2025-07-26 19:03:32.796 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_pickups_translations AS t
+[2025-07-26 19:03:32.800 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_pickups_translations (lang_code, pickup_description, pickup_name, trip_pickup_id)
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING id;
+[2025-07-26 19:03:32.800 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:03:32.801 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App) in 14.6065ms
+[2025-07-26 19:03:32.801 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:03:32.801 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - 200 null application/json; charset=utf-8 15.5201ms
+[2025-07-26 19:03:54.462 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - application/json 145
+[2025-07-26 19:03:54.462 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:03:54.463 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:03:54.463 +03:00  INF]  Route matched with {action = "SaveTripPickupsTranslations", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveTripPickupsTranslations(ITravelApp.Data.Models.trips.TripsPickupTranslationSaveReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:03:54.465 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__pickup_lang_code_0='?', @__pickup_trip_pickup_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.lang_code, t.pickup_description, t.pickup_name, t.trip_pickup_id
+FROM trip_pickups_translations AS t
+WHERE t.lang_code = @__pickup_lang_code_0 AND t.trip_pickup_id = @__pickup_trip_pickup_id_1
+LIMIT 2
+[2025-07-26 19:03:54.466 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_pickups_translations AS t
+[2025-07-26 19:03:54.467 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_pickups_translations AS t
+[2025-07-26 19:03:54.475 +03:00  INF]  Executed DbCommand (7ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_pickups_translations (lang_code, pickup_description, pickup_name, trip_pickup_id)
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING id;
+[2025-07-26 19:03:54.475 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:03:54.475 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App) in 11.8003ms
+[2025-07-26 19:03:54.475 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:03:54.475 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - 200 null application/json; charset=utf-8 13.6224ms
+[2025-07-26 19:04:05.452 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - application/json 142
+[2025-07-26 19:04:05.452 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:04:05.452 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:04:05.452 +03:00  INF]  Route matched with {action = "SaveTripPickupsTranslations", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveTripPickupsTranslations(ITravelApp.Data.Models.trips.TripsPickupTranslationSaveReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-07-26 19:04:05.454 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__pickup_lang_code_0='?', @__pickup_trip_pickup_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.lang_code, t.pickup_description, t.pickup_name, t.trip_pickup_id
+FROM trip_pickups_translations AS t
+WHERE t.lang_code = @__pickup_lang_code_0 AND t.trip_pickup_id = @__pickup_trip_pickup_id_1
+LIMIT 2
+[2025-07-26 19:04:05.455 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_pickups_translations AS t
+[2025-07-26 19:04:05.456 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_pickups_translations AS t
+[2025-07-26 19:04:05.460 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_pickups_translations (lang_code, pickup_description, pickup_name, trip_pickup_id)
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING id;
+[2025-07-26 19:04:05.460 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-07-26 19:04:05.460 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App) in 8.0151ms
+[2025-07-26 19:04:05.460 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveTripPickupsTranslations (ITravel_App)'
+[2025-07-26 19:04:05.461 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveTripPickupsTranslations - 200 null application/json; charset=utf-8 8.6757ms
+[2025-07-26 19:15:36.542 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-07-26 19:15:36.871 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-07-26 19:15:36.872 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-07-26 19:15:37.171 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-07-26 19:15:37.172 +03:00  INF]  Hosting environment: Development
+[2025-07-26 19:15:37.172 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-07-26 19:15:38.251 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-07-26 19:15:38.742 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 508.811ms
+[2025-07-26 19:15:38.823 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-07-26 19:15:38.878 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-07-26 19:15:38.933 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 109.8302ms
+[2025-07-26 19:15:38.995 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 116.2864ms
+[2025-07-26 19:15:39.246 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-07-26 19:15:39.605 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 358.3912ms
+[2025-07-26 19:16:06.434 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetPickupsForTrip?trip_id=1 - application/json 23
+[2025-07-26 19:16:06.513 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:16:06.516 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetPickupsForTrip (ITravel_App)'
+[2025-07-26 19:16:06.561 +03:00  INF]  Route matched with {action = "GetPickupsForTrip", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetPickupsForTrip(Int64, ITravelApp.Data.Models.global.LangReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-07-26 19:16:09.416 +03:00  INF]  Executed DbCommand (164ms) [Parameters=[@__req_lang_code_1='?', @__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id::numeric AS trip_pickup_id, t1.lang_code, t."order", t.pickup_code, t.pickup_default_name, t1.pickup_description, t1.pickup_name, t.trip_id::numeric AS trip_id, t.trip_type
+FROM trip_pickups_main AS t
+INNER JOIN (
+    SELECT t0.lang_code, t0.pickup_description, t0.pickup_name, t0.trip_pickup_id
+    FROM trip_pickups_translations AS t0
+    WHERE t0.lang_code = @__req_lang_code_1
+) AS t1 ON t.id = t1.trip_pickup_id
+WHERE t.trip_id = @__trip_id_0
+ORDER BY t."order"
+[2025-07-26 19:16:09.494 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripsPickupResponse, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-07-26 19:16:09.526 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetPickupsForTrip (ITravel_App) in 2955.3752ms
+[2025-07-26 19:16:09.527 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetPickupsForTrip (ITravel_App)'
+[2025-07-26 19:16:09.546 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetPickupsForTrip?trip_id=1 - 200 null application/json; charset=utf-8 3112.157ms
+[2025-07-26 19:17:37.158 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetPickupsForTrip?trip_id=2 - application/json 23
+[2025-07-26 19:17:37.172 +03:00  INF]  CORS policy execution successful.
+[2025-07-26 19:17:37.172 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetPickupsForTrip (ITravel_App)'
+[2025-07-26 19:17:37.173 +03:00  INF]  Route matched with {action = "GetPickupsForTrip", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetPickupsForTrip(Int64, ITravelApp.Data.Models.global.LangReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-07-26 19:17:37.233 +03:00  INF]  Executed DbCommand (8ms) [Parameters=[@__req_lang_code_1='?', @__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id::numeric AS trip_pickup_id, t1.lang_code, t."order", t.pickup_code, t.pickup_default_name, t1.pickup_description, t1.pickup_name, t.trip_id::numeric AS trip_id, t.trip_type
+FROM trip_pickups_main AS t
+INNER JOIN (
+    SELECT t0.lang_code, t0.pickup_description, t0.pickup_name, t0.trip_pickup_id
+    FROM trip_pickups_translations AS t0
+    WHERE t0.lang_code = @__req_lang_code_1
+) AS t1 ON t.id = t1.trip_pickup_id
+WHERE t.trip_id = @__trip_id_0
+ORDER BY t."order"
+[2025-07-26 19:17:37.234 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripsPickupResponse, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-07-26 19:17:37.234 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetPickupsForTrip (ITravel_App) in 60.8931ms
+[2025-07-26 19:17:37.235 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetPickupsForTrip (ITravel_App)'
+[2025-07-26 19:17:37.235 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetPickupsForTrip?trip_id=2 - 200 null application/json; charset=utf-8 77.1028ms

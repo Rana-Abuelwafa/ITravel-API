@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "ITravel_App\\ITravel_App.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Travel_Authentication\\Travel_Authentication.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

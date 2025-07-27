@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetClientsReviews",
+    "RelativePath": "api/Booking/GetClientsReviews",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.trips.ClientsReviewsReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "SaveReviewForTrip",
+    "RelativePath": "api/Booking/SaveReviewForTrip",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.tbl_review",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "AssignFacilityToTrip",
     "RelativePath": "api/TravelAdmin/AssignFacilityToTrip",
@@ -138,6 +170,22 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveMainTripPickups",
+    "RelativePath": "api/TravelAdmin/SaveMainTripPickups",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.trips.TripsPickupSaveReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "saveTripImage",
     "RelativePath": "api/TravelAdmin/saveTripImage",
     "HttpMethod": "POST",
@@ -150,13 +198,8 @@
         "IsRequired": false
       },
       {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "trip_id",
-        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -173,6 +216,27 @@
         "Name": "is_default",
         "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveTripPickupsTranslations",
+    "RelativePath": "api/TravelAdmin/SaveTripPickupsTranslations",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.trips.TripsPickupTranslationSaveReq",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -220,6 +284,22 @@
       {
         "Name": "req",
         "Type": "ITravelApp.Data.Models.destination.DestinationReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetPickupsForTrip",
+    "RelativePath": "api/TravelClient/GetPickupsForTrip",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.trips.PickupsReq",
         "IsRequired": true
       }
     ],
