@@ -1,5 +1,6 @@
 ﻿using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
+using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.trips;
 
 namespace ITravel_App.Services
@@ -9,6 +10,7 @@ namespace ITravel_App.Services
         public ResponseCls SaveMainDestination(destination_main row);
         public ResponseCls SaveDestinationTranslations(destination_translation row);
         public ResponseCls saveDestinationImage(destination_img row);
+        public List<DestinationWithTranslations> GetDestinationWithTranslations(DestinationReq req);
 
         #region trips
         public ResponseCls SaveMainTrip(trip_main row);

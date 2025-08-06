@@ -1,0 +1,15 @@
+[2025-07-29 17:48:07.695 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-07-29 17:48:08.161 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-07-29 17:48:09.481 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-07-29 17:48:09.482 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-07-29 17:48:09.867 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-07-29 17:48:09.868 +03:00  INF]  Hosting environment: Development
+[2025-07-29 17:48:09.868 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-07-29 17:48:15.082 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-07-29 17:48:15.895 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 832.714ms
+[2025-07-29 17:48:16.058 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-07-29 17:48:16.116 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 58.3817ms
+[2025-07-29 17:48:16.123 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-07-29 17:48:16.320 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 197.327ms
+[2025-07-29 17:48:16.494 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-07-29 17:48:16.580 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 86.3979ms

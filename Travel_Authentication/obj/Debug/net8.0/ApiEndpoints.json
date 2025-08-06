@@ -17,6 +17,22 @@
   },
   {
     "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
+    "Method": "confirmOTP",
+    "RelativePath": "api/Authentication/ConfirmOTP",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Travel_Authentication.Models.OTPConfirmCls",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
     "Method": "CreateRole",
     "RelativePath": "api/Authentication/CreateRole",
     "HttpMethod": "POST",
@@ -27,6 +43,38 @@
         "Name": "roleModel",
         "Type": "Travel_Authentication.Models.RoleModel",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
+    "Method": "ExternalRegister",
+    "RelativePath": "api/Authentication/ExternalRegister",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Travel_Authentication.Models.AppsRegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
+    "Method": "LoginGmail",
+    "RelativePath": "api/Authentication/LoginGmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Travel_Authentication.Models.AppsRegisterModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

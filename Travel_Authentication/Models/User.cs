@@ -6,9 +6,9 @@ namespace Travel_Authentication.Models
     {
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
-        public string? msg { get; set; }
-        public bool isSuccessed { get; set; }
-
+        //public string? msg { get; set; }
+        //public bool isSuccessed { get; set; }
+        public string role { get; set; }
 
     }
 }

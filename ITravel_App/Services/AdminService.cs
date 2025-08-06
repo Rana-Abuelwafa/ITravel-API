@@ -1,6 +1,7 @@
 ﻿using ITravelApp.Data;
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
+using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.trips;
 
 namespace ITravel_App.Services
@@ -18,6 +19,11 @@ namespace ITravel_App.Services
         public ResponseCls AssignFacilityToTrip(TripFacilityAssignReq row)
         {
             return _adminDAO.AssignFacilityToTrip(row);
+        }
+
+        public List<DestinationWithTranslations> GetDestinationWithTranslations(DestinationReq req)
+        {
+            return _adminDAO.GetDestinationWithTranslations(req);
         }
 
         public ResponseCls saveDestinationImage(destination_img row)

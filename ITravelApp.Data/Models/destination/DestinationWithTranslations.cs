@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ITravelApp.Data.Models.destination
 {
-    public class DestinationResponse : destination_translation
+    public class DestinationWithTranslations 
     {
+        public int? destination_id { get; set; }
         public string? dest_default_name { get; set; }
         public string? dest_code { get; set; }
         public string? country_code { get; set; }
         public string? img_path { get; set; }
+        public List<DestinationResponse> translations { get; set; }
     }
 }

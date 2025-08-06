@@ -7,7 +7,7 @@ public partial class destination_translation
 {
     public int id { get; set; }
 
-    public decimal? destination_id { get; set; }
+    public int? destination_id { get; set; }
 
     public string? lang_code { get; set; }
 

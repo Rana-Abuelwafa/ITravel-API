@@ -23,6 +23,13 @@ namespace ITravel_App.Controllers
         }
 
         #region destination
+
+        [HttpPost("GetDestinationWithTranslations")]
+        public IActionResult GetDestinationWithTranslations(DestinationReq row)
+        {
+
+            return Ok(_adminService.GetDestinationWithTranslations(row));
+        }
         [HttpPost("SaveMainDestination")]
         public IActionResult SaveMainDestination(destination_main row)
         {

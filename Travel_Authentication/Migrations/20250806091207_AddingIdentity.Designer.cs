@@ -12,7 +12,7 @@ using Travel_Authentication;
 namespace Travel_Authentication.Migrations
 {
     [DbContext(typeof(AuthenticationDBContext))]
-    [Migration("20250727091252_AddingIdentity")]
+    [Migration("20250806091207_AddingIdentity")]
     partial class AddingIdentity
     {
         /// <inheritdoc />
@@ -183,6 +183,9 @@ namespace Travel_Authentication.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<string>("GoogleId")
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
@@ -218,6 +221,12 @@ namespace Travel_Authentication.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<int>("completeprofile")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("sendOffers")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

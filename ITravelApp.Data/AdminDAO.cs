@@ -1,7 +1,9 @@
 ﻿using ITravelApp.Data.Data;
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
+using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.trips;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -110,6 +112,8 @@ namespace ITravelApp.Data
 
             return response;
         }
+        
+        
         //save destination images
         public ResponseCls saveDestinationImage(destination_img row)
         {
@@ -151,6 +155,51 @@ namespace ITravelApp.Data
                 response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
             }
             return response;
+        }
+        
+        public List<DestinationWithTranslations> GetDestinationWithTranslations(DestinationReq req)
+        {
+            try
+            {
+                var result = from trans in _db.destination_translations.Where(wr => wr.active == true)
+                             join dest in _db.destination_mains.Where(wr => wr.active == true && wr.country_code.ToLower() == (String.IsNullOrEmpty(req.country_code) ? wr.country_code.ToLower() : req.country_code.ToLower())) on trans.destination_id equals dest.id         // INNER JOIN
+                             join img in _db.destination_imgs on trans.id equals img.destination_id into DestAll
+                             from combined in DestAll.DefaultIfEmpty()               // LEFT JOIN
+                             select new DestinationResponse
+                             {
+                                 destination_id = trans.destination_id,
+                                 id = trans.id,
+                                 country_code = dest.country_code,
+                                 active = dest.active,
+                                 dest_code = dest.dest_code,
+                                 dest_description = trans.dest_description,
+                                 dest_name = trans.dest_name,
+                                 img_path = combined != null ? "https://api.waslaa.de//" + combined.img_path : null,
+                                 lang_code = trans.lang_code,
+                                 dest_default_name= dest.dest_default_name    
+                             };
+                return result.ToList().GroupBy(grp => new
+                {
+                    grp.dest_code,
+                    grp.img_path,
+                    grp.destination_id,
+                    grp.country_code,
+                    grp.dest_default_name
+                }).Select(s => new DestinationWithTranslations
+                {
+                    country_code = s.Key.country_code,
+                    dest_code = s.Key.dest_code,
+                    img_path = s.Key.img_path,
+                    destination_id=s.Key.destination_id,
+                    dest_default_name=s.Key.dest_default_name,
+                    translations = result.Where(wr => wr.dest_code == s.Key.dest_code).ToList()
+
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         #endregion
 

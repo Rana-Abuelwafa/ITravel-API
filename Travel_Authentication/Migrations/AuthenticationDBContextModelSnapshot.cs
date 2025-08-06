@@ -180,6 +180,9 @@ namespace Travel_Authentication.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<string>("GoogleId")
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
@@ -215,6 +218,12 @@ namespace Travel_Authentication.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<int>("completeprofile")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("sendOffers")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

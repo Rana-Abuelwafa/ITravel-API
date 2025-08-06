@@ -7,7 +7,7 @@ public partial class destination_img
 {
     public int id { get; set; }
 
-    public decimal? destination_id { get; set; }
+    public int? destination_id { get; set; }
 
     public string? img_path { get; set; }
 

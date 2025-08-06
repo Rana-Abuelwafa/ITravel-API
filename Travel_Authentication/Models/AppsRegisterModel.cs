@@ -2,11 +2,8 @@
 
 namespace Travel_Authentication.Models
 {
-    public class RegisterModel
+    public class AppsRegisterModel
     {
-        //[Required(ErrorMessage = "username is required")]
-        //public required string Username { get; set; }
-
         [Required(ErrorMessage = "FirstName is required")]
         public required string FirstName { get; set; }
 
@@ -16,14 +13,9 @@ namespace Travel_Authentication.Models
         [Required(ErrorMessage = "email is required")]
         public required string Email { get; set; }
 
-
-        [Required(ErrorMessage = "Password is required")]
-        public required string Password { get; set; }
-
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
-        public string? ConfirmPassword { get; set; }
         public required string lang { get; set; }
         public string? Role { get; set; }
         public bool? sendOffers { get; set; }
+
     }
 }
