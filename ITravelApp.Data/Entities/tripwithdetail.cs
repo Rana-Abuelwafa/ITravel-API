@@ -46,4 +46,14 @@ public partial class tripwithdetail
     public string? dest_code { get; set; }
 
     public string? country_code { get; set; }
+
+    public long? wish_id { get; set; }
+
+    public string? wsh_created_at { get; set; }
+
+    public int? trip_type { get; set; }
+
+    public string? isfavourite { get; set; }
+
+    public string? client_id { get; set; }
 }

@@ -144,16 +144,13 @@
   <data name="CopounValid" xml:space="preserve">
     <value>Gutschein gültig</value>
   </data>
-  <data name="NoInvoice" xml:space="preserve">
-    <value>keine Rechnung gefunden</value>
-  </data>
-  <data name="ProfileUncomplete" xml:space="preserve">
-    <value>Bitte vervollständigen Sie zuerst Ihr Profil</value>
-  </data>
   <data name="DuplicateOrder" xml:space="preserve">
     <value>Es sind bereits Daten mit derselben Bestellung vorhanden</value>
   </data>
   <data name="DuplicateData" xml:space="preserve">
     <value>doppelte Daten</value>
+  </data>
+  <data name="BookingMsg" xml:space="preserve">
+    <value>Vielen Dank für Ihre Buchung. Bitte überprüfen Sie Ihre E-Mail auf den Buchungsbeleg.</value>
   </data>
 </root>

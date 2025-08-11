@@ -2,6 +2,7 @@
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
+using ITravelApp.Data.Models.profile;
 using ITravelApp.Data.Models.trips;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -51,8 +52,14 @@ namespace ITravel_App.Controllers
 
             return Ok(await _clientService.GetPickupsForTrip(req));
         }
+        [HttpPost("GetClientsReviews")]
+        public async Task<IActionResult> GetClientsReviews(ClientsReviewsReq req)
+        {
+            return Ok(await _clientService.GetClientsReviews(req));
+        }
 
-        
         #endregion
+
+
     }
 }

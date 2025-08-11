@@ -1,16 +1,126 @@
 [
   {
     "ContainingType": "ITravel_App.Controllers.BookingController",
-    "Method": "GetClientsReviews",
-    "RelativePath": "api/Booking/GetClientsReviews",
+    "Method": "AddTripToWishList",
+    "RelativePath": "api/Booking/AddTripToWishList",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.trips_wishlist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetClient_Notification_Settings",
+    "RelativePath": "api/Booking/GetClient_Notification_Settings",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetClientProfiles",
+    "RelativePath": "api/Booking/GetClientProfiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetClientWishList",
+    "RelativePath": "api/Booking/GetClientWishList",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "req",
-        "Type": "ITravelApp.Data.Models.trips.ClientsReviewsReq",
+        "Type": "ITravelApp.Data.Models.trips.ClientWishListReq",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetProfileImage",
+    "RelativePath": "api/Booking/GetProfileImage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "SaveClientBooking",
+    "RelativePath": "api/Booking/SaveClientBooking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.Bookings.BookingCls",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "SaveClientNotificationSetting",
+    "RelativePath": "api/Booking/SaveClientNotificationSetting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Entities.client_notification_setting",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "SaveMainProfile",
+    "RelativePath": "api/Booking/SaveMainProfile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "profile",
+        "Type": "ITravelApp.Data.Models.profile.ClientProfileCast",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "SaveProfileImage",
+    "RelativePath": "api/Booking/saveProfileImage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "img",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -99,6 +209,21 @@
       {
         "Name": "is_default",
         "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "created_at",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "updated_at",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "created_by",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -237,6 +362,21 @@
         "Name": "id",
         "Type": "System.Int64",
         "IsRequired": false
+      },
+      {
+        "Name": "created_at",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "updated_at",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "created_by",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -284,6 +424,22 @@
       {
         "Name": "row",
         "Type": "ITravelApp.Data.Models.trips.TripTranslationReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetClientsReviews",
+    "RelativePath": "api/TravelClient/GetClientsReviews",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.trips.ClientsReviewsReq",
         "IsRequired": true
       }
     ],

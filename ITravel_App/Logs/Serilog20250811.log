@@ -1,0 +1,291 @@
+[2025-08-11 16:26:32.883 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-11 16:26:33.244 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-08-11 16:26:33.631 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-11 16:26:33.631 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-11 16:26:33.864 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-11 16:26:33.865 +03:00  INF]  Hosting environment: Development
+[2025-08-11 16:26:33.865 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-11 16:26:34.915 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-11 16:26:35.358 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 459.8654ms
+[2025-08-11 16:26:35.386 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-11 16:26:35.386 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-11 16:26:35.405 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 18.2567ms
+[2025-08-11 16:26:35.490 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 104.1659ms
+[2025-08-11 16:26:35.723 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-11 16:26:35.820 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 96.2397ms
+[2025-08-11 16:29:16.184 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-11 16:29:16.316 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-08-11 16:29:16.501 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-11 16:29:16.502 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-11 16:29:16.933 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-11 16:29:16.933 +03:00  INF]  Hosting environment: Development
+[2025-08-11 16:29:16.933 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-11 16:29:17.283 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-11 16:29:17.776 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 507.2683ms
+[2025-08-11 16:29:17.906 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-11 16:29:17.998 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 91.6139ms
+[2025-08-11 16:29:17.999 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-11 16:29:18.139 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 139.9047ms
+[2025-08-11 16:29:18.201 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-11 16:29:18.246 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 45.4249ms
+[2025-08-11 16:30:03.979 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/GetClientProfiles - null 0
+[2025-08-11 16:30:05.275 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.GetClientProfiles (ITravel_App)'
+[2025-08-11 16:30:05.306 +03:00  INF]  Route matched with {action = "GetClientProfiles", controller = "Booking"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetClientProfiles() on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:30:07.753 +03:00  INF]  Executed DbCommand (75ms) [Parameters=[@__clientId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c.client_birthday, c.client_email, c.client_id, c.client_name, c.gender, c.lang, c.nation, c.pay_code, c.phone_number, c.profile_id, c.address
+FROM "client_Profile" AS c
+WHERE c.client_id = @__clientId_0
+[2025-08-11 16:30:07.789 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.profile.ClientProfileCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-11 16:30:07.812 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.GetClientProfiles (ITravel_App) in 2502.4422ms
+[2025-08-11 16:30:07.813 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.GetClientProfiles (ITravel_App)'
+[2025-08-11 16:30:07.827 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/GetClientProfiles - 200 null application/json; charset=utf-8 3848.8178ms
+[2025-08-11 16:31:19.903 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveMainProfile - application/json 415
+[2025-08-11 16:31:19.919 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App)'
+[2025-08-11 16:31:19.946 +03:00  INF]  Route matched with {action = "SaveMainProfile", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainProfile(ITravelApp.Data.Models.profile.ClientProfileCast) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:31:20.081 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "client_Profile" AS c
+[2025-08-11 16:31:20.312 +03:00  ERR]  Failed executing DbCommand (11ms) [Parameters=[@p0='?' (DbType = Decimal), @p1='?', @p2='?' (DbType = Date), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = DateTime2), @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "client_Profile" (profile_id, address, client_birthday, client_email, client_id, client_name, created_at, created_by, gender, lang, nation, pay_code, phone_number, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);
+[2025-08-11 16:31:20.342 +03:00  ERR]  An exception occurred in the database while saving changes for context type 'ITravelApp.Data.Data.itravel_client_dbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone', consider using 'timestamp with time zone'. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(PgSerializerOptions options, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone', consider using 'timestamp with time zone'. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(PgSerializerOptions options, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+[2025-08-11 16:31:20.503 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-11 16:31:20.508 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App) in 561.7585ms
+[2025-08-11 16:31:20.509 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App)'
+[2025-08-11 16:31:20.509 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveMainProfile - 200 null application/json; charset=utf-8 606.8137ms
+[2025-08-11 16:31:36.163 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveMainProfile - application/json 415
+[2025-08-11 16:31:36.169 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App)'
+[2025-08-11 16:31:36.169 +03:00  INF]  Route matched with {action = "SaveMainProfile", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainProfile(ITravelApp.Data.Models.profile.ClientProfileCast) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:31:50.359 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "client_Profile" AS c
+[2025-08-11 16:31:55.093 +03:00  ERR]  Failed executing DbCommand (2ms) [Parameters=[@p0='?' (DbType = Decimal), @p1='?', @p2='?' (DbType = Date), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = DateTime2), @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "client_Profile" (profile_id, address, client_birthday, client_email, client_id, client_name, created_at, created_by, gender, lang, nation, pay_code, phone_number, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);
+[2025-08-11 16:31:55.095 +03:00  ERR]  An exception occurred in the database while saving changes for context type 'ITravelApp.Data.Data.itravel_client_dbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone', consider using 'timestamp with time zone'. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(PgSerializerOptions options, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone', consider using 'timestamp with time zone'. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(PgSerializerOptions options, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+[2025-08-11 16:32:12.284 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-11 16:32:12.284 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App) in 36115.0913ms
+[2025-08-11 16:32:12.284 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App)'
+[2025-08-11 16:32:12.284 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveMainProfile - 200 null application/json; charset=utf-8 36123.0391ms
+[2025-08-11 16:32:30.167 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveMainProfile - application/json 370
+[2025-08-11 16:32:30.169 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App)'
+[2025-08-11 16:32:30.169 +03:00  INF]  Route matched with {action = "SaveMainProfile", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainProfile(ITravelApp.Data.Models.profile.ClientProfileCast) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:32:37.529 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "client_Profile" AS c
+[2025-08-11 16:32:40.041 +03:00  INF]  Executed DbCommand (17ms) [Parameters=[@p0='?' (DbType = Decimal), @p1='?', @p2='?' (DbType = Date), @p3='?', @p4='?', @p5='?', @p6='?', @p7='?', @p8='?', @p9='?', @p10='?', @p11='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "client_Profile" (profile_id, address, client_birthday, client_email, client_id, client_name, created_by, gender, lang, nation, pay_code, phone_number)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11)
+RETURNING created_at, updated_at;
+[2025-08-11 16:32:42.402 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-11 16:32:42.403 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App) in 12233.6131ms
+[2025-08-11 16:32:42.403 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveMainProfile (ITravel_App)'
+[2025-08-11 16:32:42.403 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveMainProfile - 200 null application/json; charset=utf-8 12236.0871ms
+[2025-08-11 16:32:59.451 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/GetClientProfiles - null 0
+[2025-08-11 16:32:59.452 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.GetClientProfiles (ITravel_App)'
+[2025-08-11 16:32:59.452 +03:00  INF]  Route matched with {action = "GetClientProfiles", controller = "Booking"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetClientProfiles() on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:32:59.482 +03:00  INF]  Executed DbCommand (5ms) [Parameters=[@__clientId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c.client_birthday, c.client_email, c.client_id, c.client_name, c.gender, c.lang, c.nation, c.pay_code, c.phone_number, c.profile_id, c.address
+FROM "client_Profile" AS c
+WHERE c.client_id = @__clientId_0
+[2025-08-11 16:32:59.487 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.profile.ClientProfileCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-11 16:32:59.497 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.GetClientProfiles (ITravel_App) in 45.144ms
+[2025-08-11 16:32:59.497 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.GetClientProfiles (ITravel_App)'
+[2025-08-11 16:32:59.497 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/GetClientProfiles - 200 null application/json; charset=utf-8 47.1334ms
+[2025-08-11 16:33:34.083 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/saveProfileImage - multipart/form-data; boundary=----WebKitFormBoundaryP8Q2ok2U4jfdbDp3 195775
+[2025-08-11 16:33:34.090 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveProfileImage (ITravel_App)'
+[2025-08-11 16:33:34.094 +03:00  INF]  Route matched with {action = "SaveProfileImage", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveProfileImage(ITravelApp.Data.Models.global.ImgCls) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:33:34.226 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__image_client_id_0='?', @__image_type_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.client_id, c.created_at, c.created_by, c.img_name, c.img_path, c.type, c.updated_at
+FROM client_images AS c
+WHERE c.client_id = @__image_client_id_0 AND c.type = @__image_type_1
+LIMIT 2
+[2025-08-11 16:33:34.231 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM client_images AS c
+[2025-08-11 16:33:34.265 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Decimal), @p1='?', @p2='?', @p3='?', @p4='?', @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO client_images (id, client_id, created_by, img_name, img_path, type)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING created_at, updated_at;
+[2025-08-11 16:33:34.268 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[ITravelApp.Data.Models.ResponseCls, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-11 16:33:34.294 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveProfileImage (ITravel_App) in 199.2463ms
+[2025-08-11 16:33:34.294 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveProfileImage (ITravel_App)'
+[2025-08-11 16:33:34.296 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/saveProfileImage - 200 null application/json; charset=utf-8 213.1103ms
+[2025-08-11 16:36:04.292 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/GetProfileImage - null 0
+[2025-08-11 16:36:04.329 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.GetProfileImage (ITravel_App)'
+[2025-08-11 16:36:04.334 +03:00  INF]  Route matched with {action = "GetProfileImage", controller = "Booking"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetProfileImage() on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:36:04.398 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@__clientId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.client_id, c.img_name, c.type, 'https://api.raccoon24.de//' || COALESCE(c.img_path, '') AS img_path
+FROM client_images AS c
+WHERE c.client_id = @__clientId_0 AND c.type = 1
+[2025-08-11 16:36:04.398 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Entities.client_image, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-11 16:36:04.402 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.GetProfileImage (ITravel_App) in 68.3202ms
+[2025-08-11 16:36:04.402 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.GetProfileImage (ITravel_App)'
+[2025-08-11 16:36:04.403 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/GetProfileImage - 200 null application/json; charset=utf-8 111.2192ms
+[2025-08-11 16:36:43.900 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveClientNotificationSetting - application/json 172
+[2025-08-11 16:36:43.906 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App)'
+[2025-08-11 16:36:43.909 +03:00  INF]  Route matched with {action = "SaveClientNotificationSetting", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveClientNotificationSetting(ITravelApp.Data.Entities.client_notification_setting) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:36:43.952 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM client_notification_setting AS c
+[2025-08-11 16:36:44.006 +03:00  INF]  Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?' (DbType = Boolean), @p3='?' (DbType = Decimal), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO client_notification_setting (id, client_id, deals_reminder, profile_id, recommendation_reminder, review_reminder, travel_guide_reminder)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+[2025-08-11 16:36:44.007 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-11 16:36:44.007 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App) in 98.4001ms
+[2025-08-11 16:36:44.007 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App)'
+[2025-08-11 16:36:44.007 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveClientNotificationSetting - 200 null application/json; charset=utf-8 107.9818ms
+[2025-08-11 16:36:55.966 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveClientNotificationSetting - application/json 172
+[2025-08-11 16:36:55.969 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App)'
+[2025-08-11 16:36:55.969 +03:00  INF]  Route matched with {action = "SaveClientNotificationSetting", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveClientNotificationSetting(ITravelApp.Data.Entities.client_notification_setting) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:36:55.970 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM client_notification_setting AS c
+[2025-08-11 16:36:55.976 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__row_client_id_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM client_notification_setting AS c
+WHERE c.client_id = @__row_client_id_0
+[2025-08-11 16:36:55.976 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-11 16:36:55.977 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App) in 7.9162ms
+[2025-08-11 16:36:55.977 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App)'
+[2025-08-11 16:36:55.977 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveClientNotificationSetting - 200 null application/json; charset=utf-8 10.7431ms
+[2025-08-11 16:37:04.200 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/GetClient_Notification_Settings - null 0
+[2025-08-11 16:37:04.201 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.GetClient_Notification_Settings (ITravel_App)'
+[2025-08-11 16:37:04.205 +03:00  INF]  Route matched with {action = "GetClient_Notification_Settings", controller = "Booking"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetClient_Notification_Settings() on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:37:04.220 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__clientId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.client_id, c.deals_reminder, c.profile_id, c.recommendation_reminder, c.review_reminder, c.travel_guide_reminder
+FROM client_notification_setting AS c
+WHERE c.client_id = @__clientId_0
+[2025-08-11 16:37:04.227 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Entities.client_notification_setting, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-11 16:37:04.232 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.GetClient_Notification_Settings (ITravel_App) in 26.6827ms
+[2025-08-11 16:37:04.232 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.GetClient_Notification_Settings (ITravel_App)'
+[2025-08-11 16:37:04.232 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/GetClient_Notification_Settings - 200 null application/json; charset=utf-8 32.4767ms
+[2025-08-11 16:37:18.900 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveClientNotificationSetting - application/json 173
+[2025-08-11 16:37:18.901 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App)'
+[2025-08-11 16:37:18.901 +03:00  INF]  Route matched with {action = "SaveClientNotificationSetting", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveClientNotificationSetting(ITravelApp.Data.Entities.client_notification_setting) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:37:18.922 +03:00  INF]  Executed DbCommand (5ms) [Parameters=[@p6='?' (DbType = Int64), @p0='?', @p1='?' (DbType = Boolean), @p2='?' (DbType = Decimal), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+UPDATE client_notification_setting SET client_id = @p0, deals_reminder = @p1, profile_id = @p2, recommendation_reminder = @p3, review_reminder = @p4, travel_guide_reminder = @p5
+WHERE id = @p6;
+[2025-08-11 16:37:18.922 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-11 16:37:18.922 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App) in 20.3842ms
+[2025-08-11 16:37:18.922 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveClientNotificationSetting (ITravel_App)'
+[2025-08-11 16:37:18.922 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveClientNotificationSetting - 200 null application/json; charset=utf-8 21.7562ms
+[2025-08-11 16:37:23.785 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/GetClient_Notification_Settings - null 0
+[2025-08-11 16:37:23.787 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.GetClient_Notification_Settings (ITravel_App)'
+[2025-08-11 16:37:23.787 +03:00  INF]  Route matched with {action = "GetClient_Notification_Settings", controller = "Booking"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetClient_Notification_Settings() on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-11 16:37:23.790 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__clientId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c.id, c.client_id, c.deals_reminder, c.profile_id, c.recommendation_reminder, c.review_reminder, c.travel_guide_reminder
+FROM client_notification_setting AS c
+WHERE c.client_id = @__clientId_0
+[2025-08-11 16:37:23.792 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Entities.client_notification_setting, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-11 16:37:23.792 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.GetClient_Notification_Settings (ITravel_App) in 5.2094ms
+[2025-08-11 16:37:23.792 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.GetClient_Notification_Settings (ITravel_App)'
+[2025-08-11 16:37:23.793 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/GetClient_Notification_Settings - 200 null application/json; charset=utf-8 7.4851ms

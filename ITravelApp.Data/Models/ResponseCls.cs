@@ -10,6 +10,7 @@ namespace ITravelApp.Data.Models
     {
         public bool success { get; set; }
         public string? errors { get; set; }
+        public string? msg { get; set; }
         public decimal idOut { get; set; }
     }
 }

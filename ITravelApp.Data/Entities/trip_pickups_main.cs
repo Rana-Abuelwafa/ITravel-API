@@ -22,4 +22,10 @@ public partial class trip_pickups_main
     public string? duration { get; set; }
 
     public long id { get; set; }
+
+    public DateTime? created_at { get; set; }
+
+    public DateTime? updated_at { get; set; }
+
+    public string? created_by { get; set; }
 }

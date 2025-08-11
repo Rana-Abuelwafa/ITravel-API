@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ITravelApp.Data
 {
@@ -23,6 +24,7 @@ namespace ITravelApp.Data
             _db = db;
             _localizer = localizer;
         }
+
         #region destination
 
         //save main destination data by admin
@@ -53,6 +55,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                     row.updated_at = DateTime.Now;
                     _db.destination_mains.Update(row);
                     _db.SaveChanges();
                 }
@@ -96,6 +99,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.destination_translations.Update(row);
                     _db.SaveChanges();
                 }
@@ -141,6 +145,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.destination_imgs.Update(row);
                     _db.SaveChanges();
                 }
@@ -232,6 +237,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_mains.Update(row);
                     _db.SaveChanges();
                 }
@@ -289,6 +295,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_translations.Update(trip);
                     _db.SaveChanges();
                 }
@@ -342,6 +349,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_prices.Update(price);
                     _db.SaveChanges();
                 }
@@ -391,6 +399,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_imgs.Update(trip);
                     _db.SaveChanges();
                 }
@@ -433,6 +442,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.facility_mains.Update(row);
                     _db.SaveChanges();
                 }
@@ -487,6 +497,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.facility_translations.Update(facility);
                     _db.SaveChanges();
                 }
@@ -540,6 +551,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_facilities.Update(trip);
                     _db.SaveChanges();
                 }
@@ -596,6 +608,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_pickups_mains.Update(pickup);
                     _db.SaveChanges();
                 }
@@ -650,6 +663,7 @@ namespace ITravelApp.Data
                 }
                 else
                 {
+                    row.updated_at = DateTime.Now;
                     _db.trip_pickups_translations.Update(pickup);
                     _db.SaveChanges();
                 }

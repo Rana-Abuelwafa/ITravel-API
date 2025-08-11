@@ -16,10 +16,12 @@ namespace ITravel_App.Controllers
     {
         private readonly IAdminService _adminService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly LoginUserData _loginUserData;
         public TravelAdminController(IHttpContextAccessor httpContextAccessor, IAdminService adminService)
         {
             _adminService = adminService;
             _httpContextAccessor = httpContextAccessor;
+            _loginUserData = Utils.getTokenData(httpContextAccessor);
         }
 
         #region destination
@@ -33,19 +35,21 @@ namespace ITravel_App.Controllers
         [HttpPost("SaveMainDestination")]
         public IActionResult SaveMainDestination(destination_main row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveMainDestination(row));
         }
         [HttpPost("SaveDestinationTranslations")]
         public IActionResult SaveDestinationTranslations(destination_translation row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveDestinationTranslations(row));
         }
         [HttpPost("saveDestinationImage")]
         public IActionResult saveDestinationImage([FromForm] DestinationImgReq req)
         {
-            
+            string email = _loginUserData.client_email;
             var path = Path.Combine("images" + "//destinations//", req.img.FileName);
             //var path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Images" + "//", cls.img.FileName);
             try
@@ -68,7 +72,8 @@ namespace ITravel_App.Controllers
                 img_name = req.img.FileName,
                 img_path = path,
                 is_default = req.is_default,
-                id=req.id
+                id=req.id,
+                created_by = email,
             };
 
             return Ok(_adminService.saveDestinationImage(image));
@@ -80,6 +85,8 @@ namespace ITravel_App.Controllers
         [HttpPost("SaveMainTrip")]
         public IActionResult SaveMainTrip(trip_main row)
         {
+            string email = _loginUserData.client_email;
+            row.created_by = email;
 
             return Ok(_adminService.SaveMainTrip(row));
         }
@@ -87,18 +94,22 @@ namespace ITravel_App.Controllers
         [HttpPost("SaveTripTranslation")]
         public IActionResult SaveTripTranslation(TripTranslationReq row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveTripTranslation(row));
         }
         [HttpPost("SaveTripPrices")]
         public IActionResult SaveTripPrices(TripPricesReq row)
         {
+            string email = _loginUserData.client_email;
+            row.created_by = email;
 
             return Ok(_adminService.SaveTripPrices(row));
         }
         [HttpPost("saveTripImage")]
         public IActionResult saveTripImage([FromForm] TripImgReq req)
         {
+            string email = _loginUserData.client_email;
             var path = Path.Combine("images" + "//trips//", req.img.FileName);
             //var path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Images" + "//", cls.img.FileName);
             try
@@ -116,39 +127,45 @@ namespace ITravel_App.Controllers
             }
             req.img_name = req.img.FileName;
             req.img_path = path;
+            req.created_by=email;
             return Ok(_adminService.saveTripImage(req));
         }
 
         [HttpPost("SaveMainFacility")]
         public IActionResult SaveMainFacility(facility_main row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveMainFacility(row));
         }
         [HttpPost("SaveFacilityTranslation")]
         public IActionResult SaveFacilityTranslation(FacilityTranslationReq row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveFacilityTranslation(row));
         }
         [HttpPost("AssignFacilityToTrip")]
         public IActionResult AssignFacilityToTrip(TripFacilityAssignReq row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.AssignFacilityToTrip(row));
         }
 
         [HttpPost("SaveMainTripPickups")]
         public IActionResult SaveMainTripPickups(TripsPickupSaveReq row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveMainTripPickups(row));
         }
 
         [HttpPost("SaveTripPickupsTranslations")]
         public IActionResult SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row)
         {
-
+            string email = _loginUserData.client_email;
+            row.created_by = email;
             return Ok(_adminService.SaveTripPickupsTranslations(row));
         }
        

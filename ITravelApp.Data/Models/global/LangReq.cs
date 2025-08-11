@@ -9,5 +9,6 @@ namespace ITravelApp.Data.Models.global
     public class LangReq
     {
         public string? lang_code {  get; set; }
+        public string? currency_code { get; set; }
     }
 }

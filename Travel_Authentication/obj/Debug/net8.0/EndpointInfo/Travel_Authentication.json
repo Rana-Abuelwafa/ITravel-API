@@ -235,17 +235,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AppsRegisterModel"
+                "$ref": "#/components/schemas/AppsLoginModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AppsRegisterModel"
+                "$ref": "#/components/schemas/AppsLoginModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AppsRegisterModel"
+                "$ref": "#/components/schemas/AppsLoginModel"
               }
             }
           }
@@ -770,6 +770,24 @@
         },
         "additionalProperties": false
       },
+      "AppsLoginModel": {
+        "required": [
+          "email",
+          "lang"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lang": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AppsRegisterModel": {
         "required": [
           "email",
@@ -797,6 +815,10 @@
           },
           "role": {
             "type": "string",
+            "nullable": true
+          },
+          "sendOffers": {
+            "type": "boolean",
             "nullable": true
           }
         },
@@ -1029,6 +1051,10 @@
           },
           "role": {
             "type": "string",
+            "nullable": true
+          },
+          "sendOffers": {
+            "type": "boolean",
             "nullable": true
           }
         },

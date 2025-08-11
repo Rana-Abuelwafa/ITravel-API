@@ -73,7 +73,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "Travel_Authentication.Models.AppsRegisterModel",
+        "Type": "Travel_Authentication.Models.AppsLoginModel",
         "IsRequired": true
       }
     ],

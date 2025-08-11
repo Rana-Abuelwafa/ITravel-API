@@ -1,0 +1,121 @@
+[2025-08-10 12:42:33.295 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-10 12:42:33.795 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-08-10 12:42:34.553 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-10 12:42:34.554 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-10 12:42:35.219 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-10 12:42:35.220 +03:00  INF]  Hosting environment: Development
+[2025-08-10 12:42:35.221 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-10 12:42:36.306 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-10 12:42:36.941 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 648.2449ms
+[2025-08-10 12:42:37.785 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-10 12:42:37.791 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 6.0829ms
+[2025-08-10 12:42:37.926 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-10 12:42:37.982 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 56.6704ms
+[2025-08-10 12:42:38.970 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-10 12:42:39.014 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 44.3055ms
+[2025-08-10 13:02:22.937 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-10 13:02:23.055 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-08-10 13:02:23.228 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-10 13:02:23.230 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-10 13:02:23.375 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-10 13:02:23.375 +03:00  INF]  Hosting environment: Development
+[2025-08-10 13:02:23.376 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-10 13:02:24.432 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-10 13:02:24.761 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 340.5866ms
+[2025-08-10 13:02:24.885 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-10 13:02:24.899 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 13.4267ms
+[2025-08-10 13:02:24.975 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-10 13:02:25.036 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 60.742ms
+[2025-08-10 13:02:25.573 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-10 13:02:25.604 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 31.202ms
+[2025-08-10 13:06:39.293 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveClientBooking - application/json 351
+[2025-08-10 13:06:40.741 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App)'
+[2025-08-10 13:06:40.767 +03:00  INF]  Route matched with {action = "SaveClientBooking", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveClientBooking(ITravelApp.Data.Models.Bookings.BookingCls) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-10 13:07:35.069 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-10 13:07:35.077 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App) in 54306.5719ms
+[2025-08-10 13:07:35.078 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App)'
+[2025-08-10 13:07:35.087 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveClientBooking - 200 null application/json; charset=utf-8 55794.2099ms
+[2025-08-10 13:07:40.033 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveClientBooking - application/json 353
+[2025-08-10 13:07:40.043 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App)'
+[2025-08-10 13:07:40.043 +03:00  INF]  Route matched with {action = "SaveClientBooking", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveClientBooking(ITravelApp.Data.Models.Bookings.BookingCls) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-10 13:07:43.444 +03:00  ERR]  Failed executing DbCommand (80ms) [Parameters=[@__booking_trip_id_0='?' (DbType = Int64), @__booking_booking_status_1='?' (DbType = Int32), @__booking_client_id_2='?', @__booking_booking_date_3='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.booking_code, t.booking_date, t.booking_notes, t.booking_status, t.child_num, t.client_email, t.client_id, t.pickup_time, t.total_pax, t.total_price, t.trip_code, t.trip_date, t.trip_id
+FROM trips_booking AS t
+WHERE t.trip_id = @__booking_trip_id_0 AND t.booking_status = @__booking_booking_status_1 AND t.client_id = @__booking_client_id_2 AND t.booking_date = @__booking_booking_date_3
+LIMIT 2
+[2025-08-10 13:07:43.481 +03:00  ERR]  An exception occurred while iterating over the results of a query for context type 'ITravelApp.Data.Data.itravel_client_dbContext'.
+System.ArgumentException: Cannot write DateTime with Kind=Local to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(PgSerializerOptions options, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.InitializeReader(Enumerator enumerator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.<>c.<MoveNext>b__21_0(DbContext _, Enumerator enumerator)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.MoveNext()
+System.ArgumentException: Cannot write DateTime with Kind=Local to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(PgSerializerOptions options, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.InitializeReader(Enumerator enumerator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.<>c.<MoveNext>b__21_0(DbContext _, Enumerator enumerator)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.MoveNext()
+[2025-08-10 13:08:02.820 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-10 13:08:02.820 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App) in 22777.1908ms
+[2025-08-10 13:08:02.820 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App)'
+[2025-08-10 13:08:02.828 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveClientBooking - 200 null application/json; charset=utf-8 22795.627ms
+[2025-08-10 13:09:45.785 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-10 13:09:45.913 +03:00  WRN]  The WebRootPath was not found: D:\ItravelWebsite\API\ITravel_App\ITravel_App\wwwroot. Static files may be unavailable.
+[2025-08-10 13:09:46.077 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-10 13:09:46.078 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-10 13:09:46.266 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-10 13:09:46.267 +03:00  INF]  Hosting environment: Development
+[2025-08-10 13:09:46.267 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-10 13:09:46.697 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-10 13:09:47.144 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 457.5642ms
+[2025-08-10 13:09:47.171 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-10 13:09:47.264 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-10 13:09:47.271 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 97.1382ms
+[2025-08-10 13:09:47.409 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 145.3946ms
+[2025-08-10 13:09:47.809 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-10 13:09:47.850 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 40.512ms
+[2025-08-10 13:11:39.345 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/Booking/SaveClientBooking - application/json 352
+[2025-08-10 13:11:39.527 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App)'
+[2025-08-10 13:11:39.551 +03:00  INF]  Route matched with {action = "SaveClientBooking", controller = "Booking"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveClientBooking(ITravelApp.Data.Models.Bookings.BookingCls) on controller ITravel_App.Controllers.BookingController (ITravel_App).
+[2025-08-10 13:11:42.750 +03:00  INF]  Executed DbCommand (123ms) [Parameters=[@__booking_trip_id_0='?' (DbType = Int64), @__booking_booking_status_1='?' (DbType = Int32), @__booking_client_id_2='?', @__booking_booking_date_3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.booking_code, t.booking_date, t.booking_notes, t.booking_status, t.child_num, t.client_email, t.client_id, t.pickup_time, t.total_pax, t.total_price, t.trip_code, t.trip_date, t.trip_id
+FROM trips_booking AS t
+WHERE t.trip_id = @__booking_trip_id_0 AND t.booking_status = @__booking_booking_status_1 AND t.client_id = @__booking_client_id_2 AND t.booking_date = @__booking_booking_date_3
+LIMIT 2
+[2025-08-10 13:11:42.825 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trips_booking AS t
+[2025-08-10 13:11:43.122 +03:00  INF]  Executed DbCommand (25ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?' (DbType = DateTime2), @p3='?', @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?', @p7='?', @p8='?', @p9='?' (DbType = Int32), @p10='?' (DbType = Decimal), @p11='?', @p12='?' (DbType = DateTime2), @p13='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trips_booking (id, booking_code, booking_date, booking_notes, booking_status, child_num, client_email, client_id, pickup_time, total_pax, total_price, trip_code, trip_date, trip_id)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);
+[2025-08-10 13:11:43.145 +03:00  INF]  Executing OkObjectResult, writing value of type 'null'.
+[2025-08-10 13:11:43.151 +03:00  INF]  Executed action ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App) in 3594.9649ms
+[2025-08-10 13:11:43.151 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.BookingController.SaveClientBooking (ITravel_App)'
+[2025-08-10 13:11:43.163 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/Booking/SaveClientBooking - 204 null null 3818.0116ms

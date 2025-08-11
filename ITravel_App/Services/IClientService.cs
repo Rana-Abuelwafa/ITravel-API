@@ -1,7 +1,9 @@
 ﻿using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
+using ITravelApp.Data.Models.Bookings;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
+using ITravelApp.Data.Models.profile;
 using ITravelApp.Data.Models.trips;
 
 namespace ITravel_App.Services
@@ -19,6 +21,21 @@ namespace ITravel_App.Services
         public Task<ClientsReviewsResponse> GetClientsReviews(ClientsReviewsReq req);
 
         public ResponseCls SaveReviewForTrip(tbl_review row);
+        public Task<List<TripsAll>> GetClientWishList(ClientWishListReq req);
+        public ResponseCls AddTripToWishList(trips_wishlist row);
+        #endregion
+
+        #region "booking"
+        public ResponseCls SaveClientBooking(BookingCls row);
+        #endregion
+
+        #region "Profile"
+        public Task<List<ClientProfileCast>> GetClientProfiles(string clientId);
+        public ResponseCls SaveMainProfile(ClientProfileCast profile);
+        public Task<ResponseCls> SaveProfileImage(client_image image);
+        public Task<List<client_image>> GetProfileImage(string clientId);
+        public ResponseCls SaveClientNotificationSetting(client_notification_setting row);
+        public Task<List<client_notification_setting>> GetClient_Notification_Settings(string clientId);
         #endregion
     }
 }

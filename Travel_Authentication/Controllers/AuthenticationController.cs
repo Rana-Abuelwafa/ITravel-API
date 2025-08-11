@@ -412,7 +412,7 @@ namespace Travel_Authentication.Controllers
         {
             try
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, GoogleId = "1", TwoFactorEnabled = true,, sendOffers = model.sendOffers };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, GoogleId = "1", TwoFactorEnabled = true, sendOffers = model.sendOffers };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -480,7 +480,7 @@ namespace Travel_Authentication.Controllers
 
 
         [HttpPost("LoginGmail")]
-        public async Task<IActionResult> LoginGmail([FromBody] AppsRegisterModel model)
+        public async Task<IActionResult> LoginGmail([FromBody] AppsLoginModel model)
         {
             //check if user exist or not first
             var user = await _userManager.FindByEmailAsync(model.Email);
