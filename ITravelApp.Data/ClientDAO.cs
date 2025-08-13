@@ -36,7 +36,7 @@ namespace ITravelApp.Data
 			try
 			{
 
-				var result = from trans in _db.destination_translations.Where(wr => wr.lang_code == req.lang_code && wr.active == true)
+				var result = from trans in _db.destination_translations.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && wr.active == true)
 							 join dest in _db.destination_mains.Where(wr => wr.active == true && wr.country_code.ToLower() == (System.String.IsNullOrEmpty(req.country_code) ? wr.country_code.ToLower() : req.country_code.ToLower())) on trans.destination_id equals dest.id         // INNER JOIN
 							 join img in _db.destination_imgs on trans.id equals img.destination_id into DestAll
 							 from combined in DestAll.DefaultIfEmpty()               // LEFT JOIN
@@ -72,7 +72,7 @@ namespace ITravelApp.Data
 			try
 			{
 				var result = from TFAC in _db.trip_facilities.Where(wr => wr.trip_id == trip_id)
-							 join TRANS in _db.facility_translations.Where(wr => wr.lang_code == lang_code) on TFAC.facility_id equals TRANS.facility_id into TRIPFAC
+							 join TRANS in _db.facility_translations.Where(wr => wr.lang_code.ToLower() == lang_code.ToLower()) on TFAC.facility_id equals TRANS.facility_id into TRIPFAC
 							 from m in TRIPFAC.DefaultIfEmpty()
 							 select new TripFacility
 							 {
@@ -106,10 +106,10 @@ namespace ITravelApp.Data
 			try
 			{
 				var trips = await _db.tripwithdetails
-					.Where(wr => wr.lang_code == req.lang_code && 
+					.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && 
 								 wr.show_in_top == (req.show_in_top == false ? wr.show_in_top : req.show_in_top) && 
 								 wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
-								 wr.currency_code ==req.currency_code)
+								 wr.currency_code.ToLower() == req.currency_code.ToLower())
 					.ToListAsync();
 					return trips.Select(s => new TripsAll
 					{
@@ -159,10 +159,10 @@ namespace ITravelApp.Data
 			try
 			{
 				var trips = await _db.tripwithdetails
-					.Where(wr => wr.lang_code == req.lang_code && 
+					.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && 
 								wr.show_in_slider == true && 
 								wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
-								wr.currency_code == req.currency_code)
+								wr.currency_code.ToLower() == req.currency_code.ToLower())
 					.ToListAsync();
 
 
@@ -181,7 +181,7 @@ namespace ITravelApp.Data
 			try
 			{
 				var result = await _db.trip_pickups_mains.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
-								   .Join(_db.trip_pickups_translations.Where(wr => wr.lang_code == req.lang_code),
+								   .Join(_db.trip_pickups_translations.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower()),
 										MAIN => new { trip_pickup_id = MAIN.id },
 										TRANS => new {TRANS.trip_pickup_id },
 										(MAIN, TRANS) => new TripsPickupResponse
@@ -336,7 +336,7 @@ namespace ITravelApp.Data
 			{
 				var trips = await _db.tripwithdetails
 					 .Where(wr => wr.lang_code == req.lang_code &&
-								   wr.currency_code == req.currency_code &&
+								   wr.currency_code.ToLower() == req.currency_code.ToLower() &&
 								   wr.client_id == req.client_id &&
 								   wr.trip_type == req.trip_type &&
 								   wr.wish_id > 0
