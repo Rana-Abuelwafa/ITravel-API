@@ -49,10 +49,10 @@ namespace ITravelApp.Data
 								 dest_code = dest.dest_code,
 								 dest_description = trans.dest_description,
 								 dest_name = trans.dest_name,
-								 img_path = combined != null ? "https://api.waslaa.de//" + combined.img_path : null,
-								 lang_code = trans.lang_code
-
-
+								 img_path = combined != null ? "http://api.raccoon24.de//" + combined.img_path : null,
+								 lang_code = trans.lang_code,
+								 dest_default_name=dest.dest_default_name,
+								 route=dest.route
 							 };
 
 				return result.ToList();
@@ -138,7 +138,10 @@ namespace ITravelApp.Data
 						trip_type = s.trip_type,
 						wish_id = s.wish_id,
 						wsh_created_at=s.wsh_created_at,
-						facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
+						dest_route = s.dest_route,
+						route=s.route,
+						client_id=s.client_id,
+                        facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
 						imgs = GetImgsByTrip(s.trip_id).Result
 					})
 					.ToList();
@@ -555,7 +558,7 @@ namespace ITravelApp.Data
                     client_id = s.client_id,
                     img_name = s.img_name,
                     type = s.type,
-                    img_path = "https://api.raccoon24.de//" + s.img_path
+                    img_path = "http://api.raccoon24.de//" + s.img_path
                 }).ToListAsync();
 
             }

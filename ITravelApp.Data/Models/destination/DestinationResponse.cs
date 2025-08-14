@@ -13,5 +13,6 @@ namespace ITravelApp.Data.Models.destination
         public string? dest_code { get; set; }
         public string? country_code { get; set; }
         public string? img_path { get; set; }
+        public string? route { get; set; }
     }
 }

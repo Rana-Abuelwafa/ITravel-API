@@ -135,6 +135,7 @@ public partial class itravel_client_dbContext : DbContext
                 .HasColumnType("timestamp without time zone");
             entity.Property(e => e.created_by).HasMaxLength(100);
             entity.Property(e => e.dest_code).HasMaxLength(20);
+            entity.Property(e => e.route).HasMaxLength(100);
             entity.Property(e => e.updated_at)
                 .HasDefaultValueSql("now()")
                 .HasColumnType("timestamp without time zone");
@@ -237,6 +238,7 @@ public partial class itravel_client_dbContext : DbContext
                 .HasColumnType("timestamp without time zone");
             entity.Property(e => e.created_by).HasMaxLength(100);
             entity.Property(e => e.pickup).HasMaxLength(20);
+            entity.Property(e => e.route).HasMaxLength(100);
             entity.Property(e => e.trip_code).HasMaxLength(20);
             entity.Property(e => e.trip_default_name).HasMaxLength(50);
             entity.Property(e => e.trip_duration).HasMaxLength(20);
@@ -348,8 +350,10 @@ public partial class itravel_client_dbContext : DbContext
             entity.Property(e => e.currency_code).HasMaxLength(5);
             entity.Property(e => e.default_img).HasMaxLength(50);
             entity.Property(e => e.dest_code).HasMaxLength(20);
+            entity.Property(e => e.dest_route).HasMaxLength(100);
             entity.Property(e => e.lang_code).HasMaxLength(5);
             entity.Property(e => e.pickup).HasMaxLength(20);
+            entity.Property(e => e.route).HasMaxLength(100);
             entity.Property(e => e.trip_code).HasMaxLength(20);
             entity.Property(e => e.trip_default_name).HasMaxLength(50);
             entity.Property(e => e.trip_duration).HasMaxLength(20);

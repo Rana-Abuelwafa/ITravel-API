@@ -33,6 +33,8 @@ public partial class tripwithdetail
 
     public string? trip_duration { get; set; }
 
+    public string? route { get; set; }
+
     public string? currency_code { get; set; }
 
     public decimal? trip_origin_price { get; set; }
@@ -46,6 +48,8 @@ public partial class tripwithdetail
     public string? dest_code { get; set; }
 
     public string? country_code { get; set; }
+
+    public string? dest_route { get; set; }
 
     public long? wish_id { get; set; }
 
