@@ -19,7 +19,7 @@ public partial class trip_main
 
     public bool? show_in_slider { get; set; }
 
-    public decimal? destination_id { get; set; }
+    public int destination_id { get; set; }
 
     public long id { get; set; }
 

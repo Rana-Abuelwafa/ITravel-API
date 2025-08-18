@@ -49,7 +49,7 @@ namespace ITravelApp.Data
 								 dest_code = dest.dest_code,
 								 dest_description = trans.dest_description,
 								 dest_name = trans.dest_name,
-								 img_path = combined != null ? "http://api.raccoon24.de//" + combined.img_path : null,
+								 img_path = combined != null ? "http://api.raccoon24.de/" + combined.img_path : null,
 								 lang_code = trans.lang_code,
 								 dest_default_name=dest.dest_default_name,
 								 route=dest.route
@@ -93,7 +93,17 @@ namespace ITravelApp.Data
 		{
 			try
 			{
-				return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id).ToListAsync();
+				return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id).Select(s => new trip_img
+				{
+					id = s.id,
+					img_height=s.img_height,
+					img_name=s.img_name,
+					img_path= "http://api.raccoon24.de/" + s.img_path,
+					img_resize_path= "http://api.raccoon24.de/" + s.img_resize_path,
+					img_width=s.img_width,
+					is_default=s.is_default,
+					trip_id=s.trip_id,
+                }).ToListAsync();
 			}
 			catch (Exception ex)
 			{
@@ -109,15 +119,16 @@ namespace ITravelApp.Data
 					.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && 
 								 wr.show_in_top == (req.show_in_top == false ? wr.show_in_top : req.show_in_top) && 
 								 wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
-								 wr.currency_code.ToLower() == req.currency_code.ToLower())
+								 wr.currency_code.ToLower() == req.currency_code.ToLower() &&
+                                 wr.show_in_slider == (req.show_in_slider == false ? wr.show_in_slider : req.show_in_slider))
 					.ToListAsync();
-					return trips.Select(s => new TripsAll
+					return trips.Select( s => new TripsAll
 					{
 						destination_id = s.destination_id,
 						lang_code = s.lang_code,
 						country_code = s.country_code,
 						currency_code = s.currency_code,
-						default_img = s.default_img,
+						default_img = "http://api.raccoon24.de/" + s.default_img,
 						dest_code = s.dest_code,
 						dest_default_name = s.dest_default_name,
 						pickup = s.pickup,
@@ -142,12 +153,13 @@ namespace ITravelApp.Data
 						route=s.route,
 						client_id=s.client_id,
                         facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
-						imgs = GetImgsByTrip(s.trip_id).Result
-					})
-					.ToList();
-
-
-			   
+						imgs = GetImgsByTrip(s.trip_id).Result,
+						important_info=s.important_info,
+						trip_details=s.trip_details,
+						trip_not_includes=s.trip_not_includes,
+                        total_reviews =  _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Count(),
+                        review_rate =  _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Max(m => m.review_rate)
+					}).ToList();
 
 			}
 			catch (Exception ex)
@@ -220,8 +232,9 @@ namespace ITravelApp.Data
 			
 			try
 			{
-				var totalRecords = await _db.tbl_reviews.CountAsync();
-				var reviews = await _db.tbl_reviews.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
+				var totalRecords = await _db.tbl_reviews.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type).CountAsync();
+                var average_review_rate = await _db.tbl_reviews.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type).MaxAsync(m => m.review_rate);
+                var reviews = await _db.tbl_reviews.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
 											.Select(s => new ClientsReviews
 											{
 												trip_id = s.trip_id,
@@ -241,7 +254,8 @@ namespace ITravelApp.Data
 				return new ClientsReviewsResponse
 				{
 					reviews = reviews,
-					totalPages = totalRecords
+                    average_review_rate= average_review_rate,
+                    totalPages = totalRecords
 				};
 			}
 			catch (Exception ex)
@@ -558,7 +572,7 @@ namespace ITravelApp.Data
                     client_id = s.client_id,
                     img_name = s.img_name,
                     type = s.type,
-                    img_path = "http://api.raccoon24.de//" + s.img_path
+                    img_path = "http://api.raccoon24.de/" + s.img_path
                 }).ToListAsync();
 
             }

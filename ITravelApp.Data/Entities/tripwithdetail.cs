@@ -19,7 +19,7 @@ public partial class tripwithdetail
 
     public string? trip_name { get; set; }
 
-    public decimal? destination_id { get; set; }
+    public int? destination_id { get; set; }
 
     public string? pickup { get; set; }
 
@@ -57,7 +57,13 @@ public partial class tripwithdetail
 
     public int? trip_type { get; set; }
 
-    public string? isfavourite { get; set; }
+    public bool? isfavourite { get; set; }
 
     public string? client_id { get; set; }
+
+    public string? trip_not_includes { get; set; }
+
+    public string? important_info { get; set; }
+
+    public string? trip_details { get; set; }
 }

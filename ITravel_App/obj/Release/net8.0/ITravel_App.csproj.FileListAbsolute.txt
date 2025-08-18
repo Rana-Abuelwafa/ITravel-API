@@ -173,3 +173,4 @@ D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Release\net8.0\refint\ITravel_
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Release\net8.0\ITravel_App.pdb
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Release\net8.0\ITravel_App.genruntimeconfig.cache
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Release\net8.0\ref\ITravel_App.dll
+D:\ItravelWebsite\API\ITravel_App\ITravel_App\bin\Release\net8.0\ITravel_App.staticwebassets.runtime.json

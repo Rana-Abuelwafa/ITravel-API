@@ -173,3 +173,4 @@ D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\ITravel_App.cspro
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\de\ITravel_App.resources.dll
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\en\ITravel_App.resources.dll
 D:\ItravelWebsite\API\ITravel_App\ITravel_App\obj\Debug\net8.0\ITravel_App.sourcelink.json
+D:\ItravelWebsite\API\ITravel_App\ITravel_App\bin\Debug\net8.0\ITravel_App.staticwebassets.runtime.json

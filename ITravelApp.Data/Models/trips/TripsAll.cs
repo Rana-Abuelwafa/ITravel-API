@@ -9,6 +9,8 @@ namespace ITravelApp.Data.Models.trips
 {
     public class TripsAll : tripwithdetail
     {
+        public int? total_reviews {  get; set; }
+        public decimal? review_rate { get; set; }
         public List<TripFacility> facilities { get; set; }
         public List<trip_img> imgs {  get; set; }
     }

@@ -2,6 +2,7 @@ using ITravel_App.Services;
 using ITravelApp.Data;
 using ITravelApp.Data.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
@@ -102,6 +103,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
 app.UseRequestLocalization(locOptions.Value);
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "images")),
+    RequestPath = "/images"
+});
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseRouting();

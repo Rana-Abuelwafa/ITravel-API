@@ -3,7 +3,33 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\ItravelWebsite\API\publish\client</_PublishTargetUrl>
-    <History>True|2025-08-14T06:29:07.6027825Z||;True|2025-08-13T18:27:51.7908113+03:00||;True|2025-08-11T16:38:17.4363653+03:00||;True|2025-08-11T13:20:34.1762050+03:00||;</History>
+    <History>True|2025-08-18T11:22:45.3118394Z||;True|2025-08-18T10:08:42.7618606+03:00||;True|2025-08-18T10:07:11.8459406+03:00||;True|2025-08-18T09:56:14.0166539+03:00||;True|2025-08-18T09:35:49.9448567+03:00||;True|2025-08-18T09:10:00.5756223+03:00||;True|2025-08-17T17:28:26.9734270+03:00||;True|2025-08-17T17:13:07.0923950+03:00||;True|2025-08-17T13:10:18.5357713+03:00||;True|2025-08-14T09:29:07.6027825+03:00||;True|2025-08-13T18:27:51.7908113+03:00||;True|2025-08-11T16:38:17.4363653+03:00||;True|2025-08-11T13:20:34.1762050+03:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
+  <ItemGroup>
+    <File Include="images/el guna1.jpg">
+      <publishTime>11/08/2025 16:33:34</publishTime>
+    </File>
+    <File Include="images/hurghada-2.jpg">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="images/trips/pyramid-3804374_1920.jpg">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Resources/Messages.de.resx">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Resources/Messages.en.resx">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="wwwroot/images/el guna1.jpg">
+      <publishTime>08/11/2025 16:33:34</publishTime>
+    </File>
+    <File Include="wwwroot/images/hurghada-2.jpg">
+      <publishTime>07/23/2025 17:36:16</publishTime>
+    </File>
+    <File Include="wwwroot/images/trips/pyramid-3804374_1920.jpg">
+      <publishTime>07/24/2025 17:46:04</publishTime>
+    </File>
+  </ItemGroup>
 </Project>

@@ -28,4 +28,6 @@ public partial class trip_translation
     public DateTime? updated_at { get; set; }
 
     public string? created_by { get; set; }
+
+    public string? trip_not_includes { get; set; }
 }

@@ -26,6 +26,21 @@ namespace ITravel_App.Services
             return _adminDAO.GetDestinationWithTranslations(req);
         }
 
+        public Task<List<destination_main>> GetDestination_Mains()
+        {
+            return _adminDAO.GetDestination_Mains();
+        }
+
+        public Task<List<destination_img>> GetImgsByDestination(int? destination_id)
+        {
+            return _adminDAO.GetImgsByDestination(destination_id);
+        }
+
+        public Task<List<TripMainCast>> GetTrip_Mains(int destination_id)
+        {
+            return _adminDAO.GetTrip_Mains(destination_id);
+        }
+
         public ResponseCls saveDestinationImage(destination_img row)
         {
             return _adminDAO.saveDestinationImage(row);

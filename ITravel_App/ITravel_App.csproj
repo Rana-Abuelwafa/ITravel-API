@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\el guna1.jpg" />
+    <Content Remove="wwwroot\images\hurghada-2.jpg" />
+    <Content Remove="wwwroot\images\trips\pyramid-3804374_1920.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
@@ -31,6 +37,13 @@
   <ItemGroup>
     <Folder Include="images\destinations\" />
     <Folder Include="images\trips\" />
+    <Folder Include="wwwroot\images\destinations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\el guna1.jpg" />
+    <None Include="wwwroot\images\hurghada-2.jpg" />
+    <None Include="wwwroot\images\trips\pyramid-3804374_1920.jpg" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,7 @@ namespace ITravelApp.Data.Models.trips
         public int destination_id { get; set; }
         public string? lang_code { get; set; }
         public bool? show_in_top { get; set; }
+        public bool? show_in_slider { get; set; }
         public string? currency_code { get; set; }
     }
 }

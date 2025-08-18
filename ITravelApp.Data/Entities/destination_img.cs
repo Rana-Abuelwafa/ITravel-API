@@ -20,4 +20,10 @@ public partial class destination_img
     public DateTime? updated_at { get; set; }
 
     public string? created_by { get; set; }
+
+    public int? img_width { get; set; }
+
+    public int? img_height { get; set; }
+
+    public string? img_resize_path { get; set; }
 }

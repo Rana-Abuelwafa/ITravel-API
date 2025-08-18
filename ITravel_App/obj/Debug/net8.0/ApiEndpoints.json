@@ -159,6 +159,16 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetDestination_Mains",
+    "RelativePath": "api/TravelAdmin/GetDestinationMain",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "GetDestinationWithTranslations",
     "RelativePath": "api/TravelAdmin/GetDestinationWithTranslations",
     "HttpMethod": "POST",
@@ -175,7 +185,39 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
-    "Method": "saveDestinationImage",
+    "Method": "GetImgsByDestination",
+    "RelativePath": "api/TravelAdmin/GetImgsByDestination",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "destination_id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetTrip_Mains",
+    "RelativePath": "api/TravelAdmin/GetTrip_Mains",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "destination_id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "saveDestinationImageAsync",
     "RelativePath": "api/TravelAdmin/saveDestinationImage",
     "HttpMethod": "POST",
     "IsController": true,
@@ -223,6 +265,21 @@
       },
       {
         "Name": "created_by",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_width",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_height",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_resize_path",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -376,6 +433,21 @@
       {
         "Name": "created_by",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_resize_path",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_width",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_height",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],

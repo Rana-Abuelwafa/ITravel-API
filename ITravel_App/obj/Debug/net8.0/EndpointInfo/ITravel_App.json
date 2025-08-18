@@ -369,6 +369,29 @@
         }
       }
     },
+    "/api/TravelAdmin/GetDestinationMain": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelAdmin/GetDestinationWithTranslations": {
       "post": {
         "tags": [
@@ -548,6 +571,17 @@
                   },
                   "created_by": {
                     "type": "string"
+                  },
+                  "img_width": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "img_height": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "img_resize_path": {
+                    "type": "string"
                   }
                 }
               },
@@ -578,11 +612,82 @@
                 },
                 "created_by": {
                   "style": "form"
+                },
+                "img_width": {
+                  "style": "form"
+                },
+                "img_height": {
+                  "style": "form"
+                },
+                "img_resize_path": {
+                  "style": "form"
                 }
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/GetImgsByDestination": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "destination_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/GetTrip_Mains": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "destination_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -769,6 +874,17 @@
                   },
                   "created_by": {
                     "type": "string"
+                  },
+                  "img_resize_path": {
+                    "type": "string"
+                  },
+                  "img_width": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "img_height": {
+                    "type": "integer",
+                    "format": "int32"
                   }
                 }
               },
@@ -798,6 +914,15 @@
                   "style": "form"
                 },
                 "created_by": {
+                  "style": "form"
+                },
+                "img_resize_path": {
+                  "style": "form"
+                },
+                "img_width": {
+                  "style": "form"
+                },
+                "img_height": {
                   "style": "form"
                 }
               }
@@ -1645,6 +1770,10 @@
             "type": "string",
             "nullable": true
           },
+          "trip_not_includes": {
+            "type": "string",
+            "nullable": true
+          },
           "delete": {
             "type": "boolean"
           }
@@ -1763,6 +1892,10 @@
             "type": "boolean",
             "nullable": true
           },
+          "show_in_slider": {
+            "type": "boolean",
+            "nullable": true
+          },
           "currency_code": {
             "type": "string",
             "nullable": true
@@ -1839,6 +1972,10 @@
             "nullable": true
           },
           "created_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "route": {
             "type": "string",
             "nullable": true
           }
@@ -2000,9 +2137,8 @@
             "nullable": true
           },
           "destination_id": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
+            "type": "integer",
+            "format": "int32"
           },
           "id": {
             "type": "integer",
@@ -2019,6 +2155,10 @@
             "nullable": true
           },
           "created_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "route": {
             "type": "string",
             "nullable": true
           }

@@ -17,6 +17,7 @@ namespace ITravelApp.Data.Models.trips
     public class ClientsReviewsResponse
     {
         public int totalPages { get; set; }
+        public decimal? average_review_rate { get; set; } 
         public List<ClientsReviews> reviews { get; set; }
     }
 }

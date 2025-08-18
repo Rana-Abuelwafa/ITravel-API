@@ -118,6 +118,7 @@ public partial class itravel_client_dbContext : DbContext
             entity.Property(e => e.created_by).HasMaxLength(100);
             entity.Property(e => e.img_name).HasMaxLength(100);
             entity.Property(e => e.img_path).HasMaxLength(100);
+            entity.Property(e => e.img_resize_path).HasMaxLength(100);
             entity.Property(e => e.updated_at)
                 .HasDefaultValueSql("now()")
                 .HasColumnType("timestamp without time zone");
@@ -222,6 +223,7 @@ public partial class itravel_client_dbContext : DbContext
             entity.Property(e => e.created_by).HasMaxLength(100);
             entity.Property(e => e.img_name).HasMaxLength(50);
             entity.Property(e => e.img_path).HasMaxLength(50);
+            entity.Property(e => e.img_resize_path).HasMaxLength(100);
             entity.Property(e => e.updated_at)
                 .HasDefaultValueSql("now()")
                 .HasColumnType("timestamp without time zone");

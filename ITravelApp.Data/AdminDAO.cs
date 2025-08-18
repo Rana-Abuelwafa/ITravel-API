@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -126,32 +127,32 @@ namespace ITravelApp.Data
             try
             {
 
-                if (row.id == 0)
-                {
-                    //check duplicate validation
-                    var result = _db.destination_imgs.Where(wr => wr.destination_id == row.destination_id && wr.is_default == row.is_default).SingleOrDefault();
-                    if (result != null)
+                    if (row.id == 0)
                     {
-                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                        //check duplicate validation
+                        var result = _db.destination_imgs.Where(wr => wr.destination_id == row.destination_id && wr.is_default == (row.is_default == true ? row.is_default : null)).SingleOrDefault();
+                        if (result != null)
+                        {
+                            return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                        }
+                        if (_db.destination_imgs.Count() > 0)
+                        {
+                            maxId = _db.destination_imgs.Max(d => d.id);
+
+                        }
+                        row.id = maxId + 1;
+                        _db.destination_imgs.Add(row);
+                        _db.SaveChanges();
                     }
-                    if (_db.destination_imgs.Count() > 0)
+                    else
                     {
-                        maxId = _db.destination_imgs.Max(d => d.id);
-
+                        row.updated_at = DateTime.Now;
+                        _db.destination_imgs.Update(row);
+                        _db.SaveChanges();
                     }
-                    row.id = maxId + 1;
-                    _db.destination_imgs.Add(row);
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    row.updated_at = DateTime.Now;
-                    _db.destination_imgs.Update(row);
-                    _db.SaveChanges();
-                }
-
-                response = new ResponseCls { errors = null, success = true, idOut = row.id };
-
+                    
+                
+                    response = new ResponseCls { errors = null, success = true,idOut=row.id };
 
             }
 
@@ -166,30 +167,60 @@ namespace ITravelApp.Data
         {
             try
             {
-                var result = from trans in _db.destination_translations.Where(wr => wr.active == true)
-                             join dest in _db.destination_mains.Where(wr => wr.active == true && wr.country_code.ToLower() == (String.IsNullOrEmpty(req.country_code) ? wr.country_code.ToLower() : req.country_code.ToLower())) on trans.destination_id equals dest.id         // INNER JOIN
-                             join img in _db.destination_imgs on trans.id equals img.destination_id into DestAll
-                             from combined in DestAll.DefaultIfEmpty()               // LEFT JOIN
-                             select new DestinationResponse
-                             {
-                                 destination_id = trans.destination_id,
-                                 id = trans.id,
-                                 country_code = dest.country_code,
-                                 active = dest.active,
-                                 dest_code = dest.dest_code,
-                                 dest_description = trans.dest_description,
-                                 dest_name = trans.dest_name,
-                                 img_path = combined != null ? "https://api.waslaa.de//" + combined.img_path : null,
-                                 lang_code = trans.lang_code,
-                                 dest_default_name= dest.dest_default_name    
-                             };
+                var result =
+                    from  dest in _db.destination_mains.Where(wr => wr.active == true && wr.country_code.ToLower() == (String.IsNullOrEmpty(req.country_code) ? wr.country_code.ToLower() : req.country_code.ToLower()))
+                    join  trans in _db.destination_translations.Where(wr => wr.active == true)
+                        on dest.id equals trans.destination_id
+                             into dest_trans
+
+                        from combinedDEST in dest_trans.DefaultIfEmpty() // LEFT JOIN Customers
+                        join  img in _db.destination_imgs.Where(wr => wr.is_default == true)
+
+                           on dest.id equals img.destination_id into DestAll
+                        from IMGDEST in DestAll.DefaultIfEmpty() // LEFT JOIN Payments
+                        select new DestinationResponse
+                        {
+                            destination_id = dest.id,
+                            id = combinedDEST != null ?  combinedDEST.id : 0,
+                            country_code = dest.country_code,
+                            active = dest.active,
+                            dest_code = dest.dest_code ,
+                            dest_description = combinedDEST != null ? combinedDEST.dest_description : null,
+                            dest_name = combinedDEST != null ? combinedDEST.dest_name : null,
+                            img_path = IMGDEST != null ? "http://api.raccoon24.de/" + IMGDEST.img_path : null,
+                            lang_code = combinedDEST !=null ? combinedDEST.lang_code :null,
+                            dest_default_name = dest.dest_default_name,
+                            route = dest.route
+                        };
+
+                //var result = from trans in _db.destination_translations.Where(wr => wr.active == true)
+                //             join dest in _db.destination_mains.Where(wr => wr.active == true && wr.country_code.ToLower() == (String.IsNullOrEmpty(req.country_code) ? wr.country_code.ToLower() : req.country_code.ToLower())) on trans.destination_id equals dest.id         // INNER JOIN
+                //             join img in _db.destination_imgs on dest.id equals img.destination_id into DestAll
+                //             from combined in DestAll.DefaultIfEmpty()               // LEFT JOIN
+                //             select new DestinationResponse
+                //             {
+                //                 destination_id = trans.destination_id,
+                //                 id = trans.id,
+                //                 country_code = dest.country_code,
+                //                 active = dest.active,
+                //                 dest_code = dest.dest_code,
+                //                 dest_description = trans.dest_description,
+                //                 dest_name = trans.dest_name,
+                //                 img_path = combined != null ? "http://api.raccoon24.de/" + combined.img_path : null,
+                //                 lang_code = trans.lang_code,
+                //                 dest_default_name= dest.dest_default_name    ,
+                //                 route=dest.route
+                //             };
                 return result.ToList().GroupBy(grp => new
                 {
                     grp.dest_code,
                     grp.img_path,
                     grp.destination_id,
                     grp.country_code,
-                    grp.dest_default_name
+                    grp.dest_default_name,
+                    grp.route,
+                    grp.active
+
                 }).Select(s => new DestinationWithTranslations
                 {
                     country_code = s.Key.country_code,
@@ -197,6 +228,8 @@ namespace ITravelApp.Data
                     img_path = s.Key.img_path,
                     destination_id=s.Key.destination_id,
                     dest_default_name=s.Key.dest_default_name,
+                    route=s.Key.route,
+                    active=s.Key.active,
                     translations = result.Where(wr => wr.dest_code == s.Key.dest_code).ToList()
 
                 }).ToList();
@@ -206,7 +239,25 @@ namespace ITravelApp.Data
                 return null;
             }
         }
+        //get images list for specific trip
+        public async Task<List<destination_img>> GetImgsByDestination(int? destination_id)
+        {
+            try
+            {
+                return await _db.destination_imgs.Where(wr => wr.destination_id == destination_id).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+      
+        public async Task<List<destination_main>> GetDestination_Mains()
+        {
+            return await _db.destination_mains.Where(wr => wr.active == true).ToListAsync();
+        }
         #endregion
+
 
         #region trips
 
@@ -383,7 +434,7 @@ namespace ITravelApp.Data
                 if (row.id == 0)
                 {
                     //check duplicate validation
-                    var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == trip.is_default).SingleOrDefault();
+                    var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == (trip.is_default == true ? trip.is_default : null) ).SingleOrDefault();
                     if (result != null)
                     {
                         return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
@@ -677,7 +728,39 @@ namespace ITravelApp.Data
             return response;
         }
 
-      
+        public async Task<List<TripMainCast>> GetTrip_Mains(int destination_id)
+        {
+            try
+            {
+
+                return await _db.trip_mains.Where(wr => wr.destination_id == (destination_id == 0 ? wr.destination_id : destination_id))
+                      .Join(_db.destination_mains,
+                              TRIP => new { TRIP.destination_id },
+                              DEST => new { destination_id = DEST.id },
+                              (TRIP, DEST) => new TripMainCast
+                              {
+                                  destination_id = TRIP.destination_id,
+                                  active= TRIP.active,
+                                  id= TRIP.id,
+                                  pickup= TRIP.pickup,
+                                  route= TRIP.route,
+                                  show_in_slider= TRIP.show_in_slider,
+                                  show_in_top= TRIP.show_in_top,
+                                  trip_code= TRIP.trip_code,
+                                  trip_default_name= TRIP.trip_default_name,
+                                  trip_duration= TRIP.trip_duration,
+                                  country_code= DEST.country_code,
+                                  dest_code= DEST.dest_code,
+                                  dest_default_name= DEST.dest_default_name
+                              }).ToListAsync();
+
+
+            }   // return await _db.trip_mains.Where(wr => wr.destination_id == (destination_id == 0 ? wr.destination_id : destination_id)).ToListAsync();
+            catch (Exception ex)
+            {
+                return null;
+            }
+        } 
         #endregion
 
     }
