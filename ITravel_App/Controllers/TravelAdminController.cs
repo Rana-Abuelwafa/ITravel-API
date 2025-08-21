@@ -192,7 +192,16 @@ namespace ITravel_App.Controllers
             return Ok(_adminService.SaveTripPickupsTranslations(row));
         }
 
-      
+        [HttpPost("GetTripTranslationGrp")]
+        public async Task<IActionResult> GetTripTranslationGrp([FromQuery] long trip_id)
+        {
+            return Ok(await _adminService.GetTripTranslationGrp(trip_id));
+        }
+        [HttpPost("GetTrip_Prices")]
+        public async Task<IActionResult> GetTrip_Prices([FromQuery] long trip_id)
+        {
+            return Ok(await _adminService.GetTrip_Prices(trip_id));
+        }
         #endregion
     }
 }

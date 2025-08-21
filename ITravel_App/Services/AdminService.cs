@@ -36,9 +36,19 @@ namespace ITravel_App.Services
             return _adminDAO.GetImgsByDestination(destination_id);
         }
 
+        public Task<List<TripTranslationGrp>> GetTripTranslationGrp(long? trip_id)
+        {
+            return _adminDAO.GetTripTranslationGrp(trip_id);
+        }
+
         public Task<List<TripMainCast>> GetTrip_Mains(int destination_id)
         {
             return _adminDAO.GetTrip_Mains(destination_id);
+        }
+
+        public Task<List<trip_price>> GetTrip_Prices(long? trip_id)
+        {
+            throw new NotImplementedException();
         }
 
         public ResponseCls saveDestinationImage(destination_img row)

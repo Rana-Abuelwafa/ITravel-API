@@ -1,0 +1,131 @@
+[2025-08-19 14:12:44.267 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-19 14:12:45.122 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-19 14:12:45.123 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-19 14:12:45.486 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-19 14:12:45.487 +03:00  INF]  Hosting environment: Development
+[2025-08-19 14:12:45.487 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-19 14:12:49.597 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-19 14:12:50.162 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 585.4751ms
+[2025-08-19 14:12:50.252 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-19 14:12:50.307 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-19 14:12:50.355 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 102.6131ms
+[2025-08-19 14:12:50.459 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 152.0842ms
+[2025-08-19 14:12:50.593 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-19 14:12:50.655 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 61.6361ms
+[2025-08-19 14:13:08.743 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationWithTranslations - null null
+[2025-08-19 14:13:11.395 +03:00  INF]  CORS policy execution successful.
+[2025-08-19 14:13:11.398 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationWithTranslations - 204 null null 2654.8725ms
+[2025-08-19 14:13:11.403 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationWithTranslations - application/json 55
+[2025-08-19 14:13:11.613 +03:00  INF]  CORS policy execution successful.
+[2025-08-19 14:13:11.617 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestinationWithTranslations (ITravel_App)'
+[2025-08-19 14:13:11.664 +03:00  INF]  Route matched with {action = "GetDestinationWithTranslations", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetDestinationWithTranslations(ITravelApp.Data.Models.destination.DestinationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-19 14:13:16.972 +03:00  INF]  Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id AS destination_id, CASE
+    WHEN d1.id IS NOT NULL THEN d1.id
+    ELSE 0
+END AS id, d.country_code, d.active, d.dest_code, d1.dest_description, d1.dest_name, CASE
+    WHEN d3.id IS NOT NULL THEN 'http://api.raccoon24.de/' || COALESCE(d3.img_path, '')
+END AS img_path, d1.lang_code, d.dest_default_name, d.route
+FROM destination_main AS d
+LEFT JOIN (
+    SELECT d0.id, d0.dest_description, d0.dest_name, d0.destination_id, d0.lang_code
+    FROM destination_translations AS d0
+    WHERE d0.active
+) AS d1 ON d.id = d1.destination_id
+LEFT JOIN (
+    SELECT d2.id, d2.destination_id, d2.img_path
+    FROM destination_imgs AS d2
+    WHERE d2.is_default
+) AS d3 ON d.id = d3.destination_id
+WHERE d.active AND (lower(d.country_code) = lower(d.country_code) OR d.country_code IS NULL)
+[2025-08-19 14:13:17.182 +03:00  INF]  Executed DbCommand (21ms) [Parameters=[@__s_Key_dest_code_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id AS destination_id, CASE
+    WHEN d1.id IS NOT NULL THEN d1.id
+    ELSE 0
+END AS id, d.country_code, d.active, d.dest_code, d1.dest_description, d1.dest_name, CASE
+    WHEN d3.id IS NOT NULL THEN 'http://api.raccoon24.de/' || COALESCE(d3.img_path, '')
+END AS img_path, d1.lang_code, d.dest_default_name, d.route
+FROM destination_main AS d
+LEFT JOIN (
+    SELECT d0.id, d0.dest_description, d0.dest_name, d0.destination_id, d0.lang_code
+    FROM destination_translations AS d0
+    WHERE d0.active
+) AS d1 ON d.id = d1.destination_id
+LEFT JOIN (
+    SELECT d2.id, d2.destination_id, d2.img_path
+    FROM destination_imgs AS d2
+    WHERE d2.is_default
+) AS d3 ON d.id = d3.destination_id
+WHERE d.active AND (lower(d.country_code) = lower(d.country_code) OR d.country_code IS NULL) AND d.dest_code = @__s_Key_dest_code_0
+[2025-08-19 14:13:17.194 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__s_Key_dest_code_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id AS destination_id, CASE
+    WHEN d1.id IS NOT NULL THEN d1.id
+    ELSE 0
+END AS id, d.country_code, d.active, d.dest_code, d1.dest_description, d1.dest_name, CASE
+    WHEN d3.id IS NOT NULL THEN 'http://api.raccoon24.de/' || COALESCE(d3.img_path, '')
+END AS img_path, d1.lang_code, d.dest_default_name, d.route
+FROM destination_main AS d
+LEFT JOIN (
+    SELECT d0.id, d0.dest_description, d0.dest_name, d0.destination_id, d0.lang_code
+    FROM destination_translations AS d0
+    WHERE d0.active
+) AS d1 ON d.id = d1.destination_id
+LEFT JOIN (
+    SELECT d2.id, d2.destination_id, d2.img_path
+    FROM destination_imgs AS d2
+    WHERE d2.is_default
+) AS d3 ON d.id = d3.destination_id
+WHERE d.active AND (lower(d.country_code) = lower(d.country_code) OR d.country_code IS NULL) AND d.dest_code = @__s_Key_dest_code_0
+[2025-08-19 14:13:17.196 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__s_Key_dest_code_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id AS destination_id, CASE
+    WHEN d1.id IS NOT NULL THEN d1.id
+    ELSE 0
+END AS id, d.country_code, d.active, d.dest_code, d1.dest_description, d1.dest_name, CASE
+    WHEN d3.id IS NOT NULL THEN 'http://api.raccoon24.de/' || COALESCE(d3.img_path, '')
+END AS img_path, d1.lang_code, d.dest_default_name, d.route
+FROM destination_main AS d
+LEFT JOIN (
+    SELECT d0.id, d0.dest_description, d0.dest_name, d0.destination_id, d0.lang_code
+    FROM destination_translations AS d0
+    WHERE d0.active
+) AS d1 ON d.id = d1.destination_id
+LEFT JOIN (
+    SELECT d2.id, d2.destination_id, d2.img_path
+    FROM destination_imgs AS d2
+    WHERE d2.is_default
+) AS d3 ON d.id = d3.destination_id
+WHERE d.active AND (lower(d.country_code) = lower(d.country_code) OR d.country_code IS NULL) AND d.dest_code = @__s_Key_dest_code_0
+[2025-08-19 14:13:17.211 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.destination.DestinationWithTranslations, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-19 14:13:17.262 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetDestinationWithTranslations (ITravel_App) in 5588.2952ms
+[2025-08-19 14:13:17.262 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestinationWithTranslations (ITravel_App)'
+[2025-08-19 14:13:17.276 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationWithTranslations - 200 null application/json; charset=utf-8 5873.3488ms
+[2025-08-19 14:13:19.301 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationMain - null null
+[2025-08-19 14:13:19.301 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-19 14:13:19.306 +03:00  INF]  CORS policy execution successful.
+[2025-08-19 14:13:19.307 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationMain - 204 null null 5.7236ms
+[2025-08-19 14:13:19.309 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationMain - application/json 2
+[2025-08-19 14:13:19.312 +03:00  INF]  CORS policy execution successful.
+[2025-08-19 14:13:19.312 +03:00  INF]  CORS policy execution successful.
+[2025-08-19 14:13:19.312 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App)'
+[2025-08-19 14:13:19.312 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 10.6182ms
+[2025-08-19 14:13:19.317 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-19 14:13:19.318 +03:00  INF]  CORS policy execution successful.
+[2025-08-19 14:13:19.318 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-19 14:13:19.329 +03:00  INF]  Route matched with {action = "GetDestination_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetDestination_Mains() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-19 14:13:19.334 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-19 14:13:19.503 +03:00  INF]  Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-19 14:13:19.557 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-19 14:13:19.595 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 260.0638ms
+[2025-08-19 14:13:19.600 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-19 14:13:19.602 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 286.1937ms
+[2025-08-19 14:13:19.648 +03:00  INF]  Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id, d.active, d.country_code, d.created_at, d.created_by, d.dest_code, d.dest_default_name, d.route, d.updated_at
+FROM destination_main AS d
+WHERE d.active
+[2025-08-19 14:13:19.799 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Entities.destination_main, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-19 14:13:19.808 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App) in 479.3943ms
+[2025-08-19 14:13:19.809 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App)'
+[2025-08-19 14:13:19.809 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationMain - 200 null application/json; charset=utf-8 500.1531ms

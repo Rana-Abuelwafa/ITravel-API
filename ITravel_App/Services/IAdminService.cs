@@ -15,6 +15,8 @@ namespace ITravel_App.Services
         public Task<List<destination_main>> GetDestination_Mains();
 
         #region trips
+        public Task<List<trip_price>> GetTrip_Prices(long? trip_id);
+        public Task<List<TripTranslationGrp>> GetTripTranslationGrp(long? trip_id);
         public ResponseCls SaveMainTrip(trip_main row);
         public ResponseCls SaveTripTranslation(TripTranslationReq row);
         public ResponseCls SaveTripPrices(TripPricesReq row);
