@@ -201,6 +201,22 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetPickupsAllForTrip",
+    "RelativePath": "api/TravelAdmin/GetPickupsAllForTrip",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.trips.PickupsReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "GetTrip_Mains",
     "RelativePath": "api/TravelAdmin/GetTrip_Mains",
     "HttpMethod": "POST",

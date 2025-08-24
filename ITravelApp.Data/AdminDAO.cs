@@ -77,11 +77,17 @@ namespace ITravelApp.Data
             int maxId = 0;
             try
             {
+                if (row.active == false)
+                {
+                    _db.Remove(row);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
 
                 if (row.id == 0)
                 {
                     //check duplicate validation
-                    var result = _db.destination_translations.Where(wr => wr.dest_name == row.dest_name && wr.destination_id == row.destination_id && wr.active == row.active && wr.lang_code == row.lang_code).SingleOrDefault();
+                    var result = _db.destination_translations.Where(wr => wr.destination_id == row.destination_id && wr.active == row.active && wr.lang_code == row.lang_code).SingleOrDefault();
                     if (result != null)
                     {
                         return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
@@ -645,6 +651,13 @@ namespace ITravelApp.Data
                 {
                     _db.Remove(pickup);
                     _db.SaveChanges();
+                    //check if there are translations for this row and delete all also
+                    var transList = _db.trip_pickups_translations.Where(wr => wr.trip_pickup_id == pickup.id).ToList();
+                    if(transList.Count > 0)
+                    {
+                        _db.RemoveRange(transList);
+                        _db.SaveChanges();
+                    }
                     return new ResponseCls { errors = null, success = true };
                 }
                 if (row.id == 0)
@@ -826,6 +839,90 @@ namespace ITravelApp.Data
 
         }
         
+        public async Task<List<trip_pickups_main>> GetTrip_Pickups_Mains(long? trip_id)
+        {
+            try
+            {
+                return await _db.trip_pickups_mains.Where(wr => wr.trip_id==trip_id).ToListAsync();
+            }
+            catch (Exception ex) {
+                return null;
+            }
+        }
+
+        public List<TripsPickupResponseGrp> GetPickupsAllForTrip(PickupsReq req)
+        {
+            try
+            {
+
+                var result =
+                    from PM in _db.trip_pickups_mains.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
+                    join trans in _db.trip_pickups_translations
+                        on PM.id equals trans.trip_pickup_id
+                             into pm_trans
+
+                    from combined in pm_trans.DefaultIfEmpty()
+                    select new TripsPickupResponse
+                    {
+                        trip_pickup_id = PM.id,
+                        lang_code = combined != null ? combined.lang_code : null,
+                        order = PM.order,
+                        pickup_code = PM.pickup_code,
+                        pickup_default_name = PM.pickup_default_name,
+                        pickup_description = combined !=null ? combined.pickup_description : null,
+                        pickup_name = combined != null ?  combined.pickup_name : null,
+                        trip_id = PM.trip_id,
+                        trip_type = PM.trip_type,
+                        duration = PM.duration,
+                        id= combined != null ? combined.id : 0
+                    };
+                //var result = await _db.trip_pickups_mains.Where(wr => wr.trip_id == req.trip_id && wr.trip_type == req.trip_type)
+                //                   .Join(_db.trip_pickups_translations,
+                //                        MAIN => new { trip_pickup_id = MAIN.id },
+                //                        TRANS => new { TRANS.trip_pickup_id },
+                //                        (MAIN, TRANS) => new TripsPickupResponse
+                //                        {
+                //                            trip_pickup_id = MAIN.id,
+                //                            lang_code = TRANS.lang_code,
+                //                            order = MAIN.order,
+                //                            pickup_code = MAIN.pickup_code,
+                //                            pickup_default_name = MAIN.pickup_default_name,
+                //                            pickup_description = TRANS.pickup_description,
+                //                            pickup_name = TRANS.pickup_name,
+                //                            trip_id = MAIN.trip_id,
+                //                            trip_type = MAIN.trip_type,
+                //                            duration = MAIN.duration
+                //                        }
+                //                       ).OrderBy(x => x.order).ToListAsync();
+
+                return result.OrderBy(x => x.order).ToList().GroupBy(grp => new
+                {
+                    grp.pickup_code,
+                    grp.pickup_default_name,
+                    grp.duration,
+                    grp.order,
+                    grp.trip_id,
+                    grp.trip_pickup_id,
+                    grp.trip_type
+                }).Select(s => new TripsPickupResponseGrp
+                {
+                    trip_pickup_id=s.Key.trip_pickup_id,
+                    trip_id=s.Key.trip_id,
+                    order=s.Key.order,
+                    pickup_default_name = s.Key.pickup_default_name,
+                    pickup_code= s.Key.pickup_code,
+                    trip_type=s.Key.trip_type,
+                    duration=s.Key.duration,
+                    translations =result.ToList().Where(wr => wr.trip_pickup_id == s.Key.trip_pickup_id && wr.lang_code !=null).ToList()
+
+                }).ToList();
+               
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         #endregion
 
     }

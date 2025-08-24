@@ -202,6 +202,11 @@ namespace ITravel_App.Controllers
         {
             return Ok(await _adminService.GetTrip_Prices(trip_id));
         }
+        [HttpPost("GetPickupsAllForTrip")]
+        public IActionResult GetPickupsAllForTrip(PickupsReq req)
+        {
+            return Ok( _adminService.GetPickupsAllForTrip(req));
+        }
         #endregion
     }
 }

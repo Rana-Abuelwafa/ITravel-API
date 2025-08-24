@@ -29,6 +29,8 @@ namespace ITravel_App.Services
         public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row);
 
         public Task<List<TripMainCast>> GetTrip_Mains(int destination_id);
+
+        public List<TripsPickupResponseGrp> GetPickupsAllForTrip(PickupsReq req);
         #endregion
     }
 }

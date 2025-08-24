@@ -365,7 +365,7 @@ namespace ITravelApp.Data
 					lang_code = s.lang_code,
 					country_code = s.country_code,
 					currency_code = s.currency_code,
-					default_img = s.default_img,
+					default_img = "http://api.raccoon24.de/" +  s.default_img,
 					dest_code = s.dest_code,
 					dest_default_name = s.dest_default_name,
 					pickup = s.pickup,
