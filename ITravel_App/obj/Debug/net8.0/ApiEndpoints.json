@@ -201,6 +201,22 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetImgsByTrip",
+    "RelativePath": "api/TravelAdmin/GetImgsByTrip",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trip_id",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "GetPickupsAllForTrip",
     "RelativePath": "api/TravelAdmin/GetPickupsAllForTrip",
     "HttpMethod": "POST",
@@ -272,8 +288,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "img",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "Name": "imgs",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
         "IsRequired": false
       },
       {
@@ -432,15 +448,15 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
-    "Method": "saveTripImage",
-    "RelativePath": "api/TravelAdmin/saveTripImage",
+    "Method": "SaveTripImage",
+    "RelativePath": "api/TravelAdmin/SaveTripImage",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "img",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "Name": "imgs",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
         "IsRequired": false
       },
       {
@@ -544,6 +560,38 @@
       {
         "Name": "row",
         "Type": "ITravelApp.Data.Models.trips.TripTranslationReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "UpdateDestinationImage",
+    "RelativePath": "api/TravelAdmin/UpdateDestinationImage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.destination.DestinationImgUpdateReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "UpdateTripImage",
+    "RelativePath": "api/TravelAdmin/UpdateTripImage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trip",
+        "Type": "ITravelApp.Data.Models.trips.TripImgUpdateReq",
         "IsRequired": true
       }
     ],

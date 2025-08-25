@@ -9,10 +9,11 @@ namespace ITravel_App.Services
     {
         public ResponseCls SaveMainDestination(destination_main row);
         public ResponseCls SaveDestinationTranslations(destination_translation row);
-        public ResponseCls saveDestinationImage(destination_img row);
+        public ResponseCls saveDestinationImage(List<destination_img> row);
         public List<DestinationWithTranslations> GetDestinationWithTranslations(DestinationReq req);
         public Task<List<destination_img>> GetImgsByDestination(int? destination_id);
         public Task<List<destination_main>> GetDestination_Mains();
+        public ResponseCls UpdateDestinationImage(DestinationImgUpdateReq cls);
 
         #region trips
         public Task<List<trip_price>> GetTrip_Prices(long? trip_id);
@@ -20,7 +21,7 @@ namespace ITravel_App.Services
         public ResponseCls SaveMainTrip(trip_main row);
         public ResponseCls SaveTripTranslation(TripTranslationReq row);
         public ResponseCls SaveTripPrices(TripPricesReq row);
-        public ResponseCls saveTripImage(TripImgReq row);
+        public ResponseCls saveTripImage(List<trip_img> lst);
         public ResponseCls SaveMainFacility(facility_main row);
         public ResponseCls SaveFacilityTranslation(FacilityTranslationReq row);
         public ResponseCls AssignFacilityToTrip(TripFacilityAssignReq row);
@@ -31,6 +32,8 @@ namespace ITravel_App.Services
         public Task<List<TripMainCast>> GetTrip_Mains(int destination_id);
 
         public List<TripsPickupResponseGrp> GetPickupsAllForTrip(PickupsReq req);
+        public Task<List<trip_img>> GetImgsByTrip(decimal? trip_id);
+        public ResponseCls UpdateTripImage(TripImgUpdateReq trip);
         #endregion
     }
 }

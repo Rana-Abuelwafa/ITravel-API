@@ -51,15 +51,7 @@ public partial class tripwithdetail
 
     public string? dest_route { get; set; }
 
-    public long? wish_id { get; set; }
-
-    public string? wsh_created_at { get; set; }
-
     public int? trip_type { get; set; }
-
-    public bool? isfavourite { get; set; }
-
-    public string? client_id { get; set; }
 
     public string? trip_not_includes { get; set; }
 

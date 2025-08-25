@@ -10,6 +10,6 @@ namespace ITravelApp.Data.Models.trips
 {
     public class TripImgReq : trip_img
     {
-        public IFormFile? img { get; set; }
+        public List<IFormFile>? imgs { get; set; }
     }
 }

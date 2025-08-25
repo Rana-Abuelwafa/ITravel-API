@@ -9,6 +9,11 @@ namespace ITravelApp.Data.Models.trips
 {
     public class TripsAll : tripwithdetail
     {
+        public long wish_id { get; set; }
+        public string? client_id { get; set; }
+        public string wsh_created_at { get; set; }
+        public bool? isfavourite {  get; set; }
+        public int? trip_type { get; set; }
         public int? total_reviews {  get; set; }
         public decimal? review_rate { get; set; }
         public List<TripFacility> facilities { get; set; }

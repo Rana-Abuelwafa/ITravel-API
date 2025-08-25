@@ -347,7 +347,6 @@ public partial class itravel_client_dbContext : DbContext
                 .HasNoKey()
                 .ToView("tripwithdetails");
 
-            entity.Property(e => e.client_id).HasColumnType("character varying");
             entity.Property(e => e.country_code).HasMaxLength(20);
             entity.Property(e => e.currency_code).HasMaxLength(5);
             entity.Property(e => e.default_img).HasMaxLength(50);

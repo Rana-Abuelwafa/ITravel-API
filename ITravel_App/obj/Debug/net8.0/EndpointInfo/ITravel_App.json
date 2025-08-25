@@ -540,9 +540,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "img": {
-                    "type": "string",
-                    "format": "binary"
+                  "imgs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
                   },
                   "id": {
                     "type": "integer",
@@ -586,7 +589,7 @@
                 }
               },
               "encoding": {
-                "img": {
+                "imgs": {
                   "style": "form"
                 },
                 "id": {
@@ -657,6 +660,48 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/UpdateDestinationImage": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinationImgUpdateReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinationImgUpdateReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinationImgUpdateReq"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -821,7 +866,7 @@
         }
       }
     },
-    "/api/TravelAdmin/saveTripImage": {
+    "/api/TravelAdmin/SaveTripImage": {
       "post": {
         "tags": [
           "TravelAdmin"
@@ -843,9 +888,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "img": {
-                    "type": "string",
-                    "format": "binary"
+                  "imgs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
                   },
                   "trip_id": {
                     "type": "integer",
@@ -889,7 +937,7 @@
                 }
               },
               "encoding": {
-                "img": {
+                "imgs": {
                   "style": "form"
                 },
                 "trip_id": {
@@ -1239,6 +1287,79 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/PickupsReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/GetImgsByTrip": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "trip_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/UpdateTripImage": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripImgUpdateReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripImgUpdateReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripImgUpdateReq"
               }
             }
           }
@@ -1653,6 +1774,64 @@
         },
         "additionalProperties": false
       },
+      "DestinationImgUpdateReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "destination_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "img_path": {
+            "type": "string",
+            "nullable": true
+          },
+          "img_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_default": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "created_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "img_width": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "img_height": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "img_resize_path": {
+            "type": "string",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "DestinationReq": {
         "type": "object",
         "properties": {
@@ -1766,6 +1945,64 @@
           },
           "created_by": {
             "type": "string",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripImgUpdateReq": {
+        "type": "object",
+        "properties": {
+          "trip_id": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "img_path": {
+            "type": "string",
+            "nullable": true
+          },
+          "img_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_default": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "created_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "img_resize_path": {
+            "type": "string",
+            "nullable": true
+          },
+          "img_width": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "img_height": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "delete": {
@@ -2001,6 +2238,10 @@
             "nullable": true
           },
           "currency_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "client_id": {
             "type": "string",
             "nullable": true
           }

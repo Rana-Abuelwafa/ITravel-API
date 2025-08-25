@@ -119,39 +119,50 @@ namespace ITravelApp.Data
             return response;
         }
         //save destination images
-        public ResponseCls saveDestinationImage(destination_img row)
+        public ResponseCls saveDestinationImage(List<destination_img> lst)
         {
             ResponseCls response;
             int maxId = 0;
+            int count = 0;
             try
             {
-
-                if (row.id == 0)
+                foreach (var row in lst)
                 {
-                    //check duplicate validation
-                    var result = _db.destination_imgs.Where(wr => wr.destination_id == row.destination_id && wr.is_default == (row.is_default == true ? row.is_default : null)).SingleOrDefault();
-                    if (result != null)
+                    if (row.id == 0)
                     {
-                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
-                    }
-                    if (_db.destination_imgs.Count() > 0)
-                    {
-                        maxId = _db.destination_imgs.Max(d => d.id);
+                        //check duplicate validation
+                        var result = _db.destination_imgs.Where(wr => wr.destination_id == row.destination_id && wr.is_default == (row.is_default == true ? row.is_default : null)).SingleOrDefault();
+                        if (result != null)
+                        {
+                            return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                        }
+                        if (_db.destination_imgs.Count() > 0)
+                        {
+                            maxId = _db.destination_imgs.Max(d => d.id);
 
+                        }
+                        row.id = maxId + 1;
+                        _db.destination_imgs.Add(row);
+                        _db.SaveChanges();
                     }
-                    row.id = maxId + 1;
-                    _db.destination_imgs.Add(row);
-                    _db.SaveChanges();
+                    else
+                    {
+                        row.updated_at = DateTime.Now;
+                        _db.destination_imgs.Update(row);
+                        _db.SaveChanges();
+                    }
+                    count++;
+
+                    
+                }
+                if(count == lst.Count)
+                {
+                    response = new ResponseCls { errors = null, success = true };
                 }
                 else
                 {
-                    row.updated_at = DateTime.Now;
-                    _db.destination_imgs.Update(row);
-                    _db.SaveChanges();
+                    response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
                 }
-
-
-                response = new ResponseCls { errors = null, success = true, idOut = row.id };
 
             }
 
@@ -243,7 +254,21 @@ namespace ITravelApp.Data
         {
             try
             {
-                return await _db.destination_imgs.Where(wr => wr.destination_id == destination_id).ToListAsync();
+                return await _db.destination_imgs.Where(wr => wr.destination_id == destination_id)
+                    .OrderBy(o => o.id).Select(s => new destination_img
+                                                {
+                                                    id = s.id,
+                                                    img_height = s.img_height,
+                                                    img_name = s.img_name,
+                                                    img_path = "http://api.raccoon24.de/" + s.img_path,
+                                                    img_resize_path = "http://api.raccoon24.de/" + s.img_resize_path,
+                                                    img_width = s.img_width,
+                                                    is_default = s.is_default,
+                                                    destination_id = s.destination_id,
+                                                }).ToListAsync();
+                //return await _db.destination_imgs.Where(wr => wr.destination_id == destination_id)
+                //    .OrderBy(o => o.id)
+                //    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -254,6 +279,60 @@ namespace ITravelApp.Data
         public async Task<List<destination_main>> GetDestination_Mains()
         {
             return await _db.destination_mains.Where(wr => wr.active == true).ToListAsync();
+        }
+
+        //use to set destination image is default , and first should check if there is another image with same destination id is default or not
+        public ResponseCls UpdateDestinationImage(DestinationImgUpdateReq cls)
+        {
+            ResponseCls response;
+            try
+            {
+                destination_img dest = new destination_img
+                {
+                    id = cls.id,
+                    destination_id = cls.destination_id,
+                    is_default = cls.is_default,
+                    img_name = cls.img_name,
+                    img_path = cls.img_path,
+                    created_by = cls.created_by
+                };
+                if (cls.delete == true)
+                {
+                    _db.Remove(dest);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+                if (dest.is_default == true)
+                {
+                    var result = _db.destination_imgs.Where(wr => wr.destination_id == dest.destination_id && wr.is_default == true).SingleOrDefault();
+                    if (result != null)
+                    {
+                        //if already an image is default , so make it false and set is default to new one
+                        result.updated_at = DateTime.Now;
+                        result.is_default = false;
+                        _db.destination_imgs.Update(result);
+                        _db.SaveChanges();
+                    }
+
+                }
+                var row = _db.destination_imgs.Where(wr => wr.id == dest.id).SingleOrDefault();
+                if (row != null)
+                {
+                    row.updated_at = DateTime.Now;
+                    row.is_default = dest.is_default;
+                    _db.destination_imgs.Update(row);
+                    _db.SaveChanges();
+                }
+                response = new ResponseCls { errors = null, success = true };
+
+
+
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
         }
         #endregion
 
@@ -418,54 +497,100 @@ namespace ITravelApp.Data
             return response;
         }
 
-        //save trip images
-        public ResponseCls saveTripImage(TripImgReq row)
+        //use to set trip image is default , and first should check if there is another image with same trip id is default or not
+        public ResponseCls UpdateTripImage(TripImgUpdateReq cls)
         {
             ResponseCls response;
-            long maxId = 0;
             try
             {
                 trip_img trip = new trip_img
                 {
-                    trip_id = row.trip_id,
-                    id = row.id,
-                    img_name = row.img_name,
-                    img_path = row.img_path,
-                    is_default = row.is_default,
-                    created_by = row.created_by,
-                    img_height = row.img_height,
-                    img_resize_path = row.img_resize_path,
-                    img_width = row.img_width,
-
-
+                    id = cls.id,
+                    trip_id = cls.trip_id,
+                    is_default = cls.is_default,
+                    img_name = cls.img_name,
+                    img_path =cls.img_path,
+                    created_by= cls.created_by
                 };
-
-                if (row.id == 0)
+                if (cls.delete == true)
                 {
-                    //check duplicate validation
-                    var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == (trip.is_default == true ? trip.is_default : null)).SingleOrDefault();
+                    _db.Remove(trip);
+                    _db.SaveChanges();
+                    return new ResponseCls { errors = null, success = true };
+                }
+                if (trip.is_default == true)
+                {
+                    var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == true).SingleOrDefault();
                     if (result != null)
                     {
-                        return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                        //if already an image is default , so make it false and set is default to new one
+                        result.updated_at = DateTime.Now;
+                        result.is_default = false;
+                        _db.trip_imgs.Update(result);
+                        _db.SaveChanges();
                     }
-                    if (_db.trip_imgs.Count() > 0)
-                    {
-                        maxId = _db.trip_imgs.Max(d => d.id);
-
-                    }
-                    trip.id = maxId + 1;
-                    _db.trip_imgs.Add(trip);
-                    _db.SaveChanges();
+                   
                 }
-                else
+                var row = _db.trip_imgs.Where(wr => wr.id == trip.id).SingleOrDefault();
+                if (row != null)
                 {
                     row.updated_at = DateTime.Now;
-                    _db.trip_imgs.Update(trip);
+                    row.is_default = trip.is_default;
+                    _db.trip_imgs.Update(row);
                     _db.SaveChanges();
                 }
+                response = new ResponseCls { errors = null, success = true }; 
+                
+               
+               
+            }
+            catch (Exception ex)
+            {
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+            }
+            return response;
+        }
+        public ResponseCls saveTripImage(List<trip_img> lst)
+        {
+            ResponseCls response;
+            long maxId = 0;
+            int count = 0;
+            try
+            {
+                foreach (var trip in lst) {
+                    if (trip.id == 0)
+                    {
+                        //check duplicate validation
+                        var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == (trip.is_default == true ? trip.is_default : null)).SingleOrDefault();
+                        if (result != null)
+                        {
+                            return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+                        }
+                        if (_db.trip_imgs.Count() > 0)
+                        {
+                            maxId = _db.trip_imgs.Max(d => d.id);
 
-                response = new ResponseCls { errors = null, success = true, idOut = trip.id };
+                        }
+                        trip.id = maxId + 1;
+                        _db.trip_imgs.Add(trip);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                         trip.updated_at = DateTime.Now;
+                        _db.trip_imgs.Update(trip);
+                        _db.SaveChanges();
+                    }
+                    count++;
+                }
 
+                if (count == lst.Count)
+                {
+                    response = new ResponseCls { errors = null, success = true };
+                }
+
+
+                response = new ResponseCls { errors = _localizer["CheckAdmin"], success = true };
 
             }
 
@@ -475,6 +600,62 @@ namespace ITravelApp.Data
             }
             return response;
         }
+        //public ResponseCls saveTripImage(TripImgReq row)
+        //{
+        //    ResponseCls response;
+        //    long maxId = 0;
+        //    try
+        //    {
+        //        trip_img trip = new trip_img
+        //        {
+        //            trip_id = row.trip_id,
+        //            id = row.id,
+        //            img_name = row.img_name,
+        //            img_path = row.img_path,
+        //            is_default = row.is_default,
+        //            created_by = row.created_by,
+        //            img_height = row.img_height,
+        //            img_resize_path = row.img_resize_path,
+        //            img_width = row.img_width,
+
+
+        //        };
+
+        //        if (row.id == 0)
+        //        {
+        //            //check duplicate validation
+        //            var result = _db.trip_imgs.Where(wr => wr.trip_id == trip.trip_id && wr.is_default == (trip.is_default == true ? trip.is_default : null)).SingleOrDefault();
+        //            if (result != null)
+        //            {
+        //                return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+        //            }
+        //            if (_db.trip_imgs.Count() > 0)
+        //            {
+        //                maxId = _db.trip_imgs.Max(d => d.id);
+
+        //            }
+        //            trip.id = maxId + 1;
+        //            _db.trip_imgs.Add(trip);
+        //            _db.SaveChanges();
+        //        }
+        //        else
+        //        {
+        //            row.updated_at = DateTime.Now;
+        //            _db.trip_imgs.Update(trip);
+        //            _db.SaveChanges();
+        //        }
+
+        //        response = new ResponseCls { errors = null, success = true, idOut = trip.id };
+
+
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        response = new ResponseCls { errors = _localizer["CheckAdmin"], success = false, idOut = 0 };
+        //    }
+        //    return response;
+        //}
         //save main facility data by admin
         public ResponseCls SaveMainFacility(facility_main row)
         {
@@ -923,6 +1104,29 @@ namespace ITravelApp.Data
                 return null;
             }
         }
+        //get images list for specific trip
+        public async Task<List<trip_img>> GetImgsByTrip(decimal? trip_id)
+        {
+            try
+            {
+                return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id).OrderBy(o => o.id).Select(s => new trip_img
+                {
+                    id = s.id,
+                    img_height = s.img_height,
+                    img_name = s.img_name,
+                    img_path = "http://api.raccoon24.de/" + s.img_path,
+                    img_resize_path = "http://api.raccoon24.de/" + s.img_resize_path,
+                    img_width = s.img_width,
+                    is_default = s.is_default,
+                    trip_id = s.trip_id,
+                }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         #endregion
 
     }

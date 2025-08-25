@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Travel_Authentication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2cb229852cbdee1e59c1849aded7f8195c3ff37b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33108087fec1b7fdc33709272221d36ebb4c01ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("Travel_Authentication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Travel_Authentication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

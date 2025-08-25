@@ -36,6 +36,11 @@ namespace ITravel_App.Services
             return _adminDAO.GetImgsByDestination(destination_id);
         }
 
+        public Task<List<trip_img>> GetImgsByTrip(decimal? trip_id)
+        {
+            return _adminDAO.GetImgsByTrip(trip_id);
+        }
+
         public List<TripsPickupResponseGrp> GetPickupsAllForTrip(PickupsReq req)
         {
             return _adminDAO.GetPickupsAllForTrip(req);
@@ -56,7 +61,7 @@ namespace ITravel_App.Services
             return _adminDAO.GetTrip_Prices(trip_id);
         }
 
-        public ResponseCls saveDestinationImage(destination_img row)
+        public ResponseCls saveDestinationImage(List<destination_img> row)
         {
             return _adminDAO.saveDestinationImage(row);
         }
@@ -92,9 +97,9 @@ namespace ITravel_App.Services
         }
 
        
-        public ResponseCls saveTripImage(TripImgReq row)
+        public ResponseCls saveTripImage(List<trip_img> lst)
         {
-            return _adminDAO.saveTripImage(row);
+            return _adminDAO.saveTripImage(lst);
         }
 
         public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row)
@@ -110,6 +115,16 @@ namespace ITravel_App.Services
         public ResponseCls SaveTripTranslation(TripTranslationReq row)
         {
             return _adminDAO.SaveTripTranslation(row);
+        }
+
+        public ResponseCls UpdateDestinationImage(DestinationImgUpdateReq cls)
+        {
+            return _adminDAO.UpdateDestinationImage(cls);
+        }
+
+        public ResponseCls UpdateTripImage(TripImgUpdateReq trip)
+        {
+            return _adminDAO.UpdateTripImage(trip);
         }
     }
 }
