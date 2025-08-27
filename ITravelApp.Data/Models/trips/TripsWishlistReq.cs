@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ITravelApp.Data.Models.trips
 {
-    public class TripFacilityAssignReq : trip_facility
+    public class TripsWishlistReq : trips_wishlist
     {
-        public bool delete { get; set; }
-        public bool selected { get; set; }
+        public bool? delete { get; set; }
     }
 }

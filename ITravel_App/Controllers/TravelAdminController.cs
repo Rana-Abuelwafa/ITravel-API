@@ -1,12 +1,8 @@
 ﻿using ITravel_App.Services;
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models.destination;
-using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.trips;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ITravel_App.Controllers
 {
@@ -57,10 +53,10 @@ namespace ITravel_App.Controllers
         public IActionResult saveDestinationImageAsync([FromForm] DestinationImgReq req)
         {
             string email = _loginUserData.client_email;
-            List< destination_img > lst = new List< destination_img >();
+            List<destination_img> lst = new List<destination_img>();
             foreach (var img in req.imgs)
             {
-               
+
                 var path = Path.Combine("images" + "/destinations/", img.FileName);
                 //var path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Images" + "//", cls.img.FileName);
                 try
@@ -88,11 +84,11 @@ namespace ITravel_App.Controllers
                 };
                 lst.Add(image);
             }
-            
+
 
             return Ok(_adminService.saveDestinationImage(lst));
         }
-        
+
         [HttpPost("GetImgsByDestination")]
         public async Task<IActionResult> GetImgsByDestination([FromQuery] int destination_id)
         {
@@ -133,7 +129,7 @@ namespace ITravel_App.Controllers
             row.created_by = email;
             return Ok(_adminService.SaveTripTranslation(row));
         }
-       
+
         [HttpPost("SaveTripPrices")]
         public IActionResult SaveTripPrices(TripPricesReq row)
         {
@@ -146,7 +142,7 @@ namespace ITravel_App.Controllers
         public IActionResult SaveTripImage([FromForm] TripImgReq req)
         {
             string email = _loginUserData.client_email;
-            List< trip_img> lst = new List<trip_img>();
+            List<trip_img> lst = new List<trip_img>();
             foreach (var img in req.imgs)
             {
                 trip_img cls = new trip_img();
@@ -245,7 +241,7 @@ namespace ITravel_App.Controllers
         [HttpPost("GetPickupsAllForTrip")]
         public IActionResult GetPickupsAllForTrip(PickupsReq req)
         {
-            return Ok( _adminService.GetPickupsAllForTrip(req));
+            return Ok(_adminService.GetPickupsAllForTrip(req));
         }
 
         [HttpPost("GetImgsByTrip")]
@@ -260,7 +256,17 @@ namespace ITravel_App.Controllers
             trip.created_by = email;
             return Ok(_adminService.UpdateTripImage(trip));
         }
+        [HttpPost("GetFacilityWithTranslation")]
+        public IActionResult GetFacilityWithTranslation()
+        {
+            return Ok(_adminService.GetFacilityWithTranslation());
+        }
 
+        [HttpPost("GetFacilityAllWithSelect")]
+        public IActionResult GetFacilityAllWithSelect([FromQuery] long trip_id)
+        {
+            return Ok(_adminService.GetFacilityAllWithSelect(trip_id));
+        }
         #endregion
     }
 }

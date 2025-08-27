@@ -67,17 +67,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/trips_wishlist"
+                "$ref": "#/components/schemas/TripsWishlistReq"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/trips_wishlist"
+                "$ref": "#/components/schemas/TripsWishlistReq"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/trips_wishlist"
+                "$ref": "#/components/schemas/TripsWishlistReq"
               }
             }
           }
@@ -1371,6 +1371,60 @@
         }
       }
     },
+    "/api/TravelAdmin/GetFacilityWithTranslation": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TravelAdmin/GetFacilityAllWithSelect": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "trip_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelClient/getDestinations": {
       "post": {
         "tags": [
@@ -1949,6 +2003,9 @@
           },
           "delete": {
             "type": "boolean"
+          },
+          "selected": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -2248,6 +2305,39 @@
         },
         "additionalProperties": false
       },
+      "TripsWishlistReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trip_id": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "client_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "delete": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "client_notification_setting": {
         "type": "object",
         "properties": {
@@ -2505,35 +2595,6 @@
           },
           "route": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "trips_wishlist": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "trip_id": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "client_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "trip_type": {
-            "type": "integer",
-            "format": "int32",
             "nullable": true
           }
         },

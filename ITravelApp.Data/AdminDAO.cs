@@ -2,6 +2,7 @@
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
 using ITravelApp.Data.Models.destination;
+using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.trips;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -667,7 +668,7 @@ namespace ITravelApp.Data
                 if (row.id == 0)
                 {
                     //check duplicate validation
-                    var result = _db.facility_mains.Where(wr => wr.facility_code == row.facility_code && wr.active == row.active).SingleOrDefault();
+                    var result = _db.facility_mains.Where(wr => wr.facility_code == row.facility_code).SingleOrDefault();
                     if (result != null)
                     {
                         return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
@@ -768,7 +769,7 @@ namespace ITravelApp.Data
                     trip_id = row.trip_id,
                     created_by = row.created_by
                 };
-                if (row.delete == true)
+                if (row.selected == false && row.id > 0)
                 {
                     _db.Remove(trip);
                     _db.SaveChanges();
@@ -874,6 +875,77 @@ namespace ITravelApp.Data
             return response;
         }
 
+
+        public List<FacilityWithTranslationGrp> GetFacilityWithTranslation()
+        {
+            try
+            {
+                var result =
+                   from FM in _db.facility_mains
+                   join FT in _db.facility_translations
+                       on FM.id equals FT.facility_id
+                            into FM_FT
+
+                   from combined in FM_FT.DefaultIfEmpty()
+                   select new FacilityWithTranslation
+                   {
+                       facility_id=FM.id,
+                       id= combined != null ? combined.id : 0,
+                       facility_code=FM.facility_code,
+                       facility_default_name = FM.facility_default_name,
+                       facility_desc= combined != null ? combined.facility_desc : null,
+                       facility_name= combined != null ? combined.facility_name : null,
+                       lang_code= combined != null ? combined.lang_code : null,
+                       active=FM.active
+                   };
+               return  result.ToList().GroupBy(grp => new
+                {
+                    grp.facility_id,
+                    grp.facility_default_name,
+                    grp.facility_code,
+                    grp.active
+                }).Select(s => new FacilityWithTranslationGrp
+                {
+                    facility_code=s.Key.facility_code,
+                    facility_default_name=s.Key.facility_default_name,
+                    facility_id=s.Key.facility_id,
+                    active=s.Key.active,
+                    translations=result.ToList().Where(wr => wr.facility_id == s.Key.facility_id && wr.id !=0).ToList()
+
+                }).OrderBy(x => x.facility_id).ToList();
+            }
+            catch (Exception ex) {
+                return null;
+            }
+
+        }
+
+        public List<FacilityAllWithSelect> GetFacilityAllWithSelect(long? trip_id)
+        {
+            try
+            {
+                var result =
+                   from FM in _db.facility_mains.Where(wr => wr.active == true)
+                   join FT in _db.trip_facilities.Where(wr => wr.trip_id == trip_id)
+                       on FM.id equals FT.facility_id
+                            into FM_FT
+
+                   from combined in FM_FT.DefaultIfEmpty()
+                   select new FacilityAllWithSelect
+                   {
+                       active = FM.active,
+                       facility_code = FM.facility_code,
+                       facility_default_name = FM.facility_default_name,
+                       id = FM.id,
+                       selected = combined !=null && combined.id > 0 ? true: false
+                   };
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         //save  trip pickups main data by admin
         public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row)
         {

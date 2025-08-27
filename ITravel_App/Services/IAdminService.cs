@@ -1,6 +1,7 @@
 ﻿using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
 using ITravelApp.Data.Models.destination;
+using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.trips;
 
 namespace ITravel_App.Services
@@ -34,6 +35,10 @@ namespace ITravel_App.Services
         public List<TripsPickupResponseGrp> GetPickupsAllForTrip(PickupsReq req);
         public Task<List<trip_img>> GetImgsByTrip(decimal? trip_id);
         public ResponseCls UpdateTripImage(TripImgUpdateReq trip);
+
+        public List<FacilityWithTranslationGrp> GetFacilityWithTranslation();
+
+        public List<FacilityAllWithSelect> GetFacilityAllWithSelect(long? trip_id);
         #endregion
     }
 }

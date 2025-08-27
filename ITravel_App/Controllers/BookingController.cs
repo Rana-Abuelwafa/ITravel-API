@@ -45,7 +45,7 @@ namespace ITravel_App.Controllers
         #region "wishlist"
 
         [HttpPost("AddTripToWishList")]
-        public IActionResult AddTripToWishList(trips_wishlist row)
+        public IActionResult AddTripToWishList(TripsWishlistReq row)
         {
             string? clientId = string.Empty;
 

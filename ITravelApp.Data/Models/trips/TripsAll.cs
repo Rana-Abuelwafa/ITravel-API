@@ -11,7 +11,7 @@ namespace ITravelApp.Data.Models.trips
     {
         public long wish_id { get; set; }
         public string? client_id { get; set; }
-        public string wsh_created_at { get; set; }
+        public string? wsh_created_at { get; set; }
         public bool? isfavourite {  get; set; }
         public int? trip_type { get; set; }
         public int? total_reviews {  get; set; }

@@ -19,7 +19,7 @@ namespace ITravel_App.Services
 
         }
 
-        public ResponseCls AddTripToWishList(trips_wishlist row)
+        public ResponseCls AddTripToWishList(TripsWishlistReq row)
         {
             return _clientDAO.AddTripToWishList(row);
         }

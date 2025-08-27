@@ -120,14 +120,14 @@ namespace ITravelApp.Data
 			}
 			catch(Exception ex)
 			{
-				return null;
+				return new trips_wishlist();
 			}
 		}
 		public async Task<List<TripsAll>> GetTripsAll(TripsReq req)
 		{
-			bool isFav = false;
 			try
 			{
+				
 				
 				var trips = await _db.tripwithdetails
 					.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && 
@@ -159,13 +159,13 @@ namespace ITravelApp.Data
 						trip_origin_price = s.trip_origin_price,
 						trip_sale_price = s.trip_sale_price,
 						trip_trans_id = s.trip_trans_id,
-						isfavourite = req.client_id == null ? false : (CheckIfTripInWishList(s.trip_id,req.client_id).Result == null  ? false: true),
+						isfavourite = string.IsNullOrEmpty(req.client_id) ? false : (CheckIfTripInWishList(s.trip_id,req.client_id).Result.id == 0  ? false: true),
 						trip_type = 1,
-						//wish_id = s.wish_id,
-						//wsh_created_at=s.wsh_created_at,
+						wish_id = string.IsNullOrEmpty(req.client_id) ? 0 : CheckIfTripInWishList(s.trip_id, req.client_id).Result.id,
+                        wsh_created_at = string.IsNullOrEmpty(req.client_id) ? "" : CheckIfTripInWishList(s.trip_id, req.client_id).Result.created_at.Value.ToString("dd-MM-yyyy"),
 						dest_route = s.dest_route,
 						route=s.route,
-						//client_id=s.client_id,
+						client_id=req.client_id,
                         facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
 						imgs = GetImgsByTrip(s.trip_id).Result,
 						important_info=s.important_info,
@@ -319,14 +319,27 @@ namespace ITravelApp.Data
 		}
 
 		//save client wishList
-		//save client reviews for trip
-		public ResponseCls AddTripToWishList(trips_wishlist row)
+		
+		public ResponseCls AddTripToWishList(TripsWishlistReq cls)
 		{
 			ResponseCls response;
 			long maxId = 0;
 			try
 			{
-				row.created_at = DateTime.Now;
+				trips_wishlist row = new trips_wishlist
+				{
+					client_id = cls.client_id,
+					created_at= DateTime.Now,
+					id= cls.id,
+					trip_id= cls.trip_id,
+					trip_type= cls.trip_type
+                };
+				if(cls.delete == true)
+				{
+					_db.Remove(row);
+					_db.SaveChanges();
+                   return new ResponseCls { errors = null, success = true };
+                }
 				if (row.id == 0)
 				{
 					//check duplicate validation
@@ -365,7 +378,7 @@ namespace ITravelApp.Data
 		{
 			try
 			{
-#pragma warning disable CS8601 // Possible null reference assignment.
+
                 var trips = await _db.tripwithdetails
 					 .Where(wr => wr.lang_code == req.lang_code &&
 								   wr.currency_code.ToLower() == req.currency_code.ToLower() && wr.trip_type ==req.trip_type)
@@ -397,7 +410,7 @@ namespace ITravelApp.Data
                                         trip_trans_id = TRIP.trip_trans_id,
                                         wish_id = WSH.id,
                                         client_id = WSH.client_id,
-                                        wsh_created_at = WSH != null ? WSH.created_at.ToString() :"",
+                                        wsh_created_at = WSH != null ? WSH.created_at.Value.ToString("dd-MM-yyyy") : "",
                                         trip_type = TRIP.trip_type,
                                         isfavourite = (WSH != null && WSH.id != 0) ? true : false,
                                         dest_route = TRIP.dest_route,
@@ -407,7 +420,7 @@ namespace ITravelApp.Data
                                         trip_details = TRIP.trip_details,
                                      
                                     }).ToListAsync();
-#pragma warning restore CS8601 // Possible null reference assignment.
+
                 return trips.Select(s => new TripsAll
 				{
 					destination_id = s.destination_id,

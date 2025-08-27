@@ -1,0 +1,1417 @@
+[2025-08-27 10:04:11.145 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-27 10:04:11.615 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-27 10:04:11.616 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-27 10:04:11.786 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-27 10:04:11.786 +03:00  INF]  Hosting environment: Development
+[2025-08-27 10:04:11.787 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-27 10:04:12.696 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-27 10:04:13.376 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 676.9815ms
+[2025-08-27 10:04:13.441 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-27 10:04:13.454 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-27 10:04:13.468 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 26.9138ms
+[2025-08-27 10:04:13.563 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 108.9791ms
+[2025-08-27 10:04:13.671 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-27 10:04:13.720 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 48.2525ms
+[2025-08-27 10:05:26.587 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsAll - application/json 142
+[2025-08-27 10:05:27.741 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:05:27.745 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App)'
+[2025-08-27 10:05:27.778 +03:00  INF]  Route matched with {action = "GetTripsAll", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTripsAll(ITravelApp.Data.Models.trips.TripsReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-08-27 10:05:30.279 +03:00  INF]  Executed DbCommand (67ms) [Parameters=[@__ToLower_0='?', @__ToLower_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.country_code, t.currency_code, t.default_img, t.dest_code, t.dest_default_name, t.dest_route, t.destination_id, t.important_info, t.lang_code, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_description, t.trip_details, t.trip_duration, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name, t.trip_not_includes, t.trip_origin_price, t.trip_sale_price, t.trip_trans_id, t.trip_type
+FROM tripwithdetails AS t
+WHERE lower(t.lang_code) = @__ToLower_0 AND (t.show_in_top = t.show_in_top OR t.show_in_top IS NULL) AND (t.destination_id = t.destination_id OR t.destination_id IS NULL) AND lower(t.currency_code) = @__ToLower_1 AND (t.show_in_slider = t.show_in_slider OR t.show_in_slider IS NULL)
+[2025-08-27 10:05:30.377 +03:00  INF]  Executed DbCommand (6ms) [Parameters=[@__ToLower_1='?', @__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT f0.facility_desc, f0.facility_name
+FROM trip_facility AS t
+LEFT JOIN (
+    SELECT f.facility_desc, f.facility_id, f.facility_name
+    FROM facility_translations AS f
+    WHERE lower(f.lang_code) = @__ToLower_1
+) AS f0 ON t.facility_id = f0.facility_id
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-27 10:05:30.392 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.img_height, t.img_name, 'http://api.raccoon24.de/' || COALESCE(t.img_path, '') AS img_path, 'http://api.raccoon24.de/' || COALESCE(t.img_resize_path, '') AS img_resize_path, t.img_width, t.is_default, t.trip_id
+FROM trip_imgs AS t
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-27 10:05:30.415 +03:00  INF]  Executed DbCommand (5ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-27 10:05:30.426 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.review_rate)
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-27 10:05:30.435 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripsAll, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 10:05:30.472 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App) in 2690.7805ms
+[2025-08-27 10:05:30.473 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App)'
+[2025-08-27 10:05:30.482 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsAll - 200 null application/json; charset=utf-8 3895.576ms
+[2025-08-27 10:10:15.466 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsAll - application/json 178
+[2025-08-27 10:10:15.526 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:10:15.526 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App)'
+[2025-08-27 10:10:15.526 +03:00  INF]  Route matched with {action = "GetTripsAll", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTripsAll(ITravelApp.Data.Models.trips.TripsReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-08-27 10:10:15.552 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__ToLower_0='?', @__ToLower_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.country_code, t.currency_code, t.default_img, t.dest_code, t.dest_default_name, t.dest_route, t.destination_id, t.important_info, t.lang_code, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_description, t.trip_details, t.trip_duration, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name, t.trip_not_includes, t.trip_origin_price, t.trip_sale_price, t.trip_trans_id, t.trip_type
+FROM tripwithdetails AS t
+WHERE lower(t.lang_code) = @__ToLower_0 AND (t.show_in_top = t.show_in_top OR t.show_in_top IS NULL) AND (t.destination_id = t.destination_id OR t.destination_id IS NULL) AND lower(t.currency_code) = @__ToLower_1 AND (t.show_in_slider = t.show_in_slider OR t.show_in_slider IS NULL)
+[2025-08-27 10:10:15.570 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-27 10:10:15.636 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-27 10:10:15.639 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-27 10:10:15.648 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__ToLower_1='?', @__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT f0.facility_desc, f0.facility_name
+FROM trip_facility AS t
+LEFT JOIN (
+    SELECT f.facility_desc, f.facility_id, f.facility_name
+    FROM facility_translations AS f
+    WHERE lower(f.lang_code) = @__ToLower_1
+) AS f0 ON t.facility_id = f0.facility_id
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-27 10:10:15.650 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.img_height, t.img_name, 'http://api.raccoon24.de/' || COALESCE(t.img_path, '') AS img_path, 'http://api.raccoon24.de/' || COALESCE(t.img_resize_path, '') AS img_resize_path, t.img_width, t.is_default, t.trip_id
+FROM trip_imgs AS t
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-27 10:10:15.651 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-27 10:10:15.652 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.review_rate)
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-27 10:10:15.653 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripsAll, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 10:10:15.653 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App) in 126.5024ms
+[2025-08-27 10:10:15.653 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App)'
+[2025-08-27 10:10:15.653 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsAll - 200 null application/json; charset=utf-8 188.2544ms
+[2025-08-27 10:32:48.015 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-27 10:32:48.320 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-27 10:32:48.321 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-27 10:32:48.467 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-27 10:32:48.468 +03:00  INF]  Hosting environment: Development
+[2025-08-27 10:32:48.468 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-27 10:32:49.500 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-27 10:32:49.857 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-27 10:32:49.861 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-27 10:32:49.871 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 13.075ms
+[2025-08-27 10:32:49.871 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 385.4384ms
+[2025-08-27 10:32:49.985 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 123.5408ms
+[2025-08-27 10:32:50.116 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-27 10:32:50.201 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 85.2207ms
+[2025-08-27 10:59:22.565 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 10:59:22.763 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:22.767 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 203.8702ms
+[2025-08-27 10:59:22.770 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 10:59:22.944 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:22.978 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:22.988 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:22.991 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:23.026 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:24.967 +03:00  INF]  Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:25.030 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:25.032 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:25.038 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 10:59:25.067 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 2032.1597ms
+[2025-08-27 10:59:25.067 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:25.073 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 2303.1687ms
+[2025-08-27 10:59:35.730 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 10:59:35.733 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:35.734 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 4.3496ms
+[2025-08-27 10:59:35.737 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 102
+[2025-08-27 10:59:35.738 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:35.738 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:35.738 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:35.739 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 10:59:35.750 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:35.900 +03:00  INF]  Executed DbCommand (10ms) [Parameters=[@__facility_lang_code_0='?', @__facility_facility_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id, f.created_at, f.created_by, f.facility_desc, f.facility_id, f.facility_name, f.lang_code, f.updated_at
+FROM facility_translations AS f
+WHERE f.lang_code = @__facility_lang_code_0 AND f.facility_id = @__facility_facility_id_1
+LIMIT 2
+[2025-08-27 10:59:35.930 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM facility_translations AS f
+[2025-08-27 10:59:35.946 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(f.id)
+FROM facility_translations AS f
+[2025-08-27 10:59:36.135 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?', @p3='?' (DbType = Int64), @p4='?', @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO facility_translations (id, created_by, facility_desc, facility_id, facility_name, lang_code)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING created_at, updated_at;
+[2025-08-27 10:59:36.162 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 10:59:36.168 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 418.4049ms
+[2025-08-27 10:59:36.169 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 10:59:36.170 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 432.7478ms
+[2025-08-27 10:59:36.180 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 10:59:36.181 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:36.181 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 0.7527ms
+[2025-08-27 10:59:36.182 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 10:59:36.183 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:36.183 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:36.183 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:36.183 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:36.183 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:36.255 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:36.258 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:36.260 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:36.261 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 10:59:36.261 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 77.361ms
+[2025-08-27 10:59:36.261 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:36.261 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 78.7655ms
+[2025-08-27 10:59:43.678 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 10:59:43.679 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:43.679 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 1.0916ms
+[2025-08-27 10:59:43.681 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 103
+[2025-08-27 10:59:43.682 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:43.682 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:43.682 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:43.682 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 10:59:43.682 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:43.701 +03:00  INF]  Executed DbCommand (4ms) [Parameters=[@p7='?' (DbType = Int64), @p0='?' (DbType = DateTime2), @p1='?', @p2='?', @p3='?' (DbType = Int64), @p4='?', @p5='?', @p6='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+UPDATE facility_translations SET created_at = @p0, created_by = @p1, facility_desc = @p2, facility_id = @p3, facility_name = @p4, lang_code = @p5, updated_at = @p6
+WHERE id = @p7;
+[2025-08-27 10:59:43.702 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 10:59:43.702 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 19.284ms
+[2025-08-27 10:59:43.702 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 10:59:43.702 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 21.0103ms
+[2025-08-27 10:59:43.712 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 10:59:43.712 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:43.712 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 0.5837ms
+[2025-08-27 10:59:43.713 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 10:59:43.714 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:43.714 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:43.714 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:43.714 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:43.714 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:43.717 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:43.718 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:43.719 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:43.719 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 10:59:43.719 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 4.7227ms
+[2025-08-27 10:59:43.719 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:43.719 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 5.8736ms
+[2025-08-27 10:59:47.129 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 10:59:47.129 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:47.129 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 0.5378ms
+[2025-08-27 10:59:47.131 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 102
+[2025-08-27 10:59:47.132 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:47.132 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:47.132 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:47.132 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 10:59:47.132 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:47.145 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM facility_translations
+WHERE id = @p0;
+[2025-08-27 10:59:47.149 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 10:59:47.149 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 16.864ms
+[2025-08-27 10:59:47.149 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 10:59:47.149 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 18.1545ms
+[2025-08-27 10:59:47.162 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 10:59:47.163 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:47.163 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 0.641ms
+[2025-08-27 10:59:47.164 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 10:59:47.165 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 10:59:47.165 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 10:59:47.165 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 10:59:47.165 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:47.165 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 10:59:47.168 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:47.169 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:47.170 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 10:59:47.170 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 10:59:47.171 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 5.5685ms
+[2025-08-27 10:59:47.171 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 10:59:47.171 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 6.9044ms
+[2025-08-27 11:00:03.687 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 11:00:03.688 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:03.688 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 1.6877ms
+[2025-08-27 11:00:03.690 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 102
+[2025-08-27 11:00:03.691 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:03.691 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:03.691 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:03.691 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:03.691 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:03.694 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__facility_lang_code_0='?', @__facility_facility_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id, f.created_at, f.created_by, f.facility_desc, f.facility_id, f.facility_name, f.lang_code, f.updated_at
+FROM facility_translations AS f
+WHERE f.lang_code = @__facility_lang_code_0 AND f.facility_id = @__facility_facility_id_1
+LIMIT 2
+[2025-08-27 11:00:03.695 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM facility_translations AS f
+[2025-08-27 11:00:03.696 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(f.id)
+FROM facility_translations AS f
+[2025-08-27 11:00:03.697 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?', @p3='?' (DbType = Int64), @p4='?', @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO facility_translations (id, created_by, facility_desc, facility_id, facility_name, lang_code)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING created_at, updated_at;
+[2025-08-27 11:00:03.698 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 11:00:03.698 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 6.7495ms
+[2025-08-27 11:00:03.698 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:03.698 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 7.8139ms
+[2025-08-27 11:00:03.713 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 11:00:03.713 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:03.713 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 0.6109ms
+[2025-08-27 11:00:03.715 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 11:00:03.715 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:03.715 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:03.715 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:03.715 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:03.715 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:03.717 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:03.718 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:03.718 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:03.719 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:00:03.719 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 3.3827ms
+[2025-08-27 11:00:03.719 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:03.719 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 4.3219ms
+[2025-08-27 11:00:14.723 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 11:00:14.723 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:14.723 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 0.5523ms
+[2025-08-27 11:00:14.725 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 103
+[2025-08-27 11:00:14.726 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:14.726 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:14.726 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:14.726 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:14.726 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:14.728 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__facility_lang_code_0='?', @__facility_facility_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id, f.created_at, f.created_by, f.facility_desc, f.facility_id, f.facility_name, f.lang_code, f.updated_at
+FROM facility_translations AS f
+WHERE f.lang_code = @__facility_lang_code_0 AND f.facility_id = @__facility_facility_id_1
+LIMIT 2
+[2025-08-27 11:00:14.798 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 11:00:14.798 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 72.1162ms
+[2025-08-27 11:00:14.798 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:14.798 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 73.517ms
+[2025-08-27 11:00:20.481 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 11:00:20.481 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:20.481 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 0.8029ms
+[2025-08-27 11:00:20.484 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 104
+[2025-08-27 11:00:20.485 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:20.485 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:20.485 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:20.485 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:20.485 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:20.487 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__facility_lang_code_0='?', @__facility_facility_id_1='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id, f.created_at, f.created_by, f.facility_desc, f.facility_id, f.facility_name, f.lang_code, f.updated_at
+FROM facility_translations AS f
+WHERE f.lang_code = @__facility_lang_code_0 AND f.facility_id = @__facility_facility_id_1
+LIMIT 2
+[2025-08-27 11:00:20.488 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM facility_translations AS f
+[2025-08-27 11:00:20.489 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(f.id)
+FROM facility_translations AS f
+[2025-08-27 11:00:20.490 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?', @p2='?', @p3='?' (DbType = Int64), @p4='?', @p5='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO facility_translations (id, created_by, facility_desc, facility_id, facility_name, lang_code)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING created_at, updated_at;
+[2025-08-27 11:00:20.490 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 11:00:20.491 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 5.5818ms
+[2025-08-27 11:00:20.491 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:20.491 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 7.1468ms
+[2025-08-27 11:00:20.510 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 11:00:20.510 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:20.510 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 0.5982ms
+[2025-08-27 11:00:20.512 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 11:00:20.512 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:20.512 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:20.512 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:20.512 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:20.513 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:20.515 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:20.517 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:20.519 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:20.519 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:00:20.519 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 6.6135ms
+[2025-08-27 11:00:20.519 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:20.519 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 7.9034ms
+[2025-08-27 11:00:22.918 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - null null
+[2025-08-27 11:00:22.919 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:22.919 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 204 null null 0.4653ms
+[2025-08-27 11:00:22.921 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - application/json 103
+[2025-08-27 11:00:22.921 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:22.921 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:22.921 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:22.921 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:22.922 +03:00  INF]  Route matched with {action = "SaveFacilityTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveFacilityTranslation(ITravelApp.Data.Models.trips.FacilityTranslationReq) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:22.926 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM facility_translations
+WHERE id = @p0;
+[2025-08-27 11:00:22.927 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 11:00:22.927 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App) in 5.2864ms
+[2025-08-27 11:00:22.927 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveFacilityTranslation (ITravel_App)'
+[2025-08-27 11:00:22.927 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveFacilityTranslation - 200 null application/json; charset=utf-8 6.3346ms
+[2025-08-27 11:00:22.955 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 11:00:22.955 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:22.955 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 0.6284ms
+[2025-08-27 11:00:22.957 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 11:00:22.957 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:22.957 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:22.958 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:22.958 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:22.958 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:22.959 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:22.960 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:22.961 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:22.961 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:00:22.961 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 3.7141ms
+[2025-08-27 11:00:22.961 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:22.962 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 4.9255ms
+[2025-08-27 11:00:29.535 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveMainFacility - null null
+[2025-08-27 11:00:29.536 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:29.536 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/SaveMainFacility - 204 null null 0.4344ms
+[2025-08-27 11:00:29.537 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainFacility - application/json 82
+[2025-08-27 11:00:29.538 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:29.538 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:29.538 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:29.538 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainFacility (ITravel_App)'
+[2025-08-27 11:00:29.541 +03:00  INF]  Route matched with {action = "SaveMainFacility", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainFacility(ITravelApp.Data.Entities.facility_main) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:29.590 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@p6='?' (DbType = Int64), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime2), @p2='?', @p3='?', @p4='?', @p5='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+UPDATE facility_main SET active = @p0, created_at = @p1, created_by = @p2, facility_code = @p3, facility_default_name = @p4, updated_at = @p5
+WHERE id = @p6;
+[2025-08-27 11:00:29.591 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-08-27 11:00:29.591 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveMainFacility (ITravel_App) in 49.9215ms
+[2025-08-27 11:00:29.591 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainFacility (ITravel_App)'
+[2025-08-27 11:00:29.591 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainFacility - 200 null application/json; charset=utf-8 53.5371ms
+[2025-08-27 11:00:29.605 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - null null
+[2025-08-27 11:00:29.605 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:29.606 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 204 null null 1.254ms
+[2025-08-27 11:00:29.607 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - application/json 2
+[2025-08-27 11:00:29.607 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:29.608 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:29.608 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:29.608 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:29.608 +03:00  INF]  Route matched with {action = "GetFacilityWithTranslation", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityWithTranslation() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:29.609 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:29.610 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:29.611 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT f.id AS facility_id, CASE
+    WHEN f0.id IS NOT NULL THEN f0.id
+    ELSE 0
+END AS id, f.facility_code, f.facility_default_name, f0.facility_desc, f0.facility_name, f0.lang_code, f.active
+FROM facility_main AS f
+LEFT JOIN facility_translations AS f0 ON f.id = f0.facility_id
+[2025-08-27 11:00:29.611 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.global.FacilityWithTranslationGrp, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:00:29.611 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App) in 3.6483ms
+[2025-08-27 11:00:29.611 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityWithTranslation (ITravel_App)'
+[2025-08-27 11:00:29.612 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityWithTranslation - 200 null application/json; charset=utf-8 4.7442ms
+[2025-08-27 11:00:37.717 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationMain - null null
+[2025-08-27 11:00:37.718 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:00:37.718 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:37.718 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationMain - 204 null null 1.6833ms
+[2025-08-27 11:00:37.724 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationMain - application/json 2
+[2025-08-27 11:00:37.729 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:37.730 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:37.730 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:37.731 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App)'
+[2025-08-27 11:00:37.737 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:37.737 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 19.8737ms
+[2025-08-27 11:00:37.739 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:00:37.740 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:00:37.740 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:00:37.740 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:00:37.740 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:00:37.742 +03:00  INF]  Route matched with {action = "GetDestination_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetDestination_Mains() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:37.752 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:00:37.799 +03:00  INF]  Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id, d.active, d.country_code, d.created_at, d.created_by, d.dest_code, d.dest_default_name, d.route, d.updated_at
+FROM destination_main AS d
+WHERE d.active
+[2025-08-27 11:00:37.861 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Entities.destination_main, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:00:37.869 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App) in 126.2891ms
+[2025-08-27 11:00:37.869 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App)'
+[2025-08-27 11:00:37.870 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationMain - 200 null application/json; charset=utf-8 146.7453ms
+[2025-08-27 11:00:37.885 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:00:37.887 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:00:37.890 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 137.7069ms
+[2025-08-27 11:00:37.890 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:00:37.890 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 151.4483ms
+[2025-08-27 11:32:28.304 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-27 11:32:28.726 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-27 11:32:28.732 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-27 11:32:30.093 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-27 11:32:30.093 +03:00  INF]  Hosting environment: Development
+[2025-08-27 11:32:30.093 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-27 11:32:31.623 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-27 11:32:32.132 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 526.5749ms
+[2025-08-27 11:32:32.221 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-27 11:32:32.232 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 9.7493ms
+[2025-08-27 11:32:32.434 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-27 11:32:32.484 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 49.9365ms
+[2025-08-27 11:32:33.748 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-27 11:32:33.807 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 59.2719ms
+[2025-08-27 11:33:01.093 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:33:01.093 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationMain - null null
+[2025-08-27 11:33:01.282 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:01.283 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:01.285 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetDestinationMain - 204 null null 191.2674ms
+[2025-08-27 11:33:01.285 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 192.0788ms
+[2025-08-27 11:33:01.288 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationMain - application/json 2
+[2025-08-27 11:33:01.289 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:33:01.316 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:01.316 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:01.339 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:01.339 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:01.346 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:01.346 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:01.350 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:33:01.350 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App)'
+[2025-08-27 11:33:01.383 +03:00  INF]  Route matched with {action = "GetDestination_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetDestination_Mains() on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:01.383 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:03.304 +03:00  INF]  Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT d.id, d.active, d.country_code, d.created_at, d.created_by, d.dest_code, d.dest_default_name, d.route, d.updated_at
+FROM destination_main AS d
+WHERE d.active
+[2025-08-27 11:33:03.304 +03:00  INF]  Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:33:03.400 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:33:03.433 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 2044.7188ms
+[2025-08-27 11:33:03.434 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:33:03.443 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 2154.3717ms
+[2025-08-27 11:33:03.451 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Entities.destination_main, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:33:03.458 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App) in 2074.2702ms
+[2025-08-27 11:33:03.458 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetDestination_Mains (ITravel_App)'
+[2025-08-27 11:33:03.459 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetDestinationMain - 200 null application/json; charset=utf-8 2170.2263ms
+[2025-08-27 11:33:09.675 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:33:09.678 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:09.679 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 6.0164ms
+[2025-08-27 11:33:09.683 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:33:09.684 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:09.684 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:09.685 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:09.685 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:33:09.685 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:09.760 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:33:09.761 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:33:09.761 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 75.5469ms
+[2025-08-27 11:33:09.761 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:33:09.761 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 79.2071ms
+[2025-08-27 11:33:12.232 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:33:12.232 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:12.233 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 1.1455ms
+[2025-08-27 11:33:12.236 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:33:12.238 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:12.238 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:12.238 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:12.238 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:12.242 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:12.344 +03:00  INF]  Executed DbCommand (15ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:33:12.347 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:33:12.350 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 107.5445ms
+[2025-08-27 11:33:12.350 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:12.350 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 113.6431ms
+[2025-08-27 11:33:21.517 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - null null
+[2025-08-27 11:33:21.517 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:21.518 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - 204 null null 1.0654ms
+[2025-08-27 11:33:21.520 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - application/json 2
+[2025-08-27 11:33:21.521 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:21.521 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:21.521 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:21.521 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:21.521 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:21.532 +03:00  INF]  Executed DbCommand (5ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:33:21.533 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:33:21.533 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 11.6361ms
+[2025-08-27 11:33:21.533 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:21.533 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - 200 null application/json; charset=utf-8 13.572ms
+[2025-08-27 11:33:22.978 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=1 - null null
+[2025-08-27 11:33:22.979 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:22.979 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=1 - 204 null null 0.7102ms
+[2025-08-27 11:33:22.982 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=1 - application/json 2
+[2025-08-27 11:33:22.982 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:22.982 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:22.983 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:22.983 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:22.983 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:22.987 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:33:22.987 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:33:22.988 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 4.7503ms
+[2025-08-27 11:33:22.988 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:22.988 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=1 - 200 null application/json; charset=utf-8 6.3636ms
+[2025-08-27 11:33:39.286 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:33:39.287 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:39.287 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 1.1448ms
+[2025-08-27 11:33:39.295 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:33:39.296 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:33:39.296 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:33:39.296 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:33:39.296 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:33:39.296 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:33:57.749 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:34:09.054 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:34:09.054 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 29757.884ms
+[2025-08-27 11:34:09.054 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:34:09.055 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 29759.2683ms
+[2025-08-27 11:34:52.162 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:34:52.162 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:34:52.163 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 0.5576ms
+[2025-08-27 11:34:52.164 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:34:52.165 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:34:52.165 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:34:52.165 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:34:52.165 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:34:52.165 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:34:52.195 +03:00  INF]  Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:34:52.196 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:34:52.196 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 31.2212ms
+[2025-08-27 11:34:52.196 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:34:52.197 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 32.7321ms
+[2025-08-27 11:34:54.922 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - null null
+[2025-08-27 11:34:54.923 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:34:54.924 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - 204 null null 1.7361ms
+[2025-08-27 11:34:54.926 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - application/json 2
+[2025-08-27 11:34:54.927 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:34:54.928 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:34:54.928 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:34:54.928 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:34:54.928 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:34:59.317 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:34:59.318 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:34:59.318 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 4389.5394ms
+[2025-08-27 11:34:59.318 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:34:59.318 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - 200 null application/json; charset=utf-8 4392.7101ms
+[2025-08-27 11:37:23.754 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:37:23.755 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:37:23.757 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 3.7925ms
+[2025-08-27 11:37:23.761 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:37:23.761 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:37:23.762 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:37:23.762 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:37:23.762 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:37:23.762 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:37:23.767 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:37:23.767 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:37:23.768 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 5.6858ms
+[2025-08-27 11:37:23.768 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:37:23.768 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 7.2685ms
+[2025-08-27 11:39:02.362 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:39:02.363 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:39:02.367 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 5.1496ms
+[2025-08-27 11:39:02.371 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:39:02.373 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:39:02.374 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:39:02.374 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:39:02.374 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:39:02.374 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:39:02.421 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:39:02.421 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:39:02.421 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 47.6686ms
+[2025-08-27 11:39:02.421 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:39:02.422 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 51.1097ms
+[2025-08-27 11:39:35.420 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:39:35.420 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:39:35.420 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 0.4563ms
+[2025-08-27 11:39:35.423 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:39:35.424 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:39:35.424 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:39:35.424 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:39:35.424 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:39:35.425 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:39:35.441 +03:00  INF]  Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:39:35.442 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:39:35.442 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 17.1636ms
+[2025-08-27 11:39:35.442 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:39:35.443 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 20.0314ms
+[2025-08-27 11:39:37.672 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:39:37.672 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:39:37.672 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 0.6395ms
+[2025-08-27 11:39:37.675 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:39:37.675 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:39:37.675 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:39:37.675 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:39:37.675 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:39:37.676 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:39:37.679 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:39:37.680 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:39:37.680 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 4.228ms
+[2025-08-27 11:39:37.680 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:39:37.680 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 5.4555ms
+[2025-08-27 11:40:26.233 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:40:26.233 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:40:26.233 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 0.5947ms
+[2025-08-27 11:40:26.240 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:40:26.240 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:40:26.240 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:40:26.240 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:40:26.240 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:40:26.240 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:40:26.250 +03:00  INF]  Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:40:26.262 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:40:26.263 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 22.1244ms
+[2025-08-27 11:40:26.263 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:40:26.263 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 23.4579ms
+[2025-08-27 11:40:28.810 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:40:28.810 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:40:28.810 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 0.5307ms
+[2025-08-27 11:40:28.813 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:40:28.814 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:40:28.815 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:40:28.815 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:40:28.815 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:40:28.816 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:40:28.819 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:40:28.819 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:40:28.819 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 3.349ms
+[2025-08-27 11:40:28.819 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:40:28.819 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 7.2688ms
+[2025-08-27 11:41:15.493 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:41:15.498 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:15.500 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 6.7947ms
+[2025-08-27 11:41:15.502 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:41:15.502 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:41:15.502 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:41:15.502 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:15.503 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:41:15.503 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:41:15.509 +03:00  INF]  Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:41:15.509 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:41:15.510 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 6.7389ms
+[2025-08-27 11:41:15.510 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:41:15.510 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 8.3965ms
+[2025-08-27 11:41:23.516 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:41:23.516 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:23.519 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 2.9499ms
+[2025-08-27 11:41:23.523 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:41:23.524 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:41:23.524 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:41:23.524 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:23.524 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:41:23.524 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:41:23.534 +03:00  INF]  Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:41:23.534 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:41:23.534 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 10.2236ms
+[2025-08-27 11:41:23.535 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:41:23.535 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 11.3896ms
+[2025-08-27 11:41:40.087 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - null null
+[2025-08-27 11:41:40.087 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:40.088 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - 204 null null 1.3475ms
+[2025-08-27 11:41:40.089 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - application/json 2
+[2025-08-27 11:41:40.090 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:41:40.090 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:41:40.090 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:40.091 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:41:40.091 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:41:40.095 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:41:40.095 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:41:40.095 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 3.8649ms
+[2025-08-27 11:41:40.095 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:41:40.095 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=2 - 200 null application/json; charset=utf-8 6.2106ms
+[2025-08-27 11:41:53.278 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:41:53.278 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:53.278 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 0.5885ms
+[2025-08-27 11:41:53.280 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:41:53.280 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:41:53.280 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:41:53.280 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:53.280 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:41:53.280 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:41:53.285 +03:00  INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:41:53.286 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:41:53.286 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 5.6857ms
+[2025-08-27 11:41:53.287 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:41:53.287 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 7.3029ms
+[2025-08-27 11:41:55.571 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:41:55.571 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:55.571 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 0.5247ms
+[2025-08-27 11:41:55.573 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:41:55.573 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:41:55.575 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:41:55.575 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:41:55.575 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:41:55.575 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:41:55.577 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:41:55.577 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:41:55.578 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 2.6787ms
+[2025-08-27 11:41:55.578 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:41:55.578 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 4.9517ms
+[2025-08-27 11:42:53.439 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - null null
+[2025-08-27 11:42:53.439 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:42:53.439 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 204 null null 0.7384ms
+[2025-08-27 11:42:53.441 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - application/json 2
+[2025-08-27 11:42:53.442 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:42:53.442 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:42:53.442 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:42:53.442 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:42:53.443 +03:00  INF]  Route matched with {action = "GetTrip_Mains", controller = "TravelAdmin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTrip_Mains(Int32) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:42:53.446 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT t.destination_id, t.active, t.id, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_duration, d.country_code, d.dest_code, d.dest_default_name
+FROM trip_main AS t
+INNER JOIN destination_main AS d ON t.destination_id = d.id
+[2025-08-27 11:42:53.447 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripMainCast, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:42:53.448 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App) in 4.9107ms
+[2025-08-27 11:42:53.448 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetTrip_Mains (ITravel_App)'
+[2025-08-27 11:42:53.448 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetTrip_Mains?destination_id=0 - 200 null application/json; charset=utf-8 7.1444ms
+[2025-08-27 11:43:00.960 +03:00  INF]  Request starting HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - null null
+[2025-08-27 11:43:00.961 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:43:00.961 +03:00  INF]  Request finished HTTP/2 OPTIONS https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 204 null null 0.5902ms
+[2025-08-27 11:43:00.963 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - application/json 2
+[2025-08-27 11:43:00.963 +03:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+[2025-08-27 11:43:00.964 +03:00  INF]  Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+[2025-08-27 11:43:00.965 +03:00  INF]  CORS policy execution successful.
+[2025-08-27 11:43:00.965 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:43:00.966 +03:00  INF]  Route matched with {action = "GetFacilityAllWithSelect", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetFacilityAllWithSelect(Int64) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-08-27 11:43:00.969 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT f.active, f.facility_code, f.facility_default_name, f.id, CASE
+    WHEN t0.id IS NOT NULL AND t0.id > 0 THEN TRUE
+    ELSE FALSE
+END AS selected
+FROM facility_main AS f
+LEFT JOIN (
+    SELECT t.id, t.facility_id
+    FROM trip_facility AS t
+    WHERE t.trip_id = @__trip_id_0
+) AS t0 ON f.id = t0.facility_id
+WHERE f.active
+[2025-08-27 11:43:00.969 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.FacilityAllWithSelect, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-27 11:43:00.969 +03:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App) in 3.4801ms
+[2025-08-27 11:43:00.969 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.GetFacilityAllWithSelect (ITravel_App)'
+[2025-08-27 11:43:00.969 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/GetFacilityAllWithSelect?trip_id=3 - 200 null application/json; charset=utf-8 6.8207ms

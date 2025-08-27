@@ -2,6 +2,7 @@
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
 using ITravelApp.Data.Models.destination;
+using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.trips;
 
 namespace ITravel_App.Services
@@ -29,6 +30,16 @@ namespace ITravel_App.Services
         public Task<List<destination_main>> GetDestination_Mains()
         {
             return _adminDAO.GetDestination_Mains();
+        }
+
+        public List<FacilityAllWithSelect> GetFacilityAllWithSelect(long? trip_id)
+        {
+            return _adminDAO.GetFacilityAllWithSelect(trip_id);
+        }
+
+        public List<FacilityWithTranslationGrp> GetFacilityWithTranslation()
+        {
+            return _adminDAO.GetFacilityWithTranslation();
         }
 
         public Task<List<destination_img>> GetImgsByDestination(int? destination_id)

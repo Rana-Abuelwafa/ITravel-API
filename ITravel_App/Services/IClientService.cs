@@ -22,7 +22,7 @@ namespace ITravel_App.Services
 
         public ResponseCls SaveReviewForTrip(tbl_review row);
         public Task<List<TripsAll>> GetClientWishList(ClientWishListReq req);
-        public ResponseCls AddTripToWishList(trips_wishlist row);
+        public ResponseCls AddTripToWishList(TripsWishlistReq row);
         #endregion
 
         #region "booking"

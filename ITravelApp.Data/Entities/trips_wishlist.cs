@@ -18,4 +18,5 @@ public partial class trips_wishlist
     /// 2 = transfer trip
     /// </summary>
     public short? trip_type { get; set; }
+   
 }
