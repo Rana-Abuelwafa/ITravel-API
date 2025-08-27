@@ -112,11 +112,20 @@ namespace ITravelApp.Data
 		}
 		//get trips and top trips with its details 
 
-		public async Task<trips_wishlist> CheckIfTripInWishList(long? trip_id,string client_id)
+		public trips_wishlist CheckIfTripInWishList(long? trip_id,string client_id)
 		{
 			try
 			{
-				return await _db.trips_wishlists.Where(wr => wr.trip_id == trip_id && wr.client_id == client_id).SingleOrDefaultAsync();
+				var result =  _db.trips_wishlists.Where(wr => wr.trip_id == trip_id && wr.client_id == client_id).SingleOrDefault();
+                if(result == null)
+				{
+					return new trips_wishlist();
+				}
+				else
+				{
+					return result;
+
+                }
 			}
 			catch(Exception ex)
 			{
@@ -136,44 +145,45 @@ namespace ITravelApp.Data
 								 wr.currency_code.ToLower() == req.currency_code.ToLower() &&
                                  wr.show_in_slider == (req.show_in_slider == false ? wr.show_in_slider : req.show_in_slider))
 					.ToListAsync();
-					return trips.Select( s => new TripsAll
-					{
-						destination_id = s.destination_id,
-						lang_code = s.lang_code,
-						country_code = s.country_code,
-						currency_code = s.currency_code,
-						default_img = "http://api.raccoon24.de/" + s.default_img,
-						dest_code = s.dest_code,
-						dest_default_name = s.dest_default_name,
-						pickup = s.pickup,
-						show_in_slider = s.show_in_slider,
-						show_in_top = s.show_in_top,
-						trip_code = s.trip_code,
-						trip_default_name = s.trip_default_name,
-						trip_description = s.trip_description,
-						trip_duration = s.trip_duration,
-						trip_highlight = s.trip_highlight,
-						trip_id = s.trip_id,
-						trip_includes = s.trip_includes,
-						trip_name = s.trip_name,
-						trip_origin_price = s.trip_origin_price,
-						trip_sale_price = s.trip_sale_price,
-						trip_trans_id = s.trip_trans_id,
-						isfavourite = string.IsNullOrEmpty(req.client_id) ? false : (CheckIfTripInWishList(s.trip_id,req.client_id).Result.id == 0  ? false: true),
-						trip_type = 1,
-						wish_id = string.IsNullOrEmpty(req.client_id) ? 0 : CheckIfTripInWishList(s.trip_id, req.client_id).Result.id,
-                        wsh_created_at = string.IsNullOrEmpty(req.client_id) ? "" : CheckIfTripInWishList(s.trip_id, req.client_id).Result.created_at.Value.ToString("dd-MM-yyyy"),
-						dest_route = s.dest_route,
-						route=s.route,
-						client_id=req.client_id,
-                        facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
-						imgs = GetImgsByTrip(s.trip_id).Result,
-						important_info=s.important_info,
-						trip_details=s.trip_details,
-						trip_not_includes=s.trip_not_includes,
-                        total_reviews =  _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == 1).Count(),
-                        review_rate =  _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == 1).Max(m => m.review_rate)
-					}).ToList();
+				return trips.Select(s => new TripsAll
+				{
+					destination_id = s.destination_id,
+					lang_code = s.lang_code,
+					country_code = s.country_code,
+					currency_code = s.currency_code,
+					default_img = "http://api.raccoon24.de/" + s.default_img,
+					dest_code = s.dest_code,
+					dest_default_name = s.dest_default_name,
+					pickup = s.pickup,
+					show_in_slider = s.show_in_slider,
+					show_in_top = s.show_in_top,
+					trip_code = s.trip_code,
+					trip_default_name = s.trip_default_name,
+					trip_description = s.trip_description,
+					trip_duration = s.trip_duration,
+					trip_highlight = s.trip_highlight,
+					trip_id = s.trip_id,
+					trip_includes = s.trip_includes,
+					trip_name = s.trip_name,
+					trip_origin_price = s.trip_origin_price,
+					trip_sale_price = s.trip_sale_price,
+					trip_trans_id = s.trip_trans_id,
+					isfavourite = string.IsNullOrEmpty(req.client_id) ? false : (CheckIfTripInWishList(s.trip_id, req.client_id).id == 0 ? false : true),
+					trip_type = 1,
+					wish_id = string.IsNullOrEmpty(req.client_id) ? 0 : CheckIfTripInWishList(s.trip_id, req.client_id).id,
+					wsh_created_at = string.IsNullOrEmpty(req.client_id) ? null : (CheckIfTripInWishList(s.trip_id, req.client_id).created_at == null  ? null: CheckIfTripInWishList(s.trip_id, req.client_id).created_at.Value.ToString("dd-MM-yyyy")),
+					//wsh_created_at = null,
+                    dest_route = s.dest_route,
+					route = s.route,
+					client_id = req.client_id,
+					facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
+					imgs = GetImgsByTrip(s.trip_id).Result,
+					important_info = s.important_info,
+					trip_details = s.trip_details,
+					trip_not_includes = s.trip_not_includes,
+					total_reviews = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == 1).Count(),
+					review_rate = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == 1).Max(m => m.review_rate)
+				}).ToList();
 
 			}
 			catch (Exception ex)
@@ -410,7 +420,7 @@ namespace ITravelApp.Data
                                         trip_trans_id = TRIP.trip_trans_id,
                                         wish_id = WSH.id,
                                         client_id = WSH.client_id,
-                                        wsh_created_at = WSH != null ? WSH.created_at.Value.ToString("dd-MM-yyyy") : "",
+                                        wsh_created_at = (WSH != null && WSH.created_at !=null) ? WSH.created_at.Value.ToString("dd-MM-yyyy") : null,
                                         trip_type = TRIP.trip_type,
                                         isfavourite = (WSH != null && WSH.id != 0) ? true : false,
                                         dest_route = TRIP.dest_route,

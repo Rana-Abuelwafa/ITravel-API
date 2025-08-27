@@ -936,8 +936,9 @@ namespace ITravelApp.Data
                        active = FM.active,
                        facility_code = FM.facility_code,
                        facility_default_name = FM.facility_default_name,
-                       id = FM.id,
-                       selected = combined !=null && combined.id > 0 ? true: false
+                       facility_id = FM.id,
+                       fac_trip_id = combined != null ? combined.id : 0,
+                       selected = combined != null && combined.id > 0 ? true : false
                    };
                 return result.ToList();
             }
