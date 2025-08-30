@@ -30,4 +30,6 @@ public partial class trip_main
     public string? created_by { get; set; }
 
     public string? route { get; set; }
+
+    public int? trip_type { get; set; }
 }

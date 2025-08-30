@@ -18,4 +18,6 @@ public partial class trip_facility
     public DateTime? updated_at { get; set; }
 
     public string? created_by { get; set; }
+
+    public int? trip_type { get; set; }
 }

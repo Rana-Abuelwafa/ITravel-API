@@ -59,6 +59,11 @@ namespace ITravel_App.Services
             return _clientDAO.GetProfileImage(clientId);
         }
 
+        public Task<TripsAll> GetTripDetails(TripDetailsReq req)
+        {
+            return _clientDAO.GetTripDetails(req);
+        }
+
         public Task<List<TripsAll>> GetTripsAll(TripsReq req)
         {
             return _clientDAO.GetTripsAll(req);

@@ -153,4 +153,7 @@
   <data name="BookingMsg" xml:space="preserve">
     <value>Vielen Dank für Ihre Buchung. Bitte überprüfen Sie Ihre E-Mail auf den Buchungsbeleg.</value>
   </data>
+  <data name="AddReviewDuplicate" xml:space="preserve">
+    <value>Sie haben dieser Reise bereits eine Bewertung hinzugefügt</value>
+  </data>
 </root>

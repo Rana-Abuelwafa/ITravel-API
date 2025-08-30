@@ -37,4 +37,6 @@ public partial class trips_booking
     public string? booking_notes { get; set; }
 
     public string? trip_code { get; set; }
+
+    public int? trip_type { get; set; }
 }

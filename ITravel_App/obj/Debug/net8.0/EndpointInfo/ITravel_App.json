@@ -1467,6 +1467,48 @@
         }
       }
     },
+    "/api/TravelClient/GetTripDetails": {
+      "post": {
+        "tags": [
+          "TravelClient"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripDetailsReq"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripDetailsReq"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripDetailsReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelClient/GetTripsAll": {
       "post": {
         "tags": [
@@ -1960,6 +2002,28 @@
             "format": "int32"
           },
           "lang_code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TripDetailsReq": {
+        "type": "object",
+        "properties": {
+          "trip_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lang_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "client_id": {
             "type": "string",
             "nullable": true
           }

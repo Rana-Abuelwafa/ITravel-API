@@ -153,4 +153,7 @@
   <data name="BookingMsg" xml:space="preserve">
     <value>Thank you for your Booking, Please Check your Email For Booking Voucher</value>
   </data>
+  <data name="AddReviewDuplicate" xml:space="preserve">
+    <value>You Already Added Review To this Trip</value>
+  </data>
 </root>

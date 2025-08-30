@@ -48,6 +48,8 @@ public partial class itravel_client_dbContext : DbContext
 
     public virtual DbSet<trip_translation> trip_translations { get; set; }
 
+    public virtual DbSet<trip_types_setting> trip_types_settings { get; set; }
+
     public virtual DbSet<trips_booking> trips_bookings { get; set; }
 
     public virtual DbSet<trips_wishlist> trips_wishlists { get; set; }
@@ -310,6 +312,16 @@ public partial class itravel_client_dbContext : DbContext
             entity.Property(e => e.updated_at)
                 .HasDefaultValueSql("now()")
                 .HasColumnType("timestamp without time zone");
+        });
+
+        modelBuilder.Entity<trip_types_setting>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("trip_types_setting_pkey");
+
+            entity.ToTable("trip_types_setting");
+
+            entity.Property(e => e.type_code).HasMaxLength(20);
+            entity.Property(e => e.type_name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<trips_booking>(entity =>

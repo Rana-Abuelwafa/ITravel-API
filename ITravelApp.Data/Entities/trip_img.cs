@@ -26,4 +26,6 @@ public partial class trip_img
     public int? img_width { get; set; }
 
     public int? img_height { get; set; }
+
+    public int? trip_type { get; set; }
 }

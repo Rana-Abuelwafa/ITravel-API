@@ -31,6 +31,13 @@ namespace ITravel_App.Controllers
         }
         #endregion
         #region trips
+        //get specific trip details
+        [HttpPost("GetTripDetails")]
+        public async Task<IActionResult> GetTripDetails(TripDetailsReq req)
+        {
+
+            return Ok(await _clientService.GetTripDetails(req));
+        }
         //get trips and top trips with its details 
         [HttpPost("GetTripsAll")]
         public async Task<IActionResult> GetTripsAll(TripsReq req)

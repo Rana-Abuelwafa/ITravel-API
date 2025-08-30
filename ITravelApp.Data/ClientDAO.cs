@@ -67,11 +67,11 @@ namespace ITravelApp.Data
 		#region trips
 
 		//get facilities for specific trip
-		public List<TripFacility> getFacilityForTrip(decimal? trip_id, string lang_code)
+		public List<TripFacility> getFacilityForTrip(decimal? trip_id, string lang_code, int? trip_type)
 		{
 			try
 			{
-				var result = from TFAC in _db.trip_facilities.Where(wr => wr.trip_id == trip_id)
+				var result = from TFAC in _db.trip_facilities.Where(wr => wr.trip_id == trip_id && wr.trip_type == trip_type)
 							 join TRANS in _db.facility_translations.Where(wr => wr.lang_code.ToLower() == lang_code.ToLower()) on TFAC.facility_id equals TRANS.facility_id into TRIPFAC
 							 from m in TRIPFAC.DefaultIfEmpty()
 							 select new TripFacility
@@ -89,11 +89,11 @@ namespace ITravelApp.Data
 		}
 	   
 		//get images list for specific trip
-		public async Task<List<trip_img>> GetImgsByTrip(decimal? trip_id)
+		public async Task<List<trip_img>> GetImgsByTrip(decimal? trip_id, int? trip_type)
 		{
 			try
 			{
-				return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id).Select(s => new trip_img
+				return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id && wr.trip_type == trip_type).Select(s => new trip_img
 				{
 					id = s.id,
 					img_height=s.img_height,
@@ -112,11 +112,11 @@ namespace ITravelApp.Data
 		}
 		//get trips and top trips with its details 
 
-		public trips_wishlist CheckIfTripInWishList(long? trip_id,string client_id)
+		public trips_wishlist CheckIfTripInWishList(long? trip_id,string client_id, int? trip_type)
 		{
 			try
 			{
-				var result =  _db.trips_wishlists.Where(wr => wr.trip_id == trip_id && wr.client_id == client_id).SingleOrDefault();
+				var result =  _db.trips_wishlists.Where(wr => wr.trip_id == trip_id && wr.client_id == client_id && wr.trip_type == trip_type).SingleOrDefault();
                 if(result == null)
 				{
 					return new trips_wishlist();
@@ -140,6 +140,7 @@ namespace ITravelApp.Data
 				
 				var trips = await _db.tripwithdetails
 					.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && 
+					             wr.trip_type == req.trip_type &&
 								 wr.show_in_top == (req.show_in_top == false ? wr.show_in_top : req.show_in_top) && 
 								 wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
 								 wr.currency_code.ToLower() == req.currency_code.ToLower() &&
@@ -168,21 +169,21 @@ namespace ITravelApp.Data
 					trip_origin_price = s.trip_origin_price,
 					trip_sale_price = s.trip_sale_price,
 					trip_trans_id = s.trip_trans_id,
-					isfavourite = string.IsNullOrEmpty(req.client_id) ? false : (CheckIfTripInWishList(s.trip_id, req.client_id).id == 0 ? false : true),
-					trip_type = 1,
-					wish_id = string.IsNullOrEmpty(req.client_id) ? 0 : CheckIfTripInWishList(s.trip_id, req.client_id).id,
-					wsh_created_at = string.IsNullOrEmpty(req.client_id) ? null : (CheckIfTripInWishList(s.trip_id, req.client_id).created_at == null  ? null: CheckIfTripInWishList(s.trip_id, req.client_id).created_at.Value.ToString("dd-MM-yyyy")),
+					isfavourite = string.IsNullOrEmpty(req.client_id) ? false : (CheckIfTripInWishList(s.trip_id, req.client_id,s.trip_type).id == 0 ? false : true),
+					trip_type = s.trip_type,
+					wish_id = string.IsNullOrEmpty(req.client_id) ? 0 : CheckIfTripInWishList(s.trip_id, req.client_id,s.trip_type).id,
+					wsh_created_at = string.IsNullOrEmpty(req.client_id) ? null : (CheckIfTripInWishList(s.trip_id, req.client_id,s.trip_type).created_at == null  ? null: CheckIfTripInWishList(s.trip_id, req.client_id,s.trip_type).created_at.Value.ToString("dd-MM-yyyy")),
 					//wsh_created_at = null,
                     dest_route = s.dest_route,
 					route = s.route,
 					client_id = req.client_id,
-					facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
-					imgs = GetImgsByTrip(s.trip_id).Result,
+					facilities = getFacilityForTrip(s.trip_id, s.lang_code,s.trip_type).ToList(),
+					imgs = GetImgsByTrip(s.trip_id,s.trip_type).Result,
 					important_info = s.important_info,
 					trip_details = s.trip_details,
 					trip_not_includes = s.trip_not_includes,
-					total_reviews = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == 1).Count(),
-					review_rate = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == 1).Max(m => m.review_rate)
+					total_reviews = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Count(),
+					review_rate = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Max(m => m.review_rate)
 				}).ToList();
 
 			}
@@ -191,9 +192,73 @@ namespace ITravelApp.Data
 				return null;
 			}
 		}
-		
-		//get trips which shown in home page slider
-		public async Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req)
+
+
+        public async Task<TripsAll> GetTripDetails(TripDetailsReq req)
+        {
+            try
+            {
+
+
+                var trips = await _db.tripwithdetails
+                    .Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() &&
+                                 wr.trip_id == req.trip_id &&
+								 wr.trip_type == req.trip_type &&
+                                 wr.currency_code.ToLower() == req.currency_code.ToLower())
+                    .ToListAsync();
+                var result = trips.Select(s => new TripsAll
+                {
+                    destination_id = s.destination_id,
+                    lang_code = s.lang_code,
+                    country_code = s.country_code,
+                    currency_code = s.currency_code,
+                    default_img = "http://api.raccoon24.de/" + s.default_img,
+                    dest_code = s.dest_code,
+                    dest_default_name = s.dest_default_name,
+                    pickup = s.pickup,
+                    show_in_slider = s.show_in_slider,
+                    show_in_top = s.show_in_top,
+                    trip_code = s.trip_code,
+                    trip_default_name = s.trip_default_name,
+                    trip_description = s.trip_description,
+                    trip_duration = s.trip_duration,
+                    trip_highlight = s.trip_highlight,
+                    trip_id = s.trip_id,
+                    trip_includes = s.trip_includes,
+                    trip_name = s.trip_name,
+                    trip_origin_price = s.trip_origin_price,
+                    trip_sale_price = s.trip_sale_price,
+                    trip_trans_id = s.trip_trans_id,
+                    isfavourite = string.IsNullOrEmpty(req.client_id) ? false : (CheckIfTripInWishList(s.trip_id, req.client_id,s.trip_type).id == 0 ? false : true),
+                    trip_type = s.trip_type,
+                    wish_id = string.IsNullOrEmpty(req.client_id) ? 0 : CheckIfTripInWishList(s.trip_id, req.client_id, s.trip_type).id,
+                    wsh_created_at = string.IsNullOrEmpty(req.client_id) ? null : (CheckIfTripInWishList(s.trip_id, req.client_id, s.trip_type).created_at == null ? null : CheckIfTripInWishList(s.trip_id, req.client_id,s.trip_type).created_at.Value.ToString("dd-MM-yyyy")),
+                    //wsh_created_at = null,
+                    dest_route = s.dest_route,
+                    route = s.route,
+                    client_id = req.client_id,
+                    facilities = getFacilityForTrip(s.trip_id, s.lang_code,s.trip_type).ToList(),
+                    imgs = GetImgsByTrip(s.trip_id,s.trip_type).Result,
+                    important_info = s.important_info,
+                    trip_details = s.trip_details,
+                    trip_not_includes = s.trip_not_includes,
+                    total_reviews = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Count(),
+                    review_rate = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Max(m => m.review_rate)
+                }).ToList();
+
+				if(result != null)
+				{
+                    return result.SingleOrDefault();
+                }
+				return new TripsAll();
+            }
+            catch (Exception ex)
+            {
+                return new TripsAll();
+            }
+        }
+        //get trips which shown in home page slider
+        public async Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req)
 		{
 			try
 			{
@@ -302,7 +367,7 @@ namespace ITravelApp.Data
 					var result = _db.tbl_reviews.Where(wr => wr.client_id == row.client_id && wr.trip_id == row.trip_id).SingleOrDefault();
 					if (result != null)
 					{
-						return new ResponseCls { success = false, errors = _localizer["DuplicateData"] };
+						return new ResponseCls { success = false, errors = _localizer["AddReviewDuplicate"] };
 					}
 					if (_db.tbl_reviews.Count() > 0)
 					{
@@ -388,7 +453,6 @@ namespace ITravelApp.Data
 		{
 			try
 			{
-
                 var trips = await _db.tripwithdetails
 					 .Where(wr => wr.lang_code == req.lang_code &&
 								   wr.currency_code.ToLower() == req.currency_code.ToLower() && wr.trip_type ==req.trip_type)
@@ -466,10 +530,8 @@ namespace ITravelApp.Data
 					trip_details=s.trip_details,
                     total_reviews = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Count(),
                     review_rate = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Max(m => m.review_rate),
-                    facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
-					imgs = GetImgsByTrip(s.trip_id).Result,
-
-
+                    facilities = getFacilityForTrip(s.trip_id, s.lang_code,s.trip_type).ToList(),
+					imgs = GetImgsByTrip(s.trip_id, s.trip_type).Result,
 				})
 				.ToList();
 			}

@@ -15,6 +15,7 @@ namespace ITravel_App.Services
         public Task<List<destination_img>> GetImgsByDestination(int? destination_id);
         public Task<List<destination_main>> GetDestination_Mains();
         public ResponseCls UpdateDestinationImage(DestinationImgUpdateReq cls);
+       
 
         #region trips
         public Task<List<trip_price>> GetTrip_Prices(long? trip_id);

@@ -1,0 +1,181 @@
+[2025-08-30 12:05:23.851 +03:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-08-30 12:05:24.771 +03:00  INF]  Now listening on: https://localhost:7045
+[2025-08-30 12:05:24.771 +03:00  INF]  Now listening on: http://localhost:5124
+[2025-08-30 12:05:25.119 +03:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-08-30 12:05:25.119 +03:00  INF]  Hosting environment: Development
+[2025-08-30 12:05:25.119 +03:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-08-30 12:05:26.951 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-08-30 12:05:27.386 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 448.7261ms
+[2025-08-30 12:05:28.009 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-08-30 12:05:28.015 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 5.8511ms
+[2025-08-30 12:05:28.215 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-08-30 12:05:28.317 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 101.4009ms
+[2025-08-30 12:05:30.053 +03:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-08-30 12:05:30.110 +03:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 57.7392ms
+[2025-08-30 12:06:46.862 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsAll - application/json 142
+[2025-08-30 12:06:48.454 +03:00  INF]  CORS policy execution successful.
+[2025-08-30 12:06:48.457 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App)'
+[2025-08-30 12:06:48.500 +03:00  INF]  Route matched with {action = "GetTripsAll", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTripsAll(ITravelApp.Data.Models.trips.TripsReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-08-30 12:06:51.415 +03:00  INF]  Executed DbCommand (76ms) [Parameters=[@__ToLower_0='?', @__ToLower_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.country_code, t.currency_code, t.default_img, t.dest_code, t.dest_default_name, t.dest_route, t.destination_id, t.important_info, t.lang_code, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_description, t.trip_details, t.trip_duration, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name, t.trip_not_includes, t.trip_origin_price, t.trip_sale_price, t.trip_trans_id, t.trip_type
+FROM tripwithdetails AS t
+WHERE lower(t.lang_code) = @__ToLower_0 AND (t.show_in_top = t.show_in_top OR t.show_in_top IS NULL) AND (t.destination_id = t.destination_id OR t.destination_id IS NULL) AND lower(t.currency_code) = @__ToLower_1 AND (t.show_in_slider = t.show_in_slider OR t.show_in_slider IS NULL)
+[2025-08-30 12:06:51.525 +03:00  INF]  Executed DbCommand (10ms) [Parameters=[@__ToLower_1='?', @__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT f0.facility_desc, f0.facility_name
+FROM trip_facility AS t
+LEFT JOIN (
+    SELECT f.facility_desc, f.facility_id, f.facility_name
+    FROM facility_translations AS f
+    WHERE lower(f.lang_code) = @__ToLower_1
+) AS f0 ON t.facility_id = f0.facility_id
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:06:51.541 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.img_height, t.img_name, 'http://api.raccoon24.de/' || COALESCE(t.img_path, '') AS img_path, 'http://api.raccoon24.de/' || COALESCE(t.img_resize_path, '') AS img_resize_path, t.img_width, t.is_default, t.trip_id
+FROM trip_imgs AS t
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:06:51.566 +03:00  INF]  Executed DbCommand (4ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:06:51.578 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.review_rate)
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:06:51.588 +03:00  INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ITravelApp.Data.Models.trips.TripsAll, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2025-08-30 12:06:51.641 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App) in 3135.943ms
+[2025-08-30 12:06:51.642 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripsAll (ITravel_App)'
+[2025-08-30 12:06:51.651 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripsAll - 200 null application/json; charset=utf-8 4789.9127ms
+[2025-08-30 12:07:11.263 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripDetails - application/json 84
+[2025-08-30 12:07:11.272 +03:00  INF]  CORS policy execution successful.
+[2025-08-30 12:07:11.272 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App)'
+[2025-08-30 12:07:11.276 +03:00  INF]  Route matched with {action = "GetTripDetails", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTripDetails(ITravelApp.Data.Models.trips.TripDetailsReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-08-30 12:07:11.311 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__ToLower_0='?', @__req_trip_id_1='?' (DbType = Int64), @__ToLower_2='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.country_code, t.currency_code, t.default_img, t.dest_code, t.dest_default_name, t.dest_route, t.destination_id, t.important_info, t.lang_code, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_description, t.trip_details, t.trip_duration, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name, t.trip_not_includes, t.trip_origin_price, t.trip_sale_price, t.trip_trans_id, t.trip_type
+FROM tripwithdetails AS t
+WHERE lower(t.lang_code) = @__ToLower_0 AND t.trip_id = @__req_trip_id_1 AND lower(t.currency_code) = @__ToLower_2
+[2025-08-30 12:07:11.321 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__ToLower_1='?', @__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT f0.facility_desc, f0.facility_name
+FROM trip_facility AS t
+LEFT JOIN (
+    SELECT f.facility_desc, f.facility_id, f.facility_name
+    FROM facility_translations AS f
+    WHERE lower(f.lang_code) = @__ToLower_1
+) AS f0 ON t.facility_id = f0.facility_id
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:07:11.323 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.img_height, t.img_name, 'http://api.raccoon24.de/' || COALESCE(t.img_path, '') AS img_path, 'http://api.raccoon24.de/' || COALESCE(t.img_resize_path, '') AS img_resize_path, t.img_width, t.is_default, t.trip_id
+FROM trip_imgs AS t
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:07:11.324 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:07:11.326 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.review_rate)
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:07:11.326 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.trips.TripsAll'.
+[2025-08-30 12:07:11.327 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App) in 49.9881ms
+[2025-08-30 12:07:11.327 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App)'
+[2025-08-30 12:07:11.327 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripDetails - 200 null application/json; charset=utf-8 64.8486ms
+[2025-08-30 12:07:31.916 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripDetails - application/json 120
+[2025-08-30 12:07:31.921 +03:00  INF]  CORS policy execution successful.
+[2025-08-30 12:07:31.921 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App)'
+[2025-08-30 12:07:31.922 +03:00  INF]  Route matched with {action = "GetTripDetails", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTripDetails(ITravelApp.Data.Models.trips.TripDetailsReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-08-30 12:07:31.994 +03:00  INF]  Executed DbCommand (2ms) [Parameters=[@__ToLower_0='?', @__req_trip_id_1='?' (DbType = Int64), @__ToLower_2='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.country_code, t.currency_code, t.default_img, t.dest_code, t.dest_default_name, t.dest_route, t.destination_id, t.important_info, t.lang_code, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_description, t.trip_details, t.trip_duration, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name, t.trip_not_includes, t.trip_origin_price, t.trip_sale_price, t.trip_trans_id, t.trip_type
+FROM tripwithdetails AS t
+WHERE lower(t.lang_code) = @__ToLower_0 AND t.trip_id = @__req_trip_id_1 AND lower(t.currency_code) = @__ToLower_2
+[2025-08-30 12:07:32.016 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:32.084 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:32.085 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:32.086 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:32.094 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__ToLower_1='?', @__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT f0.facility_desc, f0.facility_name
+FROM trip_facility AS t
+LEFT JOIN (
+    SELECT f.facility_desc, f.facility_id, f.facility_name
+    FROM facility_translations AS f
+    WHERE lower(f.lang_code) = @__ToLower_1
+) AS f0 ON t.facility_id = f0.facility_id
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:07:32.096 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.img_height, t.img_name, 'http://api.raccoon24.de/' || COALESCE(t.img_path, '') AS img_path, 'http://api.raccoon24.de/' || COALESCE(t.img_resize_path, '') AS img_resize_path, t.img_width, t.is_default, t.trip_id
+FROM trip_imgs AS t
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:07:32.097 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:07:32.098 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.review_rate)
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:07:32.098 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.trips.TripsAll'.
+[2025-08-30 12:07:32.099 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App) in 176.9236ms
+[2025-08-30 12:07:32.099 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App)'
+[2025-08-30 12:07:32.099 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripDetails - 200 null application/json; charset=utf-8 183.177ms
+[2025-08-30 12:07:51.953 +03:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripDetails - application/json 120
+[2025-08-30 12:07:51.954 +03:00  INF]  CORS policy execution successful.
+[2025-08-30 12:07:51.954 +03:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App)'
+[2025-08-30 12:07:51.954 +03:00  INF]  Route matched with {action = "GetTripDetails", controller = "TravelClient"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTripDetails(ITravelApp.Data.Models.trips.TripDetailsReq) on controller ITravel_App.Controllers.TravelClientController (ITravel_App).
+[2025-08-30 12:07:51.971 +03:00  INF]  Executed DbCommand (6ms) [Parameters=[@__ToLower_0='?', @__req_trip_id_1='?' (DbType = Int64), @__ToLower_2='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.country_code, t.currency_code, t.default_img, t.dest_code, t.dest_default_name, t.dest_route, t.destination_id, t.important_info, t.lang_code, t.pickup, t.route, t.show_in_slider, t.show_in_top, t.trip_code, t.trip_default_name, t.trip_description, t.trip_details, t.trip_duration, t.trip_highlight, t.trip_id, t.trip_includes, t.trip_name, t.trip_not_includes, t.trip_origin_price, t.trip_sale_price, t.trip_trans_id, t.trip_type
+FROM tripwithdetails AS t
+WHERE lower(t.lang_code) = @__ToLower_0 AND t.trip_id = @__req_trip_id_1 AND lower(t.currency_code) = @__ToLower_2
+[2025-08-30 12:07:51.974 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:51.975 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:51.976 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__trip_id_0='?' (DbType = Int64), @__client_id_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.client_id, t.created_at, t.trip_id, t.trip_type
+FROM trips_wishlist AS t
+WHERE t.trip_id = @__trip_id_0 AND t.client_id = @__client_id_1
+LIMIT 2
+[2025-08-30 12:07:51.978 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__ToLower_1='?', @__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT f0.facility_desc, f0.facility_name
+FROM trip_facility AS t
+LEFT JOIN (
+    SELECT f.facility_desc, f.facility_id, f.facility_name
+    FROM facility_translations AS f
+    WHERE lower(f.lang_code) = @__ToLower_1
+) AS f0 ON t.facility_id = f0.facility_id
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:07:51.981 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__trip_id_0='?' (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.img_height, t.img_name, 'http://api.raccoon24.de/' || COALESCE(t.img_path, '') AS img_path, 'http://api.raccoon24.de/' || COALESCE(t.img_resize_path, '') AS img_resize_path, t.img_width, t.is_default, t.trip_id
+FROM trip_imgs AS t
+WHERE t.trip_id::numeric = @__trip_id_0
+[2025-08-30 12:07:51.982 +03:00  INF]  Executed DbCommand (0ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:07:51.983 +03:00  INF]  Executed DbCommand (1ms) [Parameters=[@__s_trip_id_0='?' (DbType = Int64)], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.review_rate)
+FROM tbl_reviews AS t
+WHERE t.trip_id = @__s_trip_id_0 AND t.trip_type = 1
+[2025-08-30 12:07:51.983 +03:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.trips.TripsAll'.
+[2025-08-30 12:07:51.984 +03:00  INF]  Executed action ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App) in 29.4906ms
+[2025-08-30 12:07:51.984 +03:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelClientController.GetTripDetails (ITravel_App)'
+[2025-08-30 12:07:51.984 +03:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelClient/GetTripDetails - 200 null application/json; charset=utf-8 31.4088ms

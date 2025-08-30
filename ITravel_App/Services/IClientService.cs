@@ -15,6 +15,7 @@ namespace ITravel_App.Services
         #endregion
 
         #region trips
+        public Task<TripsAll> GetTripDetails(TripDetailsReq req);
         public Task<List<TripsAll>> GetTripsAll(TripsReq req);
         public Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req);
         public Task<List<TripsPickupResponse>> GetPickupsForTrip(PickupsReq req);
