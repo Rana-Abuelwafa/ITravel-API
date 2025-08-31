@@ -339,6 +339,10 @@ namespace ITravelApp.Data
 
 
         #region trips
+        public async Task<List<trip_category>> GetTripCategories()
+        {
+            return await _db.trip_categories.ToListAsync();
+        }
 
         //save main trip data by admin
         public ResponseCls SaveMainTrip(trip_main row)
@@ -457,7 +461,8 @@ namespace ITravelApp.Data
                     currency_code = row.currency_code,
                     trip_origin_price = row.trip_origin_price,
                     trip_sale_price = row.trip_sale_price,
-                    created_by = row.created_by
+                    created_by = row.created_by,
+                    
                 };
                 if (row.delete == true)
                 {
@@ -511,7 +516,8 @@ namespace ITravelApp.Data
                     is_default = cls.is_default,
                     img_name = cls.img_name,
                     img_path =cls.img_path,
-                    created_by= cls.created_by
+                    created_by= cls.created_by,
+                    trip_type=cls.trip_type
                 };
                 if (cls.delete == true)
                 {
@@ -767,7 +773,8 @@ namespace ITravelApp.Data
                     facility_id = row.facility_id,
                     active = row.active,
                     trip_id = row.trip_id,
-                    created_by = row.created_by
+                    created_by = row.created_by,
+                    trip_type=row.trip_type
                 };
                 if (row.selected == false && row.id > 0)
                 {
@@ -1004,12 +1011,12 @@ namespace ITravelApp.Data
             return response;
         }
 
-        public async Task<List<TripMainCast>> GetTrip_Mains(int destination_id)
+        public async Task<List<TripMainCast>> GetTrip_Mains(int destination_id,int trip_type)
         {
             try
             {
 
-                return await _db.trip_mains.Where(wr => wr.destination_id == (destination_id == 0 ? wr.destination_id : destination_id))
+                return await _db.trip_mains.Where(wr => wr.destination_id == (destination_id == 0 ? wr.destination_id : destination_id) && wr.trip_type ==(trip_type == 0 ? wr.trip_type : trip_type))
                       .Join(_db.destination_mains,
                               TRIP => new { TRIP.destination_id },
                               DEST => new { destination_id = DEST.id },
@@ -1027,8 +1034,9 @@ namespace ITravelApp.Data
                                   trip_duration = TRIP.trip_duration,
                                   country_code = DEST.country_code,
                                   dest_code = DEST.dest_code,
-                                  dest_default_name = DEST.dest_default_name
-                              }).ToListAsync();
+                                  dest_default_name = DEST.dest_default_name,
+                                  trip_type= TRIP.trip_type
+                              }).OrderBy(d => d.id).ToListAsync();
 
 
             }   // return await _db.trip_mains.Where(wr => wr.destination_id == (destination_id == 0 ? wr.destination_id : destination_id)).ToListAsync();

@@ -67,11 +67,11 @@ namespace ITravelApp.Data
 		#region trips
 
 		//get facilities for specific trip
-		public List<TripFacility> getFacilityForTrip(decimal? trip_id, string lang_code, int? trip_type)
+		public List<TripFacility> getFacilityForTrip(decimal? trip_id, string lang_code)
 		{
 			try
 			{
-				var result = from TFAC in _db.trip_facilities.Where(wr => wr.trip_id == trip_id && wr.trip_type == trip_type)
+				var result = from TFAC in _db.trip_facilities.Where(wr => wr.trip_id == trip_id)
 							 join TRANS in _db.facility_translations.Where(wr => wr.lang_code.ToLower() == lang_code.ToLower()) on TFAC.facility_id equals TRANS.facility_id into TRIPFAC
 							 from m in TRIPFAC.DefaultIfEmpty()
 							 select new TripFacility
@@ -89,11 +89,11 @@ namespace ITravelApp.Data
 		}
 	   
 		//get images list for specific trip
-		public async Task<List<trip_img>> GetImgsByTrip(decimal? trip_id, int? trip_type)
+		public async Task<List<trip_img>> GetImgsByTrip(decimal? trip_id)
 		{
 			try
 			{
-				return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id && wr.trip_type == trip_type).Select(s => new trip_img
+				return await _db.trip_imgs.Where(wr => wr.trip_id == trip_id).Select(s => new trip_img
 				{
 					id = s.id,
 					img_height=s.img_height,
@@ -177,8 +177,8 @@ namespace ITravelApp.Data
                     dest_route = s.dest_route,
 					route = s.route,
 					client_id = req.client_id,
-					facilities = getFacilityForTrip(s.trip_id, s.lang_code,s.trip_type).ToList(),
-					imgs = GetImgsByTrip(s.trip_id,s.trip_type).Result,
+					facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
+					imgs = GetImgsByTrip(s.trip_id).Result,
 					important_info = s.important_info,
 					trip_details = s.trip_details,
 					trip_not_includes = s.trip_not_includes,
@@ -237,8 +237,8 @@ namespace ITravelApp.Data
                     dest_route = s.dest_route,
                     route = s.route,
                     client_id = req.client_id,
-                    facilities = getFacilityForTrip(s.trip_id, s.lang_code,s.trip_type).ToList(),
-                    imgs = GetImgsByTrip(s.trip_id,s.trip_type).Result,
+                    facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
+                    imgs = GetImgsByTrip(s.trip_id).Result,
                     important_info = s.important_info,
                     trip_details = s.trip_details,
                     trip_not_includes = s.trip_not_includes,
@@ -265,6 +265,7 @@ namespace ITravelApp.Data
 				var trips = await _db.tripwithdetails
 					.Where(wr => wr.lang_code.ToLower() == req.lang_code.ToLower() && 
 								wr.show_in_slider == true && 
+								wr.trip_type == req.trip_type &&
 								wr.destination_id == (req.destination_id == 0 ? wr.destination_id : req.destination_id) &&
 								wr.currency_code.ToLower() == req.currency_code.ToLower())
 					.ToListAsync();
@@ -455,7 +456,7 @@ namespace ITravelApp.Data
 			{
                 var trips = await _db.tripwithdetails
 					 .Where(wr => wr.lang_code == req.lang_code &&
-								   wr.currency_code.ToLower() == req.currency_code.ToLower() && wr.trip_type ==req.trip_type)
+								   wr.currency_code.ToLower() == req.currency_code.ToLower() && wr.trip_type ==(req.trip_type == 0 ? wr.trip_type : req.trip_type))
 					 .Join(_db.trips_wishlists.Where(wr => wr.client_id == req.client_id),
 						            TRIP => new { TRIP.trip_id},
                                     WSH => new { WSH.trip_id},
@@ -530,8 +531,8 @@ namespace ITravelApp.Data
 					trip_details=s.trip_details,
                     total_reviews = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Count(),
                     review_rate = _db.tbl_reviews.Where(wr => wr.trip_id == s.trip_id && wr.trip_type == s.trip_type).Max(m => m.review_rate),
-                    facilities = getFacilityForTrip(s.trip_id, s.lang_code,s.trip_type).ToList(),
-					imgs = GetImgsByTrip(s.trip_id, s.trip_type).Result,
+                    facilities = getFacilityForTrip(s.trip_id, s.lang_code).ToList(),
+					imgs = GetImgsByTrip(s.trip_id).Result,
 				})
 				.ToList();
 			}

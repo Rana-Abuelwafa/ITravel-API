@@ -269,6 +269,11 @@
         "Name": "destination_id",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "trip_type",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -287,6 +292,16 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetTripCategories",
+    "RelativePath": "api/TravelAdmin/GetTripCategories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -537,6 +552,11 @@
       },
       {
         "Name": "img_height",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "trip_type",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }

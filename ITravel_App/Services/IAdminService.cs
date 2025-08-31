@@ -15,9 +15,10 @@ namespace ITravel_App.Services
         public Task<List<destination_img>> GetImgsByDestination(int? destination_id);
         public Task<List<destination_main>> GetDestination_Mains();
         public ResponseCls UpdateDestinationImage(DestinationImgUpdateReq cls);
-       
+
 
         #region trips
+        public Task<List<trip_category>> GetTripCategories();
         public Task<List<trip_price>> GetTrip_Prices(long? trip_id);
         public Task<List<TripTranslationGrp>> GetTripTranslationGrp(long? trip_id);
         public ResponseCls SaveMainTrip(trip_main row);
@@ -31,7 +32,7 @@ namespace ITravel_App.Services
         public ResponseCls SaveMainTripPickups(TripsPickupSaveReq row);
         public ResponseCls SaveTripPickupsTranslations(TripsPickupTranslationSaveReq row);
 
-        public Task<List<TripMainCast>> GetTrip_Mains(int destination_id);
+        public Task<List<TripMainCast>> GetTrip_Mains(int destination_id, int trip_type);
 
         public List<TripsPickupResponseGrp> GetPickupsAllForTrip(PickupsReq req);
         public Task<List<trip_img>> GetImgsByTrip(decimal? trip_id);

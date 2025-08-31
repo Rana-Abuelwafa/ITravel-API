@@ -106,11 +106,18 @@ namespace ITravel_App.Controllers
         #endregion
         #region trips
 
-        [HttpPost("GetTrip_Mains")]
-        public async Task<IActionResult> GetTrip_Mains([FromQuery] int destination_id)
+        [HttpPost("GetTripCategories")]
+        public async Task<IActionResult> GetTripCategories()
         {
 
-            return Ok(await _adminService.GetTrip_Mains(destination_id));
+            return Ok(await _adminService.GetTripCategories());
+        }
+
+        [HttpPost("GetTrip_Mains")]
+        public async Task<IActionResult> GetTrip_Mains([FromQuery] int destination_id , [FromQuery] int trip_type)
+        {
+
+            return Ok(await _adminService.GetTrip_Mains(destination_id, trip_type));
         }
 
         [HttpPost("SaveMainTrip")]

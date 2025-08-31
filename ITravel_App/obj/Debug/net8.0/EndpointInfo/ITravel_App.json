@@ -709,6 +709,29 @@
         }
       }
     },
+    "/api/TravelAdmin/GetTripCategories": {
+      "post": {
+        "tags": [
+          "TravelAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language for the response (e.g., en, ar, de)",
+            "schema": {
+              "type": "string",
+              "default": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TravelAdmin/GetTrip_Mains": {
       "post": {
         "tags": [
@@ -717,6 +740,14 @@
         "parameters": [
           {
             "name": "destination_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "trip_type",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -933,6 +964,10 @@
                   "img_height": {
                     "type": "integer",
                     "format": "int32"
+                  },
+                  "trip_type": {
+                    "type": "integer",
+                    "format": "int32"
                   }
                 }
               },
@@ -971,6 +1006,9 @@
                   "style": "form"
                 },
                 "img_height": {
+                  "style": "form"
+                },
+                "trip_type": {
                   "style": "form"
                 }
               }
@@ -1746,6 +1784,11 @@
             "type": "string",
             "nullable": true
           },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "booking_dateStr": {
             "type": "string",
             "nullable": true
@@ -2026,6 +2069,10 @@
           "client_id": {
             "type": "string",
             "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -2063,6 +2110,11 @@
           },
           "created_by": {
             "type": "string",
+            "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "delete": {
@@ -2122,6 +2174,11 @@
             "nullable": true
           },
           "img_height": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "trip_type": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -2365,6 +2422,10 @@
           "client_id": {
             "type": "string",
             "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -2659,6 +2720,11 @@
           },
           "route": {
             "type": "string",
+            "nullable": true
+          },
+          "trip_type": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

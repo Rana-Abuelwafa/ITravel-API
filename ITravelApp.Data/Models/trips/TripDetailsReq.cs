@@ -12,6 +12,6 @@ namespace ITravelApp.Data.Models.trips
         public string? lang_code { get; set; }
         public string? currency_code { get; set; }
         public string? client_id { get; set; }
-        public int trip_type { get; set; }
+        public int trip_type { get; set; } = 1;
     }
 }
