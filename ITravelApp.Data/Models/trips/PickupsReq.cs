@@ -8,8 +8,8 @@ namespace ITravelApp.Data.Models.trips
 {
     public class PickupsReq
     {
-        public long trip_id {  get; set; }
-        public int trip_type { get; set; }
+        public long? trip_id {  get; set; }
+        public int? trip_type { get; set; }
         public string? lang_code { get; set; }
 
     }

@@ -18,4 +18,6 @@ public partial class client_notification_setting
     public long id { get; set; }
 
     public decimal? profile_id { get; set; }
+
+    public bool? travel_inspiration { get; set; }
 }

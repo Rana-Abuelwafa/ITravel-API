@@ -1,12 +1,20 @@
 ﻿using ITravel_App.Services;
 using ITravelApp.Data.Entities;
+using ITravelApp.Data.Models.Bookings.Admin;
 using ITravelApp.Data.Models.destination;
+using ITravelApp.Data.Models.Transfer;
 using ITravelApp.Data.Models.trips;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ITravel_App.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TravelAdminController : Controller
@@ -21,13 +29,26 @@ namespace ITravel_App.Controllers
             _loginUserData = Utils.getTokenData(httpContextAccessor);
         }
 
+        #region "Main_setting"
+
+        [HttpPost("Get_Currencies")]
+        public async Task<IActionResult> Get_Currencies()
+        {
+            return Ok(await _adminService.Get_Currencies());
+        }
+        [HttpPost("Get_Languages")]
+        public async Task<IActionResult> Get_Languages()
+        {
+            return Ok(await _adminService.Get_Languages());
+        }
+        #endregion
         #region destination
 
         [HttpPost("GetDestinationMain")]
-        public async Task<IActionResult> GetDestination_Mains()
+        public async Task<IActionResult> GetDestination_Mains([FromQuery] bool leaf)
         {
 
-            return Ok(await _adminService.GetDestination_Mains());
+            return Ok(await _adminService.GetDestination_Mains(leaf));
         }
         [HttpPost("GetDestinationWithTranslations")]
         public IActionResult GetDestinationWithTranslations(DestinationReq row)
@@ -273,6 +294,46 @@ namespace ITravel_App.Controllers
         public IActionResult GetFacilityAllWithSelect([FromQuery] long trip_id)
         {
             return Ok(_adminService.GetFacilityAllWithSelect(trip_id));
+        }
+
+        [HttpPost("GetTrip_ChildPolicy")]
+        public async Task<IActionResult> GetTrip_ChildPolicy([FromQuery] long trip_id)
+        {
+            return Ok(await _adminService.GetTrip_ChildPolicy(trip_id));
+        }
+        [HttpPost("SaveTripChildPolicy")]
+        public IActionResult SaveTripChildPolicy(ChildPolicyPricesReq trip)
+        {
+            string email = _loginUserData.client_email;
+            trip.created_by = email;
+            return Ok(_adminService.SaveTripChildPolicy(trip));
+        }
+        #endregion
+
+        #region transfer
+        [HttpPost("GetTransfer_Categories")]
+        public async Task<IActionResult> GetTransfer_Categories()
+        {
+
+            return Ok(await _adminService.GetTransfer_Categories());
+        }
+
+        [HttpPost("SaveTransferCategory")]
+        public IActionResult SaveTransferCategory(TransferCategorySaveReq row)
+        {
+            string? email = _loginUserData.client_email;
+            row.created_by = email;
+
+            return Ok(_adminService.SaveTransferCategory(row));
+        }
+        #endregion
+
+
+        #region "Booking"
+        [HttpPost("GetAllBooking")]
+        public async Task<IActionResult> GetAllBooking(BookingAllReq req)
+        {
+            return Ok(await _adminService.GetAllBooking(req));
         }
         #endregion
     }

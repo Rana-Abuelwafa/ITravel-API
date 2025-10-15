@@ -14,5 +14,11 @@ namespace ITravelApp.Data.Models.destination
         public string? country_code { get; set; }
         public string? img_path { get; set; }
         public string? route { get; set; }
+        public int? parent_id { get; set; }
+        public int? order { get; set; }
+        public string? parent_name { get; set; }
+        public int? parent_order { get; set; }
+        public bool? leaf { get; set; }
+        public int? trip_type { get; set; }
     }
 }

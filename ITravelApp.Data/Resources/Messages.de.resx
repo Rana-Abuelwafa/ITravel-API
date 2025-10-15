@@ -156,4 +156,23 @@
   <data name="AddReviewDuplicate" xml:space="preserve">
     <value>Sie haben dieser Reise bereits eine Bewertung hinzugefügt</value>
   </data>
+  <data name="AddExtraDuplicate" xml:space="preserve">
+    <value>Dieses Extra fügen Sie vorher hinzu</value>
+  </data>
+  <data name="BookingExtraSaveError" xml:space="preserve">
+    <value>Fehler beim Speichern der zusätzlichen Liste. Versuchen Sie es erneut oder überprüfen Sie den Administrator.</value>
+  </data>
+  <data name="UpdateBookingPrice" xml:space="preserve">
+    <value>Buchungspreis erfolgreich aktualisiert</value>
+  </data>
+  <data name="AddSletterDuplicate" xml:space="preserve">
+    <value>Danke, Sie haben sich bereits für Newsletter angemeldet</value>
+  </data>
+  <data name="ContactMsg" xml:space="preserve">
+    <value>Vielen Dank für Ihre Kontaktaufnahme. Wir haben Ihre Nachricht erhalten und werden uns innerhalb weniger Stunden bei Ihnen melden.</value>
+  </data>
+  <data name="AddSletterMsg" xml:space="preserve">
+    <value>Vielen Dank für Ihr Newsletter-Abonnement!
+Sie sind jetzt auf unserer Mailingliste und erhalten Updates, Angebote und Neuigkeiten von ITravel.</value>
+  </data>
 </root>

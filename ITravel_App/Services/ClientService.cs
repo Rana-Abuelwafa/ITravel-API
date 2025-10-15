@@ -2,10 +2,13 @@
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
 using ITravelApp.Data.Models.Bookings;
+using ITravelApp.Data.Models.Bookings.Client;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.profile;
 using ITravelApp.Data.Models.trips;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ITravel_App.Services
 {
@@ -22,6 +25,31 @@ namespace ITravel_App.Services
         public ResponseCls AddTripToWishList(TripsWishlistReq row)
         {
             return _clientDAO.AddTripToWishList(row);
+        }
+
+        public ResponseCls AssignExtraToBooking(List<booking_extra> lst)
+        {
+            return _clientDAO.AssignExtraToBooking(lst);
+        }
+
+        public BookingPrice CalculateBookingPrice(CalculateBookingPriceReq req)
+        {
+            return _clientDAO.CalculateBookingPrice(req);
+        }
+
+        public Task<ResponseCls> CancelBooking(long? booking_id, string? client_id)
+        {
+            return _clientDAO.CancelBooking(booking_id, client_id);
+        }
+
+        public async Task<BookingWithTripDetailsAll> ConfirmBooking(ConfirmBookingReq req)
+        {
+            return await _clientDAO.ConfirmBooking(req);
+        }
+
+        public Task<BookingSummary> GetBookingWithDetails(BookingReq req)
+        {
+            return _clientDAO.GetBookingWithDetails(req);
         }
 
         public Task<List<ClientProfileCast>> GetClientProfiles(string clientId)
@@ -44,9 +72,29 @@ namespace ITravel_App.Services
             return _clientDAO.GetClient_Notification_Settings(clientId);
         }
 
-        public List<DestinationResponse> getDestinations(DestinationReq req)
+        public async Task<List<destinationwithdetail>> getDestinations(DestinationReq req)
         {
-            return _clientDAO.getDestinations(req);
+            return await _clientDAO.getDestinations(req);
+        }
+
+        public List<DestinationTree> GetDestination_Tree(DestinationReq req)
+        {
+            return _clientDAO.GetDestination_Tree(req);
+        }
+
+        public List<TripFacility> getFacilityForTrip(long? trip_id, string lang_code, bool? isExtra, bool? is_obligatory)
+        {
+            return _clientDAO.getFacilityForTrip(trip_id, lang_code, isExtra, is_obligatory); 
+        }
+
+        public Task<List<BookingSummary>> GetMyBooking(LangReq req, string client_id)
+        {
+            return _clientDAO.GetMyBooking(req, client_id);
+        }
+
+        public Task<int> GetMyBookingCount(string client_id)
+        {
+            return _clientDAO.GetMyBookingCount(client_id);
         }
 
         public Task<List<TripsPickupResponse>> GetPickupsForTrip(PickupsReq req)
@@ -57,6 +105,11 @@ namespace ITravel_App.Services
         public Task<List<client_image>> GetProfileImage(string clientId)
         {
             return _clientDAO.GetProfileImage(clientId);
+        }
+
+        public Task<List<trip_category>> GetTripCategories()
+        {
+            return _clientDAO.GetTripCategories();
         }
 
         public Task<TripsAll> GetTripDetails(TripDetailsReq req)
@@ -72,6 +125,16 @@ namespace ITravel_App.Services
         public Task<List<tripwithdetail>> GetTripsForSlider(TripsReq req)
         {
             return _clientDAO.GetTripsForSlider(req);
+        }
+
+        public List<TripFacility> GetTrip_Extra_Mains(TripExtraReq req)
+        {
+            return _clientDAO.GetTrip_Extra_Mains(req);
+        }
+
+        public Task<int> GetWishListCount(string client_id)
+        {
+            return _clientDAO.GetWishListCount(client_id);
         }
 
         public ResponseCls SaveClientBooking(BookingCls row)
@@ -97,6 +160,11 @@ namespace ITravel_App.Services
         public ResponseCls SaveReviewForTrip(tbl_review row)
         {
             return _clientDAO.SaveReviewForTrip(row);
+        }
+
+        public ResponseCls SubscribeNewSletter(newsletter_subscriber row)
+        {
+            return _clientDAO.SubscribeNewSletter(row);
         }
     }
 }

@@ -22,4 +22,10 @@ public partial class destination_main
     public string? created_by { get; set; }
 
     public string? route { get; set; }
+
+    public int? parent_id { get; set; }
+
+    public bool? leaf { get; set; }
+
+    public int? order { get; set; }
 }

@@ -156,4 +156,23 @@
   <data name="AddReviewDuplicate" xml:space="preserve">
     <value>You Already Added Review To this Trip</value>
   </data>
+  <data name="AddExtraDuplicate" xml:space="preserve">
+    <value>You Add This Extra before </value>
+  </data>
+  <data name="BookingExtraSaveError" xml:space="preserve">
+    <value>Error in save Extra List,Try Again or Check Admin</value>
+  </data>
+  <data name="UpdateBookingPrice" xml:space="preserve">
+    <value>Booking's price Updated Successfully</value>
+  </data>
+  <data name="AddSletterDuplicate" xml:space="preserve">
+    <value>Thanks, You Already Subscribred bbefore for new sletters</value>
+  </data>
+  <data name="ContactMsg" xml:space="preserve">
+    <value>Thank you for contacting us. We’ve received your message and will get back to you within few hours.</value>
+  </data>
+  <data name="AddSletterMsg" xml:space="preserve">
+    <value>Thank you for subscribing to our newsletter! 
+You’re now on our mailing list and will start receiving updates, offers, and news from ITravel.</value>
+  </data>
 </root>

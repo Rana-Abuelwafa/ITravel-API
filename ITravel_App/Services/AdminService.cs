@@ -1,9 +1,13 @@
 ﻿using ITravelApp.Data;
 using ITravelApp.Data.Entities;
 using ITravelApp.Data.Models;
+using ITravelApp.Data.Models.Bookings.Admin;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
+using ITravelApp.Data.Models.Transfer;
 using ITravelApp.Data.Models.trips;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ITravel_App.Services
 {
@@ -22,14 +26,19 @@ namespace ITravel_App.Services
             return _adminDAO.AssignFacilityToTrip(row);
         }
 
+        public Task<BookingAll> GetAllBooking(BookingAllReq req)
+        {
+            return _adminDAO.GetAllBooking(req);
+        }
+
         public List<DestinationWithTranslations> GetDestinationWithTranslations(DestinationReq req)
         {
             return _adminDAO.GetDestinationWithTranslations(req);
         }
 
-        public Task<List<destination_main>> GetDestination_Mains()
+        public Task<List<destination_main>> GetDestination_Mains(bool leaf)
         {
-            return _adminDAO.GetDestination_Mains();
+            return _adminDAO.GetDestination_Mains(leaf);
         }
 
         public List<FacilityAllWithSelect> GetFacilityAllWithSelect(long? trip_id)
@@ -57,6 +66,11 @@ namespace ITravel_App.Services
             return _adminDAO.GetPickupsAllForTrip(req);
         }
 
+        public Task<List<transfer_category>> GetTransfer_Categories()
+        {
+            return _adminDAO.GetTransfer_Categories();
+        }
+
         public Task<List<trip_category>> GetTripCategories()
         {
             return _adminDAO.GetTripCategories();
@@ -67,6 +81,11 @@ namespace ITravel_App.Services
             return _adminDAO.GetTripTranslationGrp(trip_id);
         }
 
+        public Task<List<child_policy_setting>> GetTrip_ChildPolicy(long? trip_id)
+        {
+            return _adminDAO.GetTrip_ChildPolicy(trip_id);
+        }
+
         public Task<List<TripMainCast>> GetTrip_Mains(int destination_id, int trip_type)
         {
             return _adminDAO.GetTrip_Mains(destination_id, trip_type);
@@ -75,6 +94,16 @@ namespace ITravel_App.Services
         public Task<List<trip_price>> GetTrip_Prices(long? trip_id)
         {
             return _adminDAO.GetTrip_Prices(trip_id);
+        }
+
+        public Task<List<tbl_currency>> Get_Currencies()
+        {
+            return _adminDAO.Get_Currencies();
+        }
+
+        public Task<List<tbl_language>> Get_Languages()
+        {
+            return _adminDAO.Get_Languages();
         }
 
         public ResponseCls saveDestinationImage(List<destination_img> row)
@@ -112,7 +141,16 @@ namespace ITravel_App.Services
             return _adminDAO.SaveMainTripPickups(row);
         }
 
-       
+        public ResponseCls SaveTransferCategory(TransferCategorySaveReq row)
+        {
+            return _adminDAO.SaveTransferCategory(row);
+        }
+
+        public ResponseCls SaveTripChildPolicy(ChildPolicyPricesReq row)
+        {
+            return _adminDAO.SaveTripChildPolicy(row);
+        }
+
         public ResponseCls saveTripImage(List<trip_img> lst)
         {
             return _adminDAO.saveTripImage(lst);

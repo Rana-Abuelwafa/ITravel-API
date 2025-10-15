@@ -32,4 +32,8 @@ public partial class client_Profile
     public DateTime? updated_at { get; set; }
 
     public string? created_by { get; set; }
+
+    public string? client_first_name { get; set; }
+
+    public string? client_last_name { get; set; }
 }

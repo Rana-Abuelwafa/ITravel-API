@@ -19,7 +19,7 @@ public partial class trip_main
 
     public bool? show_in_slider { get; set; }
 
-    public int destination_id { get; set; }
+    public int? destination_id { get; set; }
 
     public long id { get; set; }
 
@@ -32,4 +32,14 @@ public partial class trip_main
     public string? route { get; set; }
 
     public int? trip_type { get; set; }
+
+    public int? transfer_category_id { get; set; }
+
+    public string? trip_code_auto { get; set; }
+
+    public int? release_days { get; set; }
+
+    public int? trip_order { get; set; }
+
+    public bool? is_comm_soon { get; set; }
 }

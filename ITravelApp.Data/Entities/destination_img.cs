@@ -21,9 +21,9 @@ public partial class destination_img
 
     public string? created_by { get; set; }
 
+    public string? img_resize_path { get; set; }
+
     public int? img_width { get; set; }
 
     public int? img_height { get; set; }
-
-    public string? img_resize_path { get; set; }
 }

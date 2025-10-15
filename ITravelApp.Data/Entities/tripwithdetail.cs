@@ -35,12 +35,6 @@ public partial class tripwithdetail
 
     public string? route { get; set; }
 
-    public string? currency_code { get; set; }
-
-    public decimal? trip_origin_price { get; set; }
-
-    public decimal? trip_sale_price { get; set; }
-
     public string? default_img { get; set; }
 
     public string? dest_default_name { get; set; }
@@ -58,4 +52,18 @@ public partial class tripwithdetail
     public string? important_info { get; set; }
 
     public string? trip_details { get; set; }
+
+    public string? trip_category_name { get; set; }
+
+    public string? trip_category_code { get; set; }
+
+    public string? trip_code_auto { get; set; }
+
+    public string? cancelation_policy { get; set; }
+
+    public int? release_days { get; set; }
+
+    public int? trip_order { get; set; }
+
+    public bool? is_comm_soon { get; set; }
 }

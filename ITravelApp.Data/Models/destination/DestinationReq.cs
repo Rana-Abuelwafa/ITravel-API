@@ -10,5 +10,7 @@ namespace ITravelApp.Data.Models.destination
     public class DestinationReq : LangReq
     {
         public string? country_code { get; set; }
+        public bool? leaf { get; set; }
+        public int trip_type { get; set; } = 1;
     }
 }

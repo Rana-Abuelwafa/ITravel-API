@@ -1,11 +1,14 @@
 ﻿using ITravel_App.Services;
 using ITravelApp.Data.Entities;
+using ITravelApp.Data.Models.Bookings;
 using ITravelApp.Data.Models.destination;
 using ITravelApp.Data.Models.global;
 using ITravelApp.Data.Models.profile;
 using ITravelApp.Data.Models.trips;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ITravel_App.Controllers
 {
@@ -22,15 +25,28 @@ namespace ITravel_App.Controllers
         }
 
         #region destination
+        //get destination tree
+        [HttpPost("GetDestination_Tree")]
+        public IActionResult GetDestination_Tree(DestinationReq req)
+        {
+            return Ok(_clientService.GetDestination_Tree(req));
+        }
         //get destinations
         [HttpPost("getDestinations")]
-        public IActionResult getDestinations(DestinationReq req)
+        public async Task<IActionResult> getDestinations(DestinationReq req)
         {
 
-            return Ok(_clientService.getDestinations(req));
+            return Ok( await _clientService.getDestinations(req));
         }
         #endregion
         #region trips
+        //get main categories for trips
+
+        [HttpPost("GetTripCategories")]
+        public async Task<IActionResult> GetTripCategories()
+        {
+            return Ok(await _clientService.GetTripCategories());
+        }
         //get specific trip details
         [HttpPost("GetTripDetails")]
         public async Task<IActionResult> GetTripDetails(TripDetailsReq req)
@@ -64,7 +80,23 @@ namespace ITravel_App.Controllers
         {
             return Ok(await _clientService.GetClientsReviews(req));
         }
+        [HttpPost("GetWishListCount")]
+        public async Task<IActionResult> GetWishListCount([FromQuery] string? clientId)
+        {
+            
+            return Ok(await _clientService.GetWishListCount(clientId));
+        }
+        [HttpPost("GetMyBookingCount")]
+        public async Task<IActionResult> GetMyBookingCount([FromQuery] string? clientId)
+        {
 
+            return Ok(await _clientService.GetMyBookingCount(clientId));
+        }
+        [HttpPost("CalculateBookingPrice")]
+        public IActionResult CalculateBookingPrice(CalculateBookingPriceReq req)
+        {
+            return Ok(_clientService.CalculateBookingPrice(req));
+        }
         #endregion
 
 

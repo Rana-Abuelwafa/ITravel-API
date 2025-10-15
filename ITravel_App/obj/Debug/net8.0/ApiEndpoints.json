@@ -17,6 +17,70 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "AssignExtraToBooking",
+    "RelativePath": "api/Booking/AssignExtraToBooking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "lst",
+        "Type": "System.Collections.Generic.List\u00601[[ITravelApp.Data.Entities.booking_extra, ITravelApp.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "CancelBooking",
+    "RelativePath": "api/Booking/CancelBooking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "booking_id",
+        "Type": "System.Nullable\u00601[[System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "ConfirmBooking",
+    "RelativePath": "api/Booking/ConfirmBooking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.Bookings.ConfirmBookingReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetBookingWithDetails",
+    "RelativePath": "api/Booking/GetBookingSummary",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.Bookings.BookingReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
     "Method": "GetClient_Notification_Settings",
     "RelativePath": "api/Booking/GetClient_Notification_Settings",
     "HttpMethod": "POST",
@@ -53,12 +117,44 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetMyBooking",
+    "RelativePath": "api/Booking/GetMyBooking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.global.LangReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
     "Method": "GetProfileImage",
     "RelativePath": "api/Booking/GetProfileImage",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.BookingController",
+    "Method": "GetTrip_Extra_Mains",
+    "RelativePath": "api/Booking/GetTrip_Extra_Mains",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.Bookings.TripExtraReq",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -159,12 +255,54 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "Get_Currencies",
+    "RelativePath": "api/TravelAdmin/Get_Currencies",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "Get_Languages",
+    "RelativePath": "api/TravelAdmin/Get_Languages",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetAllBooking",
+    "RelativePath": "api/TravelAdmin/GetAllBooking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.Bookings.Admin.BookingAllReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "GetDestination_Mains",
     "RelativePath": "api/TravelAdmin/GetDestinationMain",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "leaf",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -253,6 +391,32 @@
         "Name": "req",
         "Type": "ITravelApp.Data.Models.trips.PickupsReq",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetTransfer_Categories",
+    "RelativePath": "api/TravelAdmin/GetTransfer_Categories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "GetTrip_ChildPolicy",
+    "RelativePath": "api/TravelAdmin/GetTrip_ChildPolicy",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trip_id",
+        "Type": "System.Int64",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -374,6 +538,11 @@
         "IsRequired": false
       },
       {
+        "Name": "img_resize_path",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "img_width",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
@@ -381,11 +550,6 @@
       {
         "Name": "img_height",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "img_resize_path",
-        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -489,6 +653,38 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveTransferCategory",
+    "RelativePath": "api/TravelAdmin/SaveTransferCategory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "row",
+        "Type": "ITravelApp.Data.Models.Transfer.TransferCategorySaveReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
+    "Method": "SaveTripChildPolicy",
+    "RelativePath": "api/TravelAdmin/SaveTripChildPolicy",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trip",
+        "Type": "ITravelApp.Data.Models.trips.ChildPolicyPricesReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelAdminController",
     "Method": "SaveTripImage",
     "RelativePath": "api/TravelAdmin/SaveTripImage",
     "HttpMethod": "POST",
@@ -557,6 +753,11 @@
       },
       {
         "Name": "trip_type",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "img_order",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
@@ -645,6 +846,22 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "CalculateBookingPrice",
+    "RelativePath": "api/TravelClient/CalculateBookingPrice",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.Bookings.CalculateBookingPriceReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
     "Method": "GetClientsReviews",
     "RelativePath": "api/TravelClient/GetClientsReviews",
     "HttpMethod": "POST",
@@ -654,6 +871,22 @@
       {
         "Name": "req",
         "Type": "ITravelApp.Data.Models.trips.ClientsReviewsReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetDestination_Tree",
+    "RelativePath": "api/TravelClient/GetDestination_Tree",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Models.destination.DestinationReq",
         "IsRequired": true
       }
     ],
@@ -677,6 +910,22 @@
   },
   {
     "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetMyBookingCount",
+    "RelativePath": "api/TravelClient/GetMyBookingCount",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clientId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
     "Method": "GetPickupsForTrip",
     "RelativePath": "api/TravelClient/GetPickupsForTrip",
     "HttpMethod": "POST",
@@ -689,6 +938,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetTripCategories",
+    "RelativePath": "api/TravelClient/GetTripCategories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -734,6 +993,54 @@
       {
         "Name": "req",
         "Type": "ITravelApp.Data.Models.trips.TripsReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelClientController",
+    "Method": "GetWishListCount",
+    "RelativePath": "api/TravelClient/GetWishListCount",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clientId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelContactController",
+    "Method": "SendContactMail",
+    "RelativePath": "api/TravelContact/SendContactMail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravel_App.Models.ContactReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ITravel_App.Controllers.TravelContactController",
+    "Method": "SubscribeNewSletter",
+    "RelativePath": "api/TravelContact/SubscribeNewSletter",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ITravelApp.Data.Entities.newsletter_subscriber",
         "IsRequired": true
       }
     ],

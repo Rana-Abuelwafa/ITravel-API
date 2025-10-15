@@ -30,4 +30,6 @@ public partial class trip_translation
     public string? created_by { get; set; }
 
     public string? trip_not_includes { get; set; }
+
+    public string? cancelation_policy { get; set; }
 }

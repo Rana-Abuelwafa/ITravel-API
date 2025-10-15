@@ -144,16 +144,25 @@
   <data name="CopounValid" xml:space="preserve">
     <value>Copoun Valid</value>
   </data>
-  <data name="NoInvoice" xml:space="preserve">
-    <value>no Invoice Founded</value>
-  </data>
-  <data name="ProfileUncomplete" xml:space="preserve">
-    <value>Please Complete Your Profile First</value>
-  </data>
   <data name="DuplicateOrder" xml:space="preserve">
     <value>There is already data with same Order</value>
   </data>
   <data name="DuplicateData" xml:space="preserve">
     <value>duplicate Data</value>
+  </data>
+  <data name="BookingMsg" xml:space="preserve">
+    <value>Thank you for your Booking, Please Check your Email For Booking Voucher</value>
+  </data>
+  <data name="AddReviewDuplicate" xml:space="preserve">
+    <value>You Already Added Review To this Trip</value>
+  </data>
+  <data name="AddExtraDuplicate" xml:space="preserve">
+    <value>You Add This Extra before </value>
+  </data>
+  <data name="BookingExtraSaveError" xml:space="preserve">
+    <value>Error in save Extra List,Try Again or Check Admin</value>
+  </data>
+  <data name="UpdateBookingPrice" xml:space="preserve">
+    <value>Booking's price Updated Successfully</value>
   </data>
 </root>

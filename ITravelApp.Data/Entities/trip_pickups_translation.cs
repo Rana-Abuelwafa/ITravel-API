@@ -5,7 +5,7 @@ namespace ITravelApp.Data.Entities;
 
 public partial class trip_pickups_translation
 {
-    public long trip_pickup_id { get; set; }
+    public long? trip_pickup_id { get; set; }
 
     public string? pickup_name { get; set; }
 

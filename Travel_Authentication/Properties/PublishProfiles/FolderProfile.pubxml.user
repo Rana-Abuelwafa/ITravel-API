@@ -3,7 +3,15 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\ItravelWebsite\API\publish\auth</_PublishTargetUrl>
-    <History>True|2025-08-23T07:26:35.4181194Z||;True|2025-08-11T13:21:28.5609269+03:00||;</History>
+    <History>True|2025-10-15T09:48:54.9181731Z||;True|2025-08-23T10:26:35.4181194+03:00||;True|2025-08-11T13:21:28.5609269+03:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
+  <ItemGroup>
+    <File Include="MailsTemp/OTPMail_de.html">
+      <publishTime>10/15/2025 12:23:18</publishTime>
+    </File>
+    <File Include="MailsTemp/OTPMail_en.html">
+      <publishTime>10/15/2025 12:23:18</publishTime>
+    </File>
+  </ItemGroup>
 </Project>

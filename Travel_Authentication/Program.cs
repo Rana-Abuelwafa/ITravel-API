@@ -90,6 +90,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 //localization
 var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
@@ -98,7 +99,6 @@ app.UseMiddleware<LocalizedExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
 app.MapIdentityApi<ApplicationUser>();
 app.MapControllers();
 
