@@ -1762,7 +1762,7 @@ namespace ITravelApp.Data
         {
             try
             {
-                return await _db.trips_bookings.Where(wr => wr.client_id == client_id).CountAsync();
+                return await _db.trips_bookings.Where(wr => wr.client_id == client_id && wr.booking_status !=3).CountAsync();
             }
             catch (Exception ex)
             {
