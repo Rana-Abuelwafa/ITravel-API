@@ -9,5 +9,7 @@ namespace Travel_Authentication.Models
         public bool? sendOffers { get; set; }
         public int completeprofile { get; set; }
         public string? GoogleId { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

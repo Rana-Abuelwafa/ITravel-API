@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
-    "Method": "changePassword",
+    "Method": "ChangePassword",
     "RelativePath": "api/Authentication/changePassword",
     "HttpMethod": "POST",
     "IsController": true,
@@ -17,7 +17,7 @@
   },
   {
     "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
-    "Method": "confirmOTP",
+    "Method": "ConfirmOTP",
     "RelativePath": "api/Authentication/ConfirmOTP",
     "HttpMethod": "POST",
     "IsController": true,
@@ -93,6 +93,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Travel_Authentication.Controllers.AuthenticationController",
+    "Method": "Refresh",
+    "RelativePath": "api/Authentication/refresh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

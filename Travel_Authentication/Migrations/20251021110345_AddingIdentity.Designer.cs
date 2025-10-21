@@ -12,7 +12,7 @@ using Travel_Authentication;
 namespace Travel_Authentication.Migrations
 {
     [DbContext(typeof(AuthenticationDBContext))]
-    [Migration("20250806091207_AddingIdentity")]
+    [Migration("20251021110345_AddingIdentity")]
     partial class AddingIdentity
     {
         /// <inheritdoc />
@@ -211,6 +211,12 @@ namespace Travel_Authentication.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");

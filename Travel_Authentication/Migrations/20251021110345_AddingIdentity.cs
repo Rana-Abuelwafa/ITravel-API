@@ -36,6 +36,8 @@ namespace Travel_Authentication.Migrations
                     sendOffers = table.Column<bool>(type: "boolean", nullable: true),
                     completeprofile = table.Column<int>(type: "integer", nullable: false),
                     GoogleId = table.Column<string>(type: "text", nullable: true),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),

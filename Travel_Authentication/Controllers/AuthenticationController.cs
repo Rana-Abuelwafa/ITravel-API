@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using MimeKit;
+using MimeKit.Cryptography;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Travel_Authentication.Models;
 using Travel_Authentication.Services;
@@ -27,7 +29,6 @@ namespace Travel_Authentication.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private static Dictionary<string, string> refreshTokens = new();
         IMailService Mail_Service = null;
         public AuthenticationController(IStringLocalizer<Messages> localizer, RoleManager<IdentityRole>? roleManager, UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager, IMailService _MailService, IConfiguration configuration, ILogger<AuthenticationController> logger)
@@ -63,241 +64,277 @@ namespace Travel_Authentication.Controllers
             return Ok();
         }
 
-
         [HttpPost("RegisterUser")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(new ResponseCls { isSuccessed = false, message = "Invalid data" });
+
             try
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, TwoFactorEnabled = true,sendOffers=model.sendOffers };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    TwoFactorEnabled = true,
+                    sendOffers = model.sendOffers
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                    return HandleIdentityErrors(result);
 
-                if (result.Succeeded)
-                {
-                    //add rule to user
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                await _userManager.AddToRoleAsync(user, model.Role);
 
-                    await _signInManager.SignOutAsync();
-                    await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
-                    if (model.Role == "Admin")
-                    {
+                // Admin: issue token immediately
+                if (model.Role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                    return await HandleAdminRegistration(user, model.Role);
 
-                        await _signInManager.SignInAsync(user, false);
-                        var token = await GenerateJwtTokenAsync(user);
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["SuccessLogin"],
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                GoogleId = user.GoogleId,
-                                AccessToken = token,
-                                RefreshToken = token,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                role = model.Role,
-                                completeprofile = user.completeprofile
-                            }
-                        });
-                    }
-                    //genertae otp code and send to user by email to verify email
-                    var otp = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
-
-                    string fileName = "OTPMail_" + model.lang + ".html";
-                    MailData mailData = Utils.GetOTPMailData(model.lang, user.FirstName + " " + user.LastName, otp, model.Email);
-                    Mail_Service.SendMail(mailData);
-                    //generate response without token until user verify email
-                    return Ok(new ResponseCls
-                    {
-                        isSuccessed = result.Succeeded,
-                        message = _localizer["SuccessRegister"],
-                        errors = null,
-                        user = new User
-                        {
-                            UserName = user.UserName,
-                            FirstName = user.FirstName,
-                            LastName = user.LastName,
-                            Email = user.Email,
-                            GoogleId = user.GoogleId,
-                            AccessToken = null,
-                            RefreshToken = null,
-                            Id = user.Id,
-                            EmailConfirmed = user.EmailConfirmed,
-                            TwoFactorEnabled = user.TwoFactorEnabled,
-                            role = model.Role,
-                            completeprofile = user.completeprofile
-
-                        }
-                    });
-                }
-                else
-                {
-                    List<IdentityError> errorList = result.Errors.ToList();
-                    var errors = string.Join(", ", errorList.Select(e => e.Description));
-                    //_logger.LogError(errors);
-                    return Ok(new ResponseCls
-                    {
-                        isSuccessed = result.Succeeded,
-                        message = errors,
-                        errors = errors,
-                        user = null
-                    }
-
-                    );
-                }
+                // Normal user → Send OTP
+                return await HandleUnverifiedEmailLogin(user, model.lang, _localizer["SuccessRegister"]);
             }
             catch (Exception ex)
             {
+                // Ideally log ex
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                     new ResponseCls
-                     {
-                         isSuccessed = false,
-                         message = _localizer["CheckAdmin"],
-
-                     });
+                    new ResponseCls
+                    {
+                        isSuccessed = false,
+                        message = _localizer["CheckAdmin"]
+                    });
             }
-
-
         }
-
-
 
         //used for normal login (email & password)
         [HttpPost("LoginUser")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var lang = Request.Headers["Accept-Language"].ToString();
             var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return Unauthorized(BuildErrorResponse(_localizer["MailPasswordIncorrect"]));
+
             try
             {
-                var isAuth = await _userManager.CheckPasswordAsync(user, model.Password);
-                if (user != null && isAuth)
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-                    if (isAdmin)
-                    {
-                        //generate response with token to admin
-                        await _signInManager.SignInAsync(user, false);
-                        var token = await GenerateJwtTokenAsync(user);
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["SuccessLogin"],
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                GoogleId = user.GoogleId,
-                                AccessToken = token,
-                                RefreshToken = token,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                role = roles.FirstOrDefault(),
-                                completeprofile = user.completeprofile
+                if (!await _userManager.CheckPasswordAsync(user, model.Password))
+                    return Unauthorized(BuildErrorResponse(_localizer["MailPasswordIncorrect"]));
 
-                            }
-                        });
-                   
-                    }
-                    if (user.EmailConfirmed == false)
-                    {
-                        //generate otp and send it to user's email to verify email
-                        var otp = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
-                        MailData mailData = Utils.GetOTPMailData(model.lang, user.FirstName + " " + user.LastName, otp, model.Email);
+                var roles = await _userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
 
-                        Mail_Service.SendMail(mailData);
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    return await HandleAdminRegistration(user, role);
 
-                        //generate response without token until user verify email
+                // Not confirmed → send OTP
+                if (!user.EmailConfirmed)
+                    return await HandleUnverifiedEmailLogin(user, model.lang, $"{_localizer["OTPMSG"]} {user.Email}");
 
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["OTPMSG"] + user.Email,
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                GoogleId = user.GoogleId,
-                                AccessToken = null,
-                                RefreshToken = null,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                role = roles.FirstOrDefault(),
-                                completeprofile = user.completeprofile
-
-                            }
-                        });
-                      
-                    }
-                    else
-                    {
-                        //generate response with token if user's email is verified
-                        await _signInManager.SignInAsync(user, false);
-                        var token = await GenerateJwtTokenAsync(user);
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["SuccessLogin"],
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                GoogleId = user.GoogleId,
-                                AccessToken = token,
-                                RefreshToken = token,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                role = roles.FirstOrDefault(),
-                                completeprofile = user.completeprofile,
-
-                            }
-                        });
-                       
-                    }
-
-
-                }
-                else
-                    return Unauthorized(new ResponseCls
-                    {
-                        isSuccessed = false,
-                        message = _localizer["MailPasswordIncorrect"],
-
-                    });
-
-
+                return await HandleVerifiedUserLogin(user, role);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return Unauthorized(new ResponseCls
-                {
-
-                    isSuccessed = false,
-                    message = _localizer["MailPasswordIncorrect"],
-
-                });
+                // Ideally log the exception here
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    BuildErrorResponse(_localizer["UnexpectedError"] ?? "Unexpected error occurred."));
             }
         }
 
+
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordCls model)
+        {
+            if (string.IsNullOrWhiteSpace(model.userId))
+                return BadRequest(BuildErrorResponse(_localizer["UserNotFound"]));
+
+            try
+            {
+                var user = await _userManager.FindByIdAsync(model.userId);
+                if (user == null)
+                    return Unauthorized(BuildErrorResponse(_localizer["UserNotFound"]));
+
+                var result = await ChangeUserPasswordAsync(user, model);
+
+                if (!result.Succeeded)
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    _logger.LogWarning($"Password change failed for user {model.userId}: {errors}");
+                    return BadRequest(BuildErrorResponse(errors));
+                }
+
+                // Update refresh token and generate JWT
+                var roles = await _userManager.GetRolesAsync(user);
+                var token = await GenerateJwtTokenAsync(user);
+                var refreshToken = GenerateRefreshToken();
+
+                await UpdateRefreshToken(user, refreshToken);
+
+                return Ok(new ResponseCls
+                {
+                    isSuccessed = true,
+                    message = _localizer["SuccessPassChange"],
+                    user = CreateUserResponse(user, roles.FirstOrDefault(), token)
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while changing password for user {UserId}", model.userId);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    BuildErrorResponse(_localizer["CheckAdmin"] ?? "Internal server error"));
+            }
+        }
+   
+        //used in gmail register
+        [HttpPost("ExternalRegister")]
+        public async Task<IActionResult> ExternalRegister([FromBody] AppsRegisterModel model)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(new ResponseCls { isSuccessed = false, message = "Invalid data" });
+
+            try
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    TwoFactorEnabled = true,
+                    sendOffers = model.sendOffers,
+                    GoogleId="1",
+                    
+                };
+                var result = await _userManager.CreateAsync(user);
+                if (!result.Succeeded)
+                    return HandleIdentityErrors(result);
+
+                await _userManager.AddToRoleAsync(user, model.Role);
+                return await HandleUnverifiedEmailLogin(user, model.lang, _localizer["SuccessRegister"]);
+            }
+            catch (Exception ex)
+            {
+                // Ideally log ex
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new ResponseCls
+                    {
+                        isSuccessed = false,
+                        message = _localizer["CheckAdmin"]
+                    });
+            }
+
+        }
+
+        [HttpPost("LoginGmail")]
+        public async Task<IActionResult> LoginGmail([FromBody] AppsLoginModel model)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                    return Unauthorized(BuildErrorResponse(_localizer["UserNotFound"]));
+
+                var roles = await _userManager.GetRolesAsync(user);
+
+                if (!user.EmailConfirmed)
+                    return await HandleUnverifiedEmailLogin(user, model.lang, roles.FirstOrDefault());
+
+                return await HandleVerifiedUserLogin(user, roles.FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during Gmail login for {Email}", model.Email);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    BuildErrorResponse(_localizer["CheckAdmin"] ?? "Internal server error"));
+            }
+        }
+        [HttpPost("ConfirmOTP")]
+        public async Task<IActionResult> ConfirmOTP([FromBody] OTPConfirmCls model)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                    return Unauthorized(BuildErrorResponse(_localizer["UserNotFound"]));
+
+                var roles = await _userManager.GetRolesAsync(user);
+                var isCodeValid = await _userManager.VerifyTwoFactorTokenAsync(user, "Email", model.otp);
+
+                if (!isCodeValid)
+                    return Ok(BuildErrorResponse(_localizer["InvalidCode"]));
+
+                // Mark email as confirmed and issue tokens
+                user.EmailConfirmed = true;
+                var token = await GenerateJwtTokenAsync(user);
+                var refreshToken = GenerateRefreshToken();
+
+                await UpdateRefreshToken(user, refreshToken);
+                SetRefreshTokenCookie(refreshToken);
+
+                return Ok(new ResponseCls
+                {
+                    isSuccessed = true,
+                    message = _localizer["SuccessLogin"],
+                    user = CreateUserResponse(user, roles.FirstOrDefault(), token)
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error confirming OTP for {Email}", model.Email);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    BuildErrorResponse(_localizer["CheckAdmin"]));
+            }
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (refreshToken == null)
+                return Unauthorized();
+
+            var user = _userManager.Users.SingleOrDefault(u => u.RefreshToken == refreshToken);
+            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                return Unauthorized();
+
+            var newAccessToken = await GenerateJwtTokenAsync(user);
+            var newRefreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            await _userManager.UpdateAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            SetRefreshTokenCookie(newRefreshToken);
+          
+            return Ok(new ResponseCls
+            {
+                isSuccessed = true,
+                message = _localizer["SuccessLogin"],
+                errors = null,
+                user = CreateUserResponse(user, roles.FirstOrDefault(), newAccessToken)
+               
+            });
+            //return Ok(new { AccessToken = newAccessToken });
+        }
+
+        #region "helper methods"
+
+        private async Task<IdentityResult> ChangeUserPasswordAsync(ApplicationUser user, PasswordCls model)
+        {
+            var hasPassword = await _userManager.HasPasswordAsync(user);
+
+            return hasPassword
+                // Regular flow (old password required)
+                ? await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword)
+                :
+                // External login user (no password yet) → set new password directly
+                await _userManager.AddPasswordAsync(user, model.NewPassword);
+        }
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
         private async Task<string> GenerateJwtTokenAsync(ApplicationUser user)
         {
             DateTime timestamp = DateTime.Now;
@@ -336,420 +373,113 @@ namespace Travel_Authentication.Controllers
             }
         }
 
-        [HttpPost("changePassword")]
-        public async Task<IActionResult> changePassword([FromBody] PasswordCls model)
+        private void SetRefreshTokenCookie(string refreshToken)
         {
-            try
+            Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
             {
-                //check if user exist or not first
-                var user = await _userManager.FindByIdAsync(model.userId);
-                if (user != null)
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    // Check if user has a password
-                    var hasPassword = await _userManager.HasPasswordAsync(user);
-
-                    IdentityResult result;
-
-                    if (hasPassword)
-                    {
-                        // Regular flow (old password required)
-                        result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                    }
-                    else
-                    {
-                        // External login user (no password yet) → set new password directly
-                        result = await _userManager.AddPasswordAsync(user, model.NewPassword);
-                    }
-
-                    if (!result.Succeeded)
-                    {
-                        //return BadRequest(result.Errors);
-                        List<IdentityError> errorList = result.Errors.ToList();
-                        var errors = string.Join(", ", errorList.Select(e => e.Description));
-                        // _logger.LogError(errors);
-                        return BadRequest(new ResponseCls
-                        {
-                            isSuccessed = false,
-                            message = errors,
-
-                        });
-                    }
-                    var token = await GenerateJwtTokenAsync(user);
-                    return Ok(new ResponseCls
-                    {
-                        isSuccessed = true,
-                        message = _localizer["SuccessPassChange"],
-                        errors = null,
-                        user = new User
-                        {
-                            UserName = user.UserName,
-                            FirstName = user.FirstName,
-                            LastName = user.LastName,
-                            Email = user.Email,
-                            GoogleId = user.GoogleId,
-                            AccessToken = token,
-                            RefreshToken = token,
-                            Id = user.Id,
-                            role = roles.FirstOrDefault()
-
-                        }
-                    });
-                    //var roles = await _userManager.GetRolesAsync(user);
-                    //var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                    //if (result.Succeeded)
-                    //{
-                    //    var token = await GenerateJwtTokenAsync(user);
-                    //    return Ok(new ResponseCls
-                    //    {
-                    //        isSuccessed = true,
-                    //        message = _localizer["SuccessPassChange"],
-                    //        errors = null,
-                    //        user = new User
-                    //        {
-                    //            UserName = user.UserName,
-                    //            FirstName = user.FirstName,
-                    //            LastName = user.LastName,
-                    //            Email = user.Email,
-                    //            GoogleId = user.GoogleId,
-                    //            AccessToken = token,
-                    //            RefreshToken = token,
-                    //            Id = user.Id,
-                    //            role = roles.FirstOrDefault()
-
-                        //        }
-                        //    });
-
-                        //}
-                    //else
-                    //{
-                    //    List<IdentityError> errorList = result.Errors.ToList();
-                    //    var errors = string.Join(", ", errorList.Select(e => e.Description));
-                    //    // _logger.LogError(errors);
-                    //    return BadRequest(new ResponseCls
-                    //    {
-                    //        isSuccessed = false,
-                    //        message = errors,
-
-                    //    });
-                    //}
-
-
-                }
-                else
-                {
-                    return Unauthorized(new ResponseCls
-                    {
-
-                        isSuccessed = false,
-                        message = _localizer["UserNotFound"],
-
-                    });
-                }
-
-
-            }
-            catch (Exception e)
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+        }
+        private User CreateUserResponse(ApplicationUser user, string role, string token)
+        {
+            return new User
             {
-                _logger.LogError(e.Message);
-                return Unauthorized(new ResponseCls
-                {
-
-                    isSuccessed = false,
-                    message = _localizer["CheckAdmin"],
-
-                });
-            }
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                GoogleId = user.GoogleId,
+                AccessToken = token,
+                Id = user.Id,
+                EmailConfirmed = user.EmailConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                role = role,
+                completeprofile = user.completeprofile,
+                RefreshToken=user.RefreshToken,
+                sendOffers=user.sendOffers,
+                RefreshTokenExpiryTime = user.RefreshTokenExpiryTime,
+            };
         }
 
-        //used in gmail register
-        [HttpPost("ExternalRegister")]
-        public async Task<IActionResult> ExternalRegister([FromBody] AppsRegisterModel model)
+        private IActionResult HandleIdentityErrors(IdentityResult result)
         {
-            try
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+            return Ok(new ResponseCls
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, GoogleId = "1", TwoFactorEnabled = true, sendOffers = model.sendOffers };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    //add rule to user
-                    await _userManager.AddToRoleAsync(user, model.Role);
-                    //generate otp and send it to user's email to verify email
-                    var otp = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
-                    MailData mailData = Utils.GetOTPMailData(model.lang, user.FirstName + " " + user.LastName, otp, model.Email);
+                isSuccessed = false,
+                message = errors,
+                errors = errors
+            });
+        }
+        private async Task<IActionResult> HandleAdminRegistration(ApplicationUser user, string role)
+        {
+            await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    Mail_Service.SendMail(mailData);
-                    //generate response without token until user verify email
-                    return Ok(new ResponseCls
-                    {
-                        isSuccessed = result.Succeeded,
-                        message = _localizer["SuccessRegister"],
-                        errors = null,
-                        user = new User
-                        {
-                            UserName = user.UserName,
-                            FirstName = user.FirstName,
-                            LastName = user.LastName,
-                            Email = user.Email,
-                           GoogleId=user.GoogleId,
-                            AccessToken = null,
-                            RefreshToken = null,
-                            Id = user.Id,
-                            EmailConfirmed = user.EmailConfirmed,
-                            TwoFactorEnabled = user.TwoFactorEnabled,
-                            role = model.Role,
-                            completeprofile = user.completeprofile
-
-                        }
-                    });
-                    
-                }
-                else
-                {
-                    List<IdentityError> errorList = result.Errors.ToList();
-                    var errors = string.Join(", ", errorList.Select(e => e.Description));
-                    //_logger.LogError(errors);
-                    return Ok(new ResponseCls
-                    {
-                        isSuccessed = result.Succeeded,
-                        message = errors,
-                        errors = errors,
-                        user = null
-                    });
-                    
-                }
-            }
-            catch (Exception ex)
+            var token = await GenerateJwtTokenAsync(user);
+            var refreshToken = GenerateRefreshToken();
+            user.RefreshToken = refreshToken;
+            user.EmailConfirmed = true;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _userManager.UpdateAsync(user);
+            SetRefreshTokenCookie(refreshToken);
+            return Ok(new ResponseCls
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                      new ResponseCls
-                      {
-                          isSuccessed = false,
-                          message = _localizer["CheckAdmin"],
-
-                      });
-            }
-
-
+                isSuccessed = true,
+                message = _localizer["SuccessLogin"],
+                user = CreateUserResponse(user, role, token)
+            });
         }
 
-
-
-        [HttpPost("LoginGmail")]
-        public async Task<IActionResult> LoginGmail([FromBody] AppsLoginModel model)
+        private ResponseCls BuildErrorResponse(string message)
         {
-            //check if user exist or not first
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            try
+            return new ResponseCls
             {
-                if (user != null)
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    if (user.EmailConfirmed == false)
-                    {
-                        //generate otp and send it to user's email to verify email
-                        var otp = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
-                        MailData mailData = Utils.GetOTPMailData(model.lang, user.FirstName + " " + user.LastName, otp, model.Email);
-
-                        Mail_Service.SendMail(mailData);
-                        //generate response without token until user verify email
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["OTPMSG"] + user.Email,
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                GoogleId = user.GoogleId,
-                                AccessToken = null,
-                                RefreshToken = null,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                completeprofile = user.completeprofile,
-                                role = roles.FirstOrDefault()
-
-                            }
-                        });
-                        
-                    }
-                    else
-                    {
-                        //generate response with token if user verify email
-                        await _signInManager.SignInAsync(user, false);
-                        var token = await GenerateJwtTokenAsync(user);
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["SuccessLogin"],
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                GoogleId = user.GoogleId,
-                                AccessToken = token,
-                                RefreshToken = token,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                completeprofile = user.completeprofile,
-                                role = roles.FirstOrDefault()
-
-                            }
-                        });
-                   
-                    }
-                }
-                else
-                    return StatusCode(StatusCodes.Status401Unauthorized,
-                      new ResponseCls
-                      {
-                          isSuccessed = false,
-                          message = _localizer["UserNotFound"],
-
-                      });
-
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                      new ResponseCls
-                      {
-                          isSuccessed = false,
-                          message = _localizer["CheckAdmin"],
-
-                      });
-            }
+                isSuccessed = false,
+                message = message
+            };
         }
-
-
-        [HttpPost("ConfirmOTP")]
-        public async Task<IActionResult> confirmOTP([FromBody] OTPConfirmCls model)
+        private async Task<IActionResult> HandleUnverifiedEmailLogin(ApplicationUser user, string lang,string message)
         {
-            try
+            var otp = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
+            var mailData = Utils.GetOTPMailData(lang, $"{user.FirstName} {user.LastName}", otp, user.Email);
+            Mail_Service.SendMail(mailData);
+
+            return Ok(new ResponseCls
             {
-                //check if user exist or not
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null)
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    //verify otp 
-                    var isCodeValid = await _userManager.VerifyTwoFactorTokenAsync(user, "Email", model.otp);
-
-                    if (isCodeValid)
-                    {
-                        //update user EmailConfirmed = true;
-                        user.EmailConfirmed = true;
-                        await _userManager.UpdateAsync(user);
-                        var token = await GenerateJwtTokenAsync(user);
-
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = true,
-                            message = _localizer["SuccessLogin"],
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                AccessToken = token,
-                                RefreshToken = token,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                GoogleId = user.GoogleId,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                completeprofile = user.completeprofile,
-                                role = roles.FirstOrDefault()
-
-                            }
-                        });
-                    }
-                    else
-                    {
-
-                        return Ok(new ResponseCls
-                        {
-                            isSuccessed = false,
-                            message = _localizer["InvalidCode"],
-                            errors = null,
-                            user = new User
-                            {
-                                UserName = user.UserName,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Email = user.Email,
-                                Id = user.Id,
-                                EmailConfirmed = user.EmailConfirmed,
-                                GoogleId = user.GoogleId,
-                                TwoFactorEnabled = user.TwoFactorEnabled,
-                                
-                                AccessToken = "",
-                                RefreshToken = "",
-                                completeprofile = user.completeprofile,
-                                role = roles.FirstOrDefault()
-
-                            }
-                        });
-                        
-
-                    }
-                }
-                return Unauthorized(new ResponseCls
-                {
-                    isSuccessed = false,
-                    message = _localizer["UserNotFound"],
-                    user=null
-                });
-
-
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                return Ok(new ResponseCls
-                {
-                    
-                    isSuccessed = false,
-                    message = _localizer["CheckAdmin"],
-                    user=null
-
-                });
-            }
+                isSuccessed = true,
+                message = message,
+                user = CreateUserResponse(user, "User", null)
+            });
         }
+        private async Task<IActionResult> HandleVerifiedUserLogin(ApplicationUser user, string role)
+        {
+            await _signInManager.SignInAsync(user, false);
+
+            var token = await GenerateJwtTokenAsync(user);
+            var refreshToken = GenerateRefreshToken();
+
+            await UpdateRefreshToken(user, refreshToken);
+            SetRefreshTokenCookie(refreshToken);
+
+            return Ok(new ResponseCls
+            {
+                isSuccessed = true,
+                message = _localizer["SuccessLogin"],
+                user = CreateUserResponse(user, role, token)
+            });
+        }
+        private async Task UpdateRefreshToken(ApplicationUser user, string refreshToken)
+        {
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _userManager.UpdateAsync(user);
+        }
+  
+        #endregion
 
 
-        //[HttpPost("refresh")]
-        //public async Task<IActionResult> Refresh([FromBody] Models.RefreshRequest request)
-        //{
-        //    var handler = new JwtSecurityTokenHandler();
-        //    var jwtToken = handler.ReadJwtToken(request.Token);
-
-        //    var userId = jwtToken.Subject;
-        //    if (userId == null || !refreshTokens.ContainsKey(userId)) return Unauthorized();
-
-        //    if (refreshTokens[userId] != request.RefreshToken) return Unauthorized();
-
-        //    var user = await _userManager.FindByIdAsync(userId);
-        //    if (user == null) return Unauthorized();
-
-        //    // New tokens
-        //    var newJwt = await GenerateJwtTokenAsync(user);
-        //    var newRefresh = Guid.NewGuid().ToString();
-
-        //    refreshTokens[user.Id] = newRefresh;
-
-        //    return Ok(new { token = newJwt, refreshToken = newRefresh });
-        //}
-
-       
     }
 }
