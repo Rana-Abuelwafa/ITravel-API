@@ -31,15 +31,26 @@ builder.Services.AddControllersWithViews()
 );
 builder.Services.AddRazorPages();
 builder.Services.AddControllers().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(MyAllowSpecificOrigins,
+//        builder =>
+//        {
+//            builder.WithOrigins("*")
+//                    .WithMethods("*")
+//                    .WithHeaders(HeaderNames.ContentType, "*");
+//        });
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(MyAllowSpecificOrigins,
-        builder =>
-        {
-            builder.WithOrigins("*")
-                    .WithMethods("*")
-                    .WithHeaders(HeaderNames.ContentType, "*");
-        });
+    options.AddPolicy(MyAllowSpecificOrigins, policy =>
+    {
+        policy
+            .WithOrigins("https://localhost:3000") // React dev server
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials(); // allow cookies
+    });
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -114,6 +125,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 //localization
 var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
@@ -125,7 +137,6 @@ app.UseStaticFiles(new StaticFileOptions
         Path.Combine(builder.Environment.ContentRootPath, "images")),
     RequestPath = "/images"
 });
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();

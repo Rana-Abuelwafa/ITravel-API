@@ -23,15 +23,26 @@ builder.Logging.AddSerilog(logger);
 // Add services to the container.
 
 builder.Services.AddControllers();
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(MyAllowSpecificOrigins,
+//        builder =>
+//        {
+//            builder.WithOrigins("*")
+//                    .WithMethods("*")
+//                    .WithHeaders(HeaderNames.ContentType, "*");
+//        });
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(MyAllowSpecificOrigins,
-        builder =>
-        {
-            builder.WithOrigins("*")
-                    .WithMethods("*")
-                    .WithHeaders(HeaderNames.ContentType, "*");
-        });
+    options.AddPolicy(MyAllowSpecificOrigins, policy =>
+    {
+        policy
+            .WithOrigins("https://localhost:3000") // React dev server
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials(); // allow cookies
+    });
 });
 //mail
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
@@ -90,8 +101,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
 //localization
 var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
 app.UseRequestLocalization(locOptions.Value);

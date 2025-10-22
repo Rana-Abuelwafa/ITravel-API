@@ -351,7 +351,7 @@ namespace Travel_Authentication.Controllers
                         new Claim("Email", user.Email),
                         //new Claim("ClientId", user.Id.ToString()),
                         new Claim("TimeStamp",timestamp.ToString()),
-                        new Claim("ActivtationTokenExpiredAt",timestamp.AddMinutes(30).ToString()),
+                        new Claim("ActivtationTokenExpiredAt",timestamp.AddMinutes(5).ToString()),
                     };
             AddRolesToClaims(authClaims, roles);
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -360,7 +360,7 @@ namespace Travel_Authentication.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: authClaims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: creds);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
@@ -379,7 +379,8 @@ namespace Travel_Authentication.Controllers
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict,
+                //SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
         }
