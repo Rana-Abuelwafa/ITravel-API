@@ -405,7 +405,7 @@ public partial class itravel_client_dbContext : DbContext
             entity.Property(e => e.transfer_category_id).HasDefaultValue(0);
             entity.Property(e => e.trip_code).HasMaxLength(20);
             entity.Property(e => e.trip_code_auto).HasMaxLength(20);
-            entity.Property(e => e.trip_default_name).HasMaxLength(50);
+            entity.Property(e => e.trip_default_name).HasMaxLength(100);
             entity.Property(e => e.trip_duration).HasMaxLength(20);
             entity.Property(e => e.trip_order).HasDefaultValue(0);
             entity.Property(e => e.trip_type).HasDefaultValue(0);
@@ -529,6 +529,7 @@ public partial class itravel_client_dbContext : DbContext
 
             entity.Property(e => e.country_code).HasMaxLength(20);
             entity.Property(e => e.dest_code).HasMaxLength(20);
+            entity.Property(e => e.dest_name).HasMaxLength(50);
             entity.Property(e => e.dest_route).HasMaxLength(100);
             entity.Property(e => e.lang_code).HasMaxLength(5);
             entity.Property(e => e.pickup).HasMaxLength(20);
@@ -537,7 +538,7 @@ public partial class itravel_client_dbContext : DbContext
             entity.Property(e => e.trip_category_name).HasMaxLength(100);
             entity.Property(e => e.trip_code).HasMaxLength(20);
             entity.Property(e => e.trip_code_auto).HasMaxLength(20);
-            entity.Property(e => e.trip_default_name).HasMaxLength(50);
+            entity.Property(e => e.trip_default_name).HasMaxLength(100);
             entity.Property(e => e.trip_duration).HasMaxLength(20);
             entity.Property(e => e.trip_name).HasMaxLength(50);
         });

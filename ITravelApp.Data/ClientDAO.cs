@@ -876,6 +876,7 @@ namespace ITravelApp.Data
                     .Max(m => m.age_to),
                 trip_order = s.trip_order,
                 is_comm_soon = s.is_comm_soon,
+                dest_name=s.dest_name
                 // child_lst = GetChild_Prices(currency_code ,s.trip_id, trip_max_price)
             };
         }

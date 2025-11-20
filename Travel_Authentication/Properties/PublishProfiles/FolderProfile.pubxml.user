@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\ItravelWebsite\API\publish\auth</_PublishTargetUrl>
-    <History>True|2025-10-15T09:48:54.9181731Z||;True|2025-08-23T10:26:35.4181194+03:00||;True|2025-08-11T13:21:28.5609269+03:00||;</History>
+    <History>True|2025-11-20T08:21:03.8746520Z||;True|2025-10-15T12:48:54.9181731+03:00||;True|2025-08-23T10:26:35.4181194+03:00||;True|2025-08-11T13:21:28.5609269+03:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>

@@ -102,7 +102,13 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Travel_Authentication.Models.TokenModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

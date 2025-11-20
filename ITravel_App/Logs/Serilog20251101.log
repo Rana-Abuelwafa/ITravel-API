@@ -1,0 +1,222 @@
+[2025-11-01 10:11:41.984 +02:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-11-01 10:11:42.565 +02:00  INF]  Now listening on: https://localhost:7045
+[2025-11-01 10:11:42.566 +02:00  INF]  Now listening on: http://localhost:5124
+[2025-11-01 10:11:42.855 +02:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-11-01 10:11:42.855 +02:00  INF]  Hosting environment: Development
+[2025-11-01 10:11:42.855 +02:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-11-01 10:11:51.962 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-11-01 10:11:52.149 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 192.3305ms
+[2025-11-01 10:11:52.189 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-11-01 10:11:52.190 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-11-01 10:11:52.198 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 11.1231ms
+[2025-11-01 10:11:52.260 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 69.8214ms
+[2025-11-01 10:11:52.313 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-11-01 10:11:52.387 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 74.2649ms
+[2025-11-01 10:13:49.591 +02:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - application/json-patch+json 383
+[2025-11-01 10:13:49.599 +02:00  INF]  CORS policy execution successful.
+[2025-11-01 10:13:51.071 +02:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App)'
+[2025-11-01 10:13:51.112 +02:00  INF]  Route matched with {action = "SaveMainTrip", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainTrip(ITravelApp.Data.Entities.trip_main) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-11-01 10:14:03.213 +02:00  INF]  Executed DbCommand (71ms) [Parameters=[@__row_trip_code_0='?', @__row_active_1='?' (DbType = Boolean), @__row_destination_id_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.active, t.created_at, t.created_by, t.destination_id, t.is_comm_soon, t.pickup, t.release_days, t.route, t.show_in_slider, t.show_in_top, t.transfer_category_id, t.trip_code, t.trip_code_auto, t.trip_default_name, t.trip_duration, t.trip_order, t.trip_type, t.updated_at
+FROM trip_main AS t
+WHERE t.trip_code = @__row_trip_code_0 AND t.active = @__row_active_1 AND t.destination_id = @__row_destination_id_2
+LIMIT 2
+[2025-11-01 10:14:07.945 +02:00  INF]  Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_main AS t
+[2025-11-01 10:14:09.216 +02:00  INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_main AS t
+[2025-11-01 10:14:12.113 +02:00  INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.trip_order)
+FROM trip_main AS t
+[2025-11-01 10:14:14.063 +02:00  ERR]  Failed executing DbCommand (16ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?' (DbType = Boolean), @p2='?', @p3='?' (DbType = Int32), @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Int32), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = Boolean), @p10='?' (DbType = Int32), @p11='?', @p12='?', @p13='?', @p14='?', @p15='?' (DbType = Int32), @p16='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_main (id, active, created_by, destination_id, is_comm_soon, pickup, release_days, route, show_in_slider, show_in_top, transfer_category_id, trip_code, trip_code_auto, trip_default_name, trip_duration, trip_order, trip_type)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16)
+RETURNING created_at, updated_at;
+[2025-11-01 10:14:14.090 +02:00  ERR]  An exception occurred in the database while saving changes for context type 'ITravelApp.Data.Data.itravel_client_dbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 22001: value too long for type character varying(20)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+  Exception data:
+    Severity: ERROR
+    SqlState: 22001
+    MessageText: value too long for type character varying(20)
+    File: varchar.c
+    Line: 640
+    Routine: varchar
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 22001: value too long for type character varying(20)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+  Exception data:
+    Severity: ERROR
+    SqlState: 22001
+    MessageText: value too long for type character varying(20)
+    File: varchar.c
+    Line: 640
+    Routine: varchar
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+[2025-11-01 10:14:30.009 +02:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-11-01 10:14:30.054 +02:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App) in 38937.3989ms
+[2025-11-01 10:14:30.054 +02:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App)'
+[2025-11-01 10:14:30.065 +02:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - 200 85 application/json; charset=utf-8 40474.3836ms
+[2025-11-01 17:00:53.487 +02:00  INF]  User profile is available. Using 'C:\Users\Pro\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2025-11-01 17:00:54.196 +02:00  INF]  Now listening on: https://localhost:7045
+[2025-11-01 17:00:54.197 +02:00  INF]  Now listening on: http://localhost:5124
+[2025-11-01 17:00:54.515 +02:00  INF]  Application started. Press Ctrl+C to shut down.
+[2025-11-01 17:00:54.515 +02:00  INF]  Hosting environment: Development
+[2025-11-01 17:00:54.515 +02:00  INF]  Content root path: D:\ItravelWebsite\API\ITravel_App\ITravel_App
+[2025-11-01 17:00:55.339 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/index.html - null null
+[2025-11-01 17:00:55.645 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/index.html - 200 null text/html;charset=utf-8 319.4353ms
+[2025-11-01 17:00:55.700 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - null null
+[2025-11-01 17:00:55.701 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/_vs/browserLink - null null
+[2025-11-01 17:00:55.711 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 10.6303ms
+[2025-11-01 17:00:55.803 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/_vs/browserLink - 200 null text/javascript; charset=UTF-8 101.3059ms
+[2025-11-01 17:00:55.887 +02:00  INF]  Request starting HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - null null
+[2025-11-01 17:00:55.998 +02:00  INF]  Request finished HTTP/2 GET https://localhost:7045/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 110.6053ms
+[2025-11-01 17:04:27.111 +02:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - application/json-patch+json 394
+[2025-11-01 17:04:27.121 +02:00  INF]  CORS policy execution successful.
+[2025-11-01 17:04:27.267 +02:00  INF]  Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10503: Signature validation failed. Token does not have a kid. Keys tried: '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+[2025-11-01 17:04:27.271 +02:00  INF]  Bearer was not authenticated. Failure message: IDX10503: Signature validation failed. Token does not have a kid. Keys tried: '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+[2025-11-01 17:04:27.305 +02:00  INF]  Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+[2025-11-01 17:04:27.316 +02:00  INF]  AuthenticationScheme: Bearer was challenged.
+[2025-11-01 17:04:27.317 +02:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - 401 0 null 215.3727ms
+[2025-11-01 17:05:04.420 +02:00  INF]  Request starting HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - application/json-patch+json 394
+[2025-11-01 17:05:04.421 +02:00  INF]  CORS policy execution successful.
+[2025-11-01 17:05:04.475 +02:00  INF]  Executing endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App)'
+[2025-11-01 17:05:04.498 +02:00  INF]  Route matched with {action = "SaveMainTrip", controller = "TravelAdmin"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult SaveMainTrip(ITravelApp.Data.Entities.trip_main) on controller ITravel_App.Controllers.TravelAdminController (ITravel_App).
+[2025-11-01 17:05:13.151 +02:00  INF]  Executed DbCommand (79ms) [Parameters=[@__row_trip_code_0='?', @__row_active_1='?' (DbType = Boolean), @__row_destination_id_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT t.id, t.active, t.created_at, t.created_by, t.destination_id, t.is_comm_soon, t.pickup, t.release_days, t.route, t.show_in_slider, t.show_in_top, t.transfer_category_id, t.trip_code, t.trip_code_auto, t.trip_default_name, t.trip_duration, t.trip_order, t.trip_type, t.updated_at
+FROM trip_main AS t
+WHERE t.trip_code = @__row_trip_code_0 AND t.active = @__row_active_1 AND t.destination_id = @__row_destination_id_2
+LIMIT 2
+[2025-11-01 17:05:16.500 +02:00  INF]  Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM trip_main AS t
+[2025-11-01 17:05:17.548 +02:00  INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.id)
+FROM trip_main AS t
+[2025-11-01 17:05:19.534 +02:00  INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT max(t.trip_order)
+FROM trip_main AS t
+[2025-11-01 17:05:21.232 +02:00  ERR]  Failed executing DbCommand (19ms) [Parameters=[@p0='?' (DbType = Int64), @p1='?' (DbType = Boolean), @p2='?', @p3='?' (DbType = Int32), @p4='?' (DbType = Boolean), @p5='?', @p6='?' (DbType = Int32), @p7='?', @p8='?' (DbType = Boolean), @p9='?' (DbType = Boolean), @p10='?' (DbType = Int32), @p11='?', @p12='?', @p13='?', @p14='?', @p15='?' (DbType = Int32), @p16='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO trip_main (id, active, created_by, destination_id, is_comm_soon, pickup, release_days, route, show_in_slider, show_in_top, transfer_category_id, trip_code, trip_code_auto, trip_default_name, trip_duration, trip_order, trip_type)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16)
+RETURNING created_at, updated_at;
+[2025-11-01 17:05:21.246 +02:00  ERR]  An exception occurred in the database while saving changes for context type 'ITravelApp.Data.Data.itravel_client_dbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 22001: value too long for type character varying(50)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+  Exception data:
+    Severity: ERROR
+    SqlState: 22001
+    MessageText: value too long for type character varying(50)
+    File: varchar.c
+    Line: 640
+    Routine: varchar
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 22001: value too long for type character varying(50)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+  Exception data:
+    Severity: ERROR
+    SqlState: 22001
+    MessageText: value too long for type character varying(50)
+    File: varchar.c
+    Line: 640
+    Routine: varchar
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__112_0(DbContext _, ValueTuple`2 t)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+[2025-11-01 17:08:28.979 +02:00  INF]  Executing OkObjectResult, writing value of type 'ITravelApp.Data.Models.ResponseCls'.
+[2025-11-01 17:08:29.060 +02:00  INF]  Executed action ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App) in 204557.5815ms
+[2025-11-01 17:08:29.061 +02:00  INF]  Executed endpoint 'ITravel_App.Controllers.TravelAdminController.SaveMainTrip (ITravel_App)'
+[2025-11-01 17:08:29.072 +02:00  INF]  Request finished HTTP/2 POST https://localhost:7045/api/TravelAdmin/SaveMainTrip - 200 85 application/json; charset=utf-8 204651.8315ms

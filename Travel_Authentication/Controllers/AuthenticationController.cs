@@ -286,32 +286,47 @@ namespace Travel_Authentication.Controllers
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh()
+        public async Task<IActionResult> Refresh(TokenModel model)
         {
-            var refreshToken = Request.Cookies["refreshToken"];
-            if (refreshToken == null)
-                return Unauthorized();
-
-            var user = _userManager.Users.SingleOrDefault(u => u.RefreshToken == refreshToken);
-            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
-                return Unauthorized();
-
-            var newAccessToken = await GenerateJwtTokenAsync(user);
-            var newRefreshToken = GenerateRefreshToken();
-
-            user.RefreshToken = newRefreshToken;
-            await _userManager.UpdateAsync(user);
-            var roles = await _userManager.GetRolesAsync(user);
-            SetRefreshTokenCookie(newRefreshToken);
-          
-            return Ok(new ResponseCls
+            try
             {
-                isSuccessed = true,
-                message = _localizer["SuccessLogin"],
-                errors = null,
-                user = CreateUserResponse(user, roles.FirstOrDefault(), newAccessToken)
-               
-            });
+                //var refreshToken = Request.Cookies["refreshToken"];
+                var refreshToken = model.RefreshToken;
+                if (refreshToken == null)
+                    return Unauthorized();
+
+                var user = _userManager.Users.SingleOrDefault(u => u.RefreshToken == refreshToken);
+                if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                    return Unauthorized();
+
+                // var user = await _userManager.FindByEmailAsync(model.email);
+
+                //if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                //    return Unauthorized();
+
+                var newAccessToken = await GenerateJwtTokenAsync(user);
+                var newRefreshToken = GenerateRefreshToken();
+
+                user.RefreshToken = newRefreshToken;
+                // await _userManager.UpdateAsync(user);
+                await UpdateRefreshToken(user, newRefreshToken);
+                var roles = await _userManager.GetRolesAsync(user);
+                SetRefreshTokenCookie(newRefreshToken);
+
+                return Ok(new ResponseCls
+                {
+                    isSuccessed = true,
+                    message = _localizer["SuccessLogin"],
+                    errors = null,
+                    user = CreateUserResponse(user, roles.FirstOrDefault(), newAccessToken)
+
+                });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized();
+            }
+
             //return Ok(new { AccessToken = newAccessToken });
         }
 
